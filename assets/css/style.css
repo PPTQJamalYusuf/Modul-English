@@ -1,0 +1,503 @@
+/* ==========================================================================
+   Modul Pembelajaran Bahasa Inggris - PPTQ Jamal Yusuf Al-Haddad
+   Global Stylesheet (Offline, Responsive & Ultimate Teacher Edition)
+   ========================================================================== */
+
+:root {
+  --primary-color: #0b4f57;       /* Deep Dark Turquoise */
+  --primary-light: #187781;       /* Elegant Medium Teal/Turquoise */
+  --accent-color: #e0f2f3;        /* Soft Pale Ice Turquoise Accent */
+  --highlight-color: #1b8a96;     /* Vibrant Turquoise Highlight */
+  --text-dark: #1e293b;          /* Dark Slate Neutral */
+  --text-muted: #576d7a;          /* Slate Muted Text */
+  --bg-light: #f3f7f8;           /* Calming Subtle Ice Tinted Background */
+  --card-bg: #ffffff;             /* Card Background */
+  --border-color: #d1e2e5;       /* Soft Border */
+  --success-color: #0f8b8d;      /* Teal Success */
+  --success-bg: #e6f7f7;
+  --danger-color: #e63946;       /* Red Alert */
+  --danger-bg: #ffebee;
+  --warning-bg: #fffde7;
+  --warning-border: #ffe082;
+  --teacher-bg: #edf7f8;
+  --teacher-border: #0b4f57;
+  --shadow-sm: 0 2px 6px rgba(11,79,87,0.06);
+  --shadow-md: 0 4px 14px rgba(11,79,87,0.10);
+  --shadow-lg: 0 8px 24px rgba(11,79,87,0.14);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --font-main: 'Segoe UI', system-ui, -apple-system, Roboto, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-main);
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* Container & Layout */
+.container {
+  max-width: 1050px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* Header Branding */
+header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  color: white;
+  padding: 30px 24px;
+  border-radius: var(--radius-md);
+  margin-bottom: 25px;
+  box-shadow: var(--shadow-md);
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 6px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+
+header p {
+  opacity: 0.92;
+  font-size: 1rem;
+}
+
+.brand-badge {
+  display: inline-block;
+  background-color: rgba(255, 255, 255, 0.22);
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+/* Navigation Bar */
+.nav-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+  background-color: var(--card-bg);
+  padding: 14px 22px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+  box-shadow: var(--shadow-sm);
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: var(--primary-color);
+  font-weight: 600;
+  font-size: 0.95rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.nav-link:hover {
+  color: var(--primary-light);
+  transform: translateY(-1px);
+}
+
+/* Cards & Containers */
+.card {
+  background-color: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  padding: 26px;
+  margin-bottom: 28px;
+  box-shadow: var(--shadow-sm);
+}
+
+.card-title {
+  color: var(--primary-color);
+  font-size: 1.35rem;
+  border-bottom: 2px solid var(--accent-color);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Meeting Cards (Distinct & Separated per meeting) */
+.meeting-card {
+  background-color: var(--card-bg);
+  border: 2px solid #cfe2ff;
+  border-radius: var(--radius-md);
+  margin-bottom: 35px;
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.meeting-header {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+  color: white;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.meeting-header h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.meeting-badge {
+  background-color: #ffd166;
+  color: #1d3557;
+  font-weight: 700;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+.meeting-body {
+  padding: 26px;
+}
+
+/* Teacher Notes Box */
+.teacher-note {
+  background-color: var(--teacher-bg);
+  border-left: 5px solid var(--teacher-border);
+  padding: 16px 20px;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  margin: 18px 0;
+  font-size: 0.95rem;
+}
+
+.teacher-note h5 {
+  color: var(--teacher-border);
+  font-size: 0.95rem;
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  letter-spacing: 0.5px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* Worksheet Box (LKPD) */
+.worksheet-box {
+  background-color: var(--warning-bg);
+  border: 1px solid var(--warning-border);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin: 20px 0;
+}
+
+.worksheet-box h5 {
+  color: #856404;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Tables & Grids */
+.table-responsive {
+  overflow-x: auto;
+  margin: 18px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 15px;
+  font-size: 0.95rem;
+}
+
+th, td {
+  padding: 12px 16px;
+  border: 1px solid var(--border-color);
+  text-align: left;
+}
+
+th {
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: 600;
+}
+
+tr:nth-child(even) {
+  background-color: #f9fbf9;
+}
+
+/* Dialogue & Code Boxes */
+.dialogue-box {
+  background-color: #ffffff;
+  border-left: 4px solid var(--highlight-color);
+  padding: 16px 20px;
+  margin: 18px 0;
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.04);
+}
+
+.dialogue-speaker {
+  font-weight: 700;
+  color: var(--primary-light);
+}
+
+/* Audio Player Box */
+.audio-player-box {
+  background-color: #eaf5ee;
+  border: 1px solid #c7e8d3;
+  border-radius: var(--radius-sm);
+  padding: 16px;
+  margin: 18px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.audio-player-box label {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--primary-color);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+audio {
+  width: 100%;
+  outline: none;
+}
+
+/* Meta Grid */
+.meta-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+  margin-bottom: 18px;
+}
+
+.meta-item {
+  background-color: var(--bg-light);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border-left: 4px solid var(--primary-light);
+  font-size: 0.9rem;
+}
+
+.meta-item strong {
+  display: block;
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
+
+/* Quiz UI Components */
+.quiz-section {
+  background-color: #ffffff;
+  border: 2px solid var(--primary-light);
+  border-radius: var(--radius-md);
+  padding: 28px;
+  margin-top: 35px;
+}
+
+.quiz-header {
+  border-bottom: 2px dashed var(--border-color);
+  padding-bottom: 16px;
+  margin-bottom: 22px;
+}
+
+.quiz-question-card {
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 20px;
+  margin-bottom: 22px;
+}
+
+.question-number {
+  font-weight: 700;
+  color: var(--primary-color);
+  font-size: 1rem;
+  margin-bottom: 6px;
+}
+
+.question-text {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 16px;
+  color: var(--text-dark);
+}
+
+.options-group {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.option-label {
+  display: flex;
+  align-items: center;
+  padding: 14px 18px;
+  background-color: white;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-size: 0.95rem;
+}
+
+.option-label:hover {
+  border-color: var(--primary-light);
+  background-color: var(--accent-color);
+}
+
+.option-label input[type="radio"] {
+  margin-right: 12px;
+  accent-color: var(--primary-color);
+  width: 18px;
+  height: 18px;
+}
+
+.option-label.correct {
+  background-color: var(--success-bg) !important;
+  border-color: var(--success-color) !important;
+  color: var(--primary-color);
+  font-weight: 600;
+}
+
+.option-label.incorrect {
+  background-color: var(--danger-bg) !important;
+  border-color: var(--danger-color) !important;
+  color: var(--danger-color);
+}
+
+.quiz-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+  justify-content: flex-end;
+}
+
+.btn {
+  padding: 12px 24px;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-light);
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: white;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+}
+
+.score-banner {
+  background-color: var(--accent-color);
+  border: 2px solid var(--primary-light);
+  border-radius: var(--radius-sm);
+  padding: 22px;
+  text-align: center;
+  margin-bottom: 25px;
+  display: none;
+}
+
+.score-banner h3 {
+  color: var(--primary-color);
+  font-size: 1.5rem;
+  margin-bottom: 8px;
+}
+
+/* Grammar Badge (used in unit model text sections) */
+.grammar-badge {
+  display: inline-block;
+  background-color: var(--primary-color);
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 4px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+footer {
+  text-align: center;
+  padding: 28px;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  margin-top: 45px;
+  border-top: 1px solid var(--border-color);
+}
+
+/* Quick Navigation Menu for Meetings */
+.meeting-nav-menu {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+  padding: 15px;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-color);
+}
+
+.meeting-nav-item {
+  padding: 6px 14px;
+  background-color: var(--bg-light);
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--primary-color);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.meeting-nav-item:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+@media (max-width: 600px) {
+  header h1 { font-size: 1.5rem; }
+  .nav-bar { flex-direction: column; align-items: flex-start; }
+  .quiz-actions { flex-direction: column; }
+  .btn { width: 100%; }
+}
