@@ -548,8 +548,7 @@
       <!-- Action Buttons Bar -->
       <div class="action-group">
         <button class="btn-game btn-clear" onclick="clearAnswerSlots()">🧹 Hapus</button>
-        <button class="btn-game btn-shuffle" onclick="shuffleCurrentPool()">🔄 Acak Ubin</button>
-        <button id="btnHint" class="btn-game btn-hint" onclick="useHint()">💡 Petunjuk (-10 Poin)</button>
+        <button id="btnHint" class="btn-game btn-hint" onclick="useHint()">💡 Petunjuk (-30s Waktu)</button>
         <button id="btnCheck" class="btn-game btn-check" onclick="checkAnswer()">✓ Periksa Jawaban</button>
         <button id="btnNext" class="btn-game btn-next" style="display: none;" onclick="nextQuestion()">⏭️ Kata Selanjutnya</button>
       </div>
@@ -958,16 +957,17 @@
     }
 
     function useHint() {
-      if (score < 10 && score > 0) {
-        alert('Skor kurang untuk membuka petunjuk!');
+      if (timeRemaining <= 30) {
+        alert('Sisa waktu kurang dari 30 detik untuk menggunakan petunjuk!');
         return;
       }
       
       const targetText = currentMode === 'word' ? currentQuestion.word : currentQuestion.sentence;
       document.getElementById('clueText').innerHTML = `💡 <strong>Arti:</strong> ${currentQuestion.meaning} <br><small style="color: var(--text-muted);">${currentQuestion.hint || ''}</small>`;
       
-      if (score >= 10) score -= 10;
-      updateStatusDisplay();
+      timeRemaining -= 30;
+      updateTimerDisplay();
+      document.getElementById('btnHint').disabled = true;
       playSound('click');
     }
 
