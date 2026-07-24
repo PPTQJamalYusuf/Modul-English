@@ -719,13 +719,30 @@
           osc.start(now);
           osc.stop(now + 0.3);
         } else if (type === 'error') {
-          osc.type = 'sawtooth';
-          osc.frequency.setValueAtTime(180, now);
-          osc.frequency.setValueAtTime(130, now + 0.1);
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.25);
-          osc.start(now);
-          osc.stop(now + 0.25);
+          // Fun Retro Game Show Wrong Buzzer ("Bzz-Bzz!")
+          [0, 0.12].forEach(offset => {
+            const osc1 = audioCtx.createOscillator();
+            const osc2 = audioCtx.createOscillator();
+            const g = audioCtx.createGain();
+
+            osc1.type = 'square';
+            osc2.type = 'sawtooth';
+
+            osc1.frequency.setValueAtTime(160, now + offset);
+            osc2.frequency.setValueAtTime(168, now + offset);
+
+            g.gain.setValueAtTime(0.18, now + offset);
+            g.gain.linearRampToValueAtTime(0.01, now + offset + 0.09);
+
+            osc1.connect(g);
+            osc2.connect(g);
+            g.connect(audioCtx.destination);
+
+            osc1.start(now + offset);
+            osc2.start(now + offset);
+            osc1.stop(now + offset + 0.09);
+            osc2.stop(now + offset + 0.09);
+          });
         } else if (type === 'gameover') {
           osc.type = 'sawtooth';
           osc.frequency.setValueAtTime(300, now);
