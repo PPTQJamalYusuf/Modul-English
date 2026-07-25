@@ -3,37 +3,52 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fun Games - Susun Kata Bahasa Inggris | PPTQ Jamal Yusuf Al-Haddad</title>
+  <title>Fun Games - Susun Kata & Kalimat Bahasa Inggris | PPTQ Jamal Yusuf Al-Haddad</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
-    /* Custom Styling for Fun Games Engine */
+    /* Custom Styling for Fun Games Engine - Focused, Clean & Funny Edition */
     .game-container {
-      max-width: 900px;
+      max-width: 920px;
       margin: 0 auto;
     }
 
+    /* Modern Game Header Card */
     .game-header-card {
-      background: linear-gradient(135deg, var(--primary-color), var(--primary-light));
+      background: linear-gradient(135deg, #0b4f57 0%, #187781 50%, #1b8a96 100%);
       color: white;
-      padding: 24px;
-      border-radius: var(--radius-lg);
-      margin-bottom: 24px;
-      box-shadow: var(--shadow-md);
+      padding: 24px 28px;
+      border-radius: 20px;
+      margin-bottom: 22px;
+      box-shadow: 0 10px 25px rgba(11,79,87,0.18);
       display: flex;
       flex-direction: column;
       gap: 16px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .game-header-card::after {
+      content: '🎲';
+      position: absolute;
+      right: 15px;
+      bottom: -15px;
+      font-size: 7rem;
+      opacity: 0.12;
+      pointer-events: none;
+      transform: rotate(-15deg);
     }
 
     .game-controls {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       flex-wrap: wrap;
       justify-content: space-between;
       align-items: center;
-      background: rgba(255, 255, 255, 0.12);
-      padding: 14px 18px;
-      border-radius: var(--radius-md);
-      backdrop-filter: blur(4px);
+      background: rgba(255, 255, 255, 0.15);
+      padding: 12px 18px;
+      border-radius: 14px;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
     }
 
     .control-group {
@@ -44,7 +59,7 @@
 
     .control-group label {
       font-size: 0.88rem;
-      font-weight: 600;
+      font-weight: 700;
       color: white;
       white-space: nowrap;
     }
@@ -52,22 +67,24 @@
     .game-select, .game-btn-toggle {
       background: white;
       color: var(--primary-color);
-      border: none;
-      padding: 8px 14px;
-      border-radius: 20px;
-      font-weight: 700;
+      border: 2px solid transparent;
+      padding: 8px 16px;
+      border-radius: 25px;
+      font-weight: 800;
       font-size: 0.88rem;
       cursor: pointer;
       outline: none;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-      transition: all 0.2s ease;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.1);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .game-select:hover, .game-btn-toggle:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+      transform: translateY(-2px) scale(1.02);
+      border-color: #f59e0b;
+      box-shadow: 0 5px 12px rgba(0,0,0,0.15);
     }
 
+    /* Playful Mode Switch Tabs */
     .mode-tab-container {
       display: flex;
       gap: 10px;
@@ -76,26 +93,27 @@
 
     .tab-btn {
       flex: 1;
-      padding: 12px 18px;
+      padding: 12px 16px;
       background: white;
       border: 2px solid var(--border-color);
-      border-radius: var(--radius-md);
-      font-weight: 700;
+      border-radius: 14px;
+      font-weight: 800;
       color: var(--text-muted);
       cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
-      transition: all 0.2s ease;
-      font-size: 0.95rem;
+      transition: all 0.22s ease;
+      font-size: 0.92rem;
     }
 
     .tab-btn.active {
       border-color: var(--primary-color);
-      background: var(--accent-color);
+      background: #e0f2f3;
       color: var(--primary-color);
-      box-shadow: var(--shadow-sm);
+      box-shadow: 0 4px 12px rgba(11,79,87,0.12);
+      transform: translateY(-2px);
     }
 
     /* Scoreboard & Status Bar */
@@ -103,25 +121,30 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
       gap: 12px;
-      margin-bottom: 24px;
+      margin-bottom: 22px;
     }
 
     .status-card {
       background: white;
       padding: 12px 16px;
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-sm);
+      border-radius: 16px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
       text-align: center;
+      transition: transform 0.2s ease;
+    }
+
+    .status-card:hover {
+      transform: translateY(-2px);
     }
 
     .status-card .label {
       font-size: 0.75rem;
       text-transform: uppercase;
-      letter-spacing: 0.5px;
+      letter-spacing: 0.6px;
       color: var(--text-muted);
-      font-weight: 700;
-      margin-bottom: 2px;
+      font-weight: 800;
+      margin-bottom: 3px;
     }
 
     .status-card .value {
@@ -135,25 +158,125 @@
       font-size: 1.3rem;
     }
 
-    /* Main Gameplay Board */
+    /* Main Gameplay Board Arena */
     .game-board {
       background: white;
-      border-radius: var(--radius-lg);
-      padding: 30px 24px;
-      border: 1px solid var(--border-color);
-      box-shadow: var(--shadow-md);
+      border-radius: 24px;
+      padding: 32px 26px;
+      border: 2px solid var(--border-color);
+      box-shadow: 0 12px 30px rgba(11,79,87,0.08);
       text-align: center;
       position: relative;
       overflow: hidden;
+      min-height: 440px;
     }
 
+    /* Start Cover Overlay (Turn-Based Multiplayer Cover) */
+    .start-cover-overlay {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, #0b4f57 0%, #187781 50%, #1b8a96 100%);
+      color: white;
+      border-radius: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 24px;
+      z-index: 100;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: inset 0 0 40px rgba(0,0,0,0.2);
+    }
+
+    .start-cover-overlay.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .start-cover-content {
+      text-align: center;
+      max-width: 520px;
+      animation: popIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .start-cover-badge {
+      display: inline-block;
+      background: #f59e0b;
+      color: #0f172a;
+      font-weight: 900;
+      font-size: 0.85rem;
+      padding: 6px 18px;
+      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(245,158,11,0.35);
+    }
+
+    .start-cover-icon {
+      font-size: 4.5rem;
+      margin: 10px 0;
+      filter: drop-shadow(0 6px 12px rgba(0,0,0,0.2));
+      animation: floatEmoji 2s infinite ease-in-out;
+    }
+
+    .start-cover-title {
+      font-size: 1.8rem;
+      font-weight: 900;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+
+    .start-cover-desc {
+      font-size: 0.98rem;
+      opacity: 0.95;
+      margin-bottom: 26px;
+      line-height: 1.6;
+    }
+
+    .btn-start-play {
+      background: #f59e0b;
+      color: #0f172a;
+      border: none;
+      padding: 16px 40px;
+      border-radius: 50px;
+      font-size: 1.25rem;
+      font-weight: 900;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(245, 158, 11, 0.45);
+      transition: all 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .btn-start-play:hover {
+      transform: translateY(-4px) scale(1.05);
+      background: #fbbf24;
+      box-shadow: 0 12px 28px rgba(245, 158, 11, 0.55);
+    }
+
+    .btn-start-play:active {
+      transform: translateY(1px) scale(0.98);
+    }
+
+    @keyframes floatEmoji {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.06); }
+    }
+
+    /* Clue Box Area */
     .clue-box {
-      background: var(--bg-light);
+      background: #f0fdfa;
       padding: 16px 20px;
-      border-radius: var(--radius-md);
-      border-left: 5px solid var(--primary-color);
+      border-radius: 16px;
+      border-left: 6px solid var(--primary-color);
       margin-bottom: 28px;
       text-align: left;
+      border: 1px solid #ccfbf1;
+      border-left-width: 6px;
     }
 
     .clue-meta {
@@ -166,58 +289,58 @@
 
     .badge-tag {
       font-size: 0.75rem;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 12px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 14px;
       text-transform: uppercase;
     }
 
     .badge-easy { background: #d1fae5; color: #065f46; }
     .badge-medium { background: #fef3c7; color: #92400e; }
     .badge-hard { background: #fee2e2; color: #991b1b; }
-    .badge-grade { background: var(--accent-color); color: var(--primary-color); }
+    .badge-grade { background: #e0f2f3; color: var(--primary-color); }
+    .badge-type { background: #f3e8ff; color: #6b21a8; }
 
     .clue-text {
       font-size: 1.05rem;
       color: var(--text-dark);
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* Slot Target & Tiles */
+    /* Target Answer Slots & Letter Tiles */
     .answer-slots {
       display: flex;
       justify-content: center;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
-      min-height: 70px;
-      margin-bottom: 35px;
-      padding: 16px 20px;
-      background: var(--bg-light);
-      border-radius: var(--radius-md);
-      border: 2px dashed var(--border-color);
+      min-height: 72px;
+      margin-bottom: 30px;
+      padding: 18px;
+      background: #f8fafc;
+      border-radius: 16px;
+      border: 2.5px dashed #cbd5e1;
     }
 
     .slot-tile {
-      min-width: 54px;
+      min-width: 52px;
       width: auto;
       height: 60px;
       padding: 0 16px;
       background: white;
-      border: 2.5px solid var(--primary-color);
-      border-radius: 12px;
-      font-size: 1.65rem;
-      font-weight: 800;
+      border: 3px solid var(--primary-color);
+      border-radius: 14px;
+      font-size: 1.5rem;
+      font-weight: 900;
       color: var(--primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 8px rgba(11,79,87,0.1);
-      transition: all 0.2s ease;
+      box-shadow: 0 4px 10px rgba(11,79,87,0.12);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       user-select: none;
-      letter-spacing: 1px;
-      margin: 4px;
-      animation: popIn 0.25s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin: 3px;
+      animation: popIn 0.25s ease;
     }
 
     .slot-tile.empty {
@@ -236,52 +359,44 @@
     .pool-tiles {
       display: flex;
       justify-content: center;
-      gap: 16px;
+      gap: 12px;
       flex-wrap: wrap;
-      min-height: 70px;
-      margin-bottom: 32px;
-      padding: 12px 18px;
+      min-height: 72px;
+      margin-bottom: 28px;
+      padding: 10px 14px;
     }
 
     .letter-tile {
-      min-width: 54px;
+      min-width: 52px;
       width: auto;
       height: 60px;
       padding: 0 16px;
       background: linear-gradient(145deg, #ffffff, #f1f5f9);
       border: 2.5px solid var(--primary-light);
-      border-radius: 12px;
-      font-size: 1.65rem;
-      font-weight: 800;
+      border-radius: 14px;
+      font-size: 1.5rem;
+      font-weight: 900;
       color: var(--primary-color);
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      box-shadow: 0 4px 12px rgba(11,79,87,0.12);
-      transition: all 0.18s ease;
+      box-shadow: 0 5px 12px rgba(11,79,87,0.12);
+      transition: all 0.18s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       user-select: none;
-      letter-spacing: 1px;
-      margin: 4px;
-    }
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      box-shadow: 0 4px 10px rgba(11,79,87,0.12);
-      transition: all 0.18s ease;
-      user-select: none;
+      margin: 3px;
     }
 
     .letter-tile:hover {
-      transform: translateY(-4px) scale(1.05);
+      transform: translateY(-4px) scale(1.06);
       background: var(--primary-color);
       color: white;
       border-color: var(--primary-color);
-      box-shadow: 0 6px 14px rgba(11,79,87,0.25);
+      box-shadow: 0 8px 16px rgba(11,79,87,0.25);
     }
 
     .letter-tile.used {
-      opacity: 0.25;
+      opacity: 0.2;
       pointer-events: none;
       transform: scale(0.9);
       box-shadow: none;
@@ -296,22 +411,22 @@
     }
 
     .btn-game {
-      padding: 10px 20px;
-      border-radius: 25px;
-      font-weight: 700;
-      font-size: 0.92rem;
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.95rem;
       border: none;
       cursor: pointer;
       display: flex;
       align-items: center;
       gap: 8px;
-      transition: all 0.2s ease;
-      box-shadow: var(--shadow-sm);
+      transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 4px 10px rgba(0,0,0,0.08);
     }
 
     .btn-game:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow-md);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 16px rgba(0,0,0,0.12);
     }
 
     .btn-game:disabled {
@@ -324,30 +439,30 @@
     .btn-shuffle { background: #e0f2fe; color: #0369a1; }
     .btn-hint { background: #fef3c7; color: #92400e; }
     .btn-check { background: var(--primary-color); color: white; }
-    .btn-next { background: var(--success-color); color: white; }
+    .btn-next { background: #10b981; color: white; }
 
     /* Key Animations */
     @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
+      0% { transform: scale(0.6); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
 
     @keyframes shake {
       0%, 100% { transform: translateX(0); }
-      20%, 60% { transform: translateX(-10px); }
-      40%, 80% { transform: translateX(10px); }
+      20%, 60% { transform: translateX(-12px); }
+      40%, 80% { transform: translateX(12px); }
     }
 
     .shake-animation {
       animation: shake 0.4s ease-in-out;
     }
 
-    /* Game Over & Victory Modal Overlay */
+    /* Modal Overlay Styling */
     .modal-overlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
-      background: rgba(15, 23, 42, 0.7);
-      backdrop-filter: blur(5px);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(6px);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -365,14 +480,14 @@
 
     .modal-card {
       background: white;
-      border-radius: var(--radius-lg);
-      padding: 32px 28px;
-      max-width: 480px;
+      border-radius: 24px;
+      padding: 34px 28px;
+      max-width: 490px;
       width: 100%;
       text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.25);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.3);
       transform: translateY(20px);
-      transition: transform 0.3s ease;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
       position: relative;
     }
 
@@ -381,43 +496,45 @@
     }
 
     .modal-icon {
-      font-size: 3.8rem;
+      font-size: 4.2rem;
       margin-bottom: 12px;
       line-height: 1;
     }
 
     .modal-title {
-      font-size: 1.6rem;
-      font-weight: 800;
+      font-size: 1.65rem;
+      font-weight: 900;
       margin-bottom: 10px;
       color: var(--text-dark);
     }
 
     .modal-desc {
       color: var(--text-muted);
-      font-size: 0.95rem;
-      margin-bottom: 20px;
+      font-size: 0.98rem;
+      margin-bottom: 22px;
+      line-height: 1.5;
     }
 
     .word-reveal-box {
-      background: var(--bg-light);
-      padding: 14px 18px;
-      border-radius: var(--radius-md);
+      background: #f8fafc;
+      padding: 16px 20px;
+      border-radius: 16px;
       margin: 16px 0 24px;
-      border: 1px dashed var(--primary-light);
+      border: 2px dashed var(--primary-light);
     }
 
     .word-reveal-box .word {
       font-size: 1.6rem;
-      font-weight: 800;
+      font-weight: 900;
       color: var(--primary-color);
-      letter-spacing: 2px;
+      letter-spacing: 1px;
     }
 
     .word-reveal-box .meaning {
-      font-size: 0.92rem;
+      font-size: 0.95rem;
       color: var(--text-muted);
       margin-top: 4px;
+      font-weight: 600;
     }
 
     /* Confetti Canvas */
@@ -436,36 +553,36 @@
   <div class="container game-container">
     
     <!-- Top Header -->
-    <header style="padding: 22px 20px; margin-bottom: 20px; text-align: center;">
+    <header style="padding: 24px 20px; margin-bottom: 20px; text-align: center;">
       <div class="brand-badge">PPTQ Jamal Yusuf Al-Haddad</div>
-      <h1 style="font-size: 1.8rem; margin-bottom: 4px;">🎮 Fun Games Bahasa Inggris</h1>
-      <p style="font-size: 0.95rem; opacity: 0.95;">Asah Vocabulary Santri dengan Game Interaktif (Susun Kata & Kalimat)</p>
+      <h1 style="font-size: 1.9rem; margin-bottom: 4px; font-weight: 900;">🎮 Fun Games Bahasa Inggris</h1>
+      <p style="font-size: 0.95rem; opacity: 0.95;">Susun Kata & Kalimat Bahasa Inggris • Mode Main Gantian</p>
     </header>
 
     <!-- Navigation Bar -->
     <nav class="nav-bar">
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <span style="font-weight: 700; color: var(--primary-color);">📌 Fun Games Arena</span>
+      <div style="display: flex; gap: 6px; align-items: center;">
+        <span style="font-weight: 800; color: var(--primary-color); font-size: 0.88rem; padding-left: 4px;">📌 Fun Games Arena</span>
       </div>
-      <div style="display: flex; gap: 8px; align-items: center; flex-wrap: wrap;">
+      <div class="nav-link-group">
         <a href="index.html" class="nav-link">🏠 Utama</a>
         <a href="peta-materi.html" class="nav-link">📊 Peta Materi</a>
-        <a href="Kelas VII/index.html" class="nav-link">Kelas VII</a>
-        <a href="Kelas VIII/index.html" class="nav-link">Kelas VIII</a>
-        <a href="Kelas IX/index.html" class="nav-link">Kelas IX</a>
-        <a href="fun-games.html" class="nav-link" style="background-color: var(--primary-color); color: white; font-weight: 700;">🎮 Fun Games</a>
+        <a href="Kelas VII/index.html" class="nav-link">📘 Kelas VII</a>
+        <a href="Kelas VIII/index.html" class="nav-link">📗 Kelas VIII</a>
+        <a href="Kelas IX/index.html" class="nav-link">📙 Kelas IX</a>
+        <a href="fun-games.html" class="nav-link active">🎮 Fun Games</a>
       </div>
     </nav>
 
-    <!-- Game Header Card & Filters -->
+    <!-- Game Header Card & Settings -->
     <div class="game-header-card">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <h2 style="font-size: 1.3rem; font-weight: 700;">🎯 Pengaturan Permainan</h2>
-        <span style="font-size: 0.85rem; background: rgba(255,255,255,0.2); padding: 4px 12px; border-radius: 15px;">Aturan: 3x Salah = Game Over (❤️ ❤️ ❤️)</span>
+        <h2 style="font-size: 1.35rem; font-weight: 900;">🎯 Pengaturan Permainan</h2>
+        <span style="font-size: 0.85rem; background: rgba(255,255,255,0.22); padding: 5px 14px; border-radius: 20px; font-weight: 700;">Mode Gantian (3x Salah = Game Over)</span>
       </div>
 
       <div class="game-controls">
-        <!-- Grade / Class Filter -->
+        <!-- Grade Filter -->
         <div class="control-group">
           <label for="gradeSelect">📚 Tingkat Kelas:</label>
           <select id="gradeSelect" class="game-select" onchange="initGameSession()">
@@ -476,14 +593,11 @@
           </select>
         </div>
 
-        <!-- Difficulty Filter -->
+        <!-- Player Turn Status -->
         <div class="control-group">
-          <label for="difficultySelect">⚡ Tingkat Kesulitan:</label>
-          <select id="difficultySelect" class="game-select" onchange="initGameSession()">
-            <option value="easy">🟢 Mudah (3-5 Huruf)</option>
-            <option value="medium" selected>🟡 Sedang (5-7 Huruf)</option>
-            <option value="hard">🔴 Sulit (7+ Huruf)</option>
-          </select>
+          <span id="turnCounterBadge" style="background: white; color: var(--primary-color); font-weight: 800; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
+            👤 Giliran Pemain: <span id="turnNumberText">#1</span>
+          </span>
         </div>
 
         <button class="game-btn-toggle" onclick="resetGameStats()">🔄 Reset Sesi Game</button>
@@ -493,7 +607,7 @@
     <!-- Game Mode Switcher -->
     <div class="mode-tab-container">
       <button id="tabWordMode" class="tab-btn active" onclick="switchGameMode('word')">
-        🔤 Susun Kata Acak (Word Scramble)
+        🔤 Susun Kata (Word Scramble)
       </button>
       <button id="tabSentenceMode" class="tab-btn" onclick="switchGameMode('sentence')">
         📝 Susun Kalimat (Jumbled Sentence)
@@ -522,13 +636,25 @@
 
     <!-- Main Game Board Arena -->
     <div id="gameBoard" class="game-board">
+
+      <!-- START COVER OVERLAY (Turn-Based Multiplayer Cover Screen) -->
+      <div id="startCoverOverlay" class="start-cover-overlay active">
+        <div class="start-cover-content">
+          <span id="coverPlayerBadge" class="start-cover-badge">🎲 SIAP-SIAP PEMAIN #1!</span>
+          <div class="start-cover-icon">🚀</div>
+          <h2 class="start-cover-title" style="margin-bottom: 24px;">Giliran Kamu Bermain!</h2>
+          <button class="btn-start-play" onclick="revealQuestionAndStart()">
+            <span>▶️</span> BUKA SOAL & MULAI
+          </button>
+        </div>
+      </div>
       
       <!-- Clue & Hints -->
       <div class="clue-box">
         <div class="clue-meta">
-          <span id="badgeDiff" class="badge-tag badge-medium">🟡 SEDANG</span>
+          <span id="badgeType" class="badge-tag badge-type">🔤 SUSUN KATA</span>
           <span id="badgeCategory" class="badge-tag badge-grade">Kelas VIII</span>
-          <span id="badgePos" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 700;">(NOUN)</span>
+          <span id="badgePos" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 800;">(NOUN)</span>
         </div>
         <div id="clueText" class="clue-text">
           💡 Petunjuk: ...
@@ -540,7 +666,7 @@
         <!-- Generated by JS -->
       </div>
 
-      <!-- Scrambled Letter Tiles Pool -->
+      <!-- Scrambled Letter / Word Tiles Pool -->
       <div id="poolTiles" class="pool-tiles">
         <!-- Generated by JS -->
       </div>
@@ -548,9 +674,9 @@
       <!-- Action Buttons Bar -->
       <div class="action-group">
         <button class="btn-game btn-clear" onclick="clearAnswerSlots()">🧹 Hapus</button>
-        <button id="btnHint" class="btn-game btn-hint" onclick="useHint()">💡 Petunjuk (-30s Waktu)</button>
+        <button id="btnHint" class="btn-game btn-hint" onclick="useHint()">💡 Petunjuk (-1 Min Waktu)</button>
         <button id="btnCheck" class="btn-game btn-check" onclick="checkAnswer()">✓ Periksa Jawaban</button>
-        <button id="btnNext" class="btn-game btn-next" style="display: none;" onclick="nextQuestion()">⏭️ Kata Selanjutnya</button>
+        <button id="btnNext" class="btn-game btn-next" style="display: none;" onclick="nextQuestion()">⏭️ Soal Selanjutnya</button>
       </div>
 
     </div>
@@ -560,37 +686,36 @@
   <!-- Game Over Modal (3x Salah / Time Out) -->
   <div id="gameOverModal" class="modal-overlay">
     <div class="modal-card">
-      <div class="modal-icon">💔</div>
-      <h2 class="modal-title">Yaaah... Kesempatan Habis!</h2>
-      <p class="modal-desc">Kamu telah salah 3 kali pada kata ini. Tetap semangat, mari pelajari kata yang benar berikut!</p>
+      <div class="modal-icon">🙈</div>
+      <h2 class="modal-title">Kesempatan Habis!</h2>
+      <p class="modal-desc">Kamu telah salah 3 kali atau waktu habis. Mari pelajari jawaban yang benar berikut ini!</p>
       
       <div class="word-reveal-box">
         <div id="revealWord" class="word">WORD</div>
         <div id="revealMeaning" class="meaning">Arti kata...</div>
       </div>
 
-      <div style="display: flex; gap: 10px; justify-content: center;">
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
         <button class="btn-game btn-check" onclick="speakCurrentWord(document.getElementById('revealWord').innerText)">🔊 Dengar Pelafalan</button>
-        <button class="btn-game btn-next" onclick="closeGameOverModalAndNext()">🔄 Coba Kata Lain</button>
+        <button class="btn-game btn-next" onclick="closeGameOverModalAndNext()">🔄 Coba Soal Lain</button>
       </div>
     </div>
   </div>
 
-  <!-- Victory Level Modal -->
+  <!-- Victory Modal -->
   <div id="victoryModal" class="modal-overlay">
-    <div class="modal-card">
-      <div class="modal-icon">🎉</div>
-      <h2 class="modal-title" style="color: var(--success-color);">Luar Biasa! Jawaban Benar</h2>
-      <p class="modal-desc">Kamu berhasil menyusun kata dengan tepat!</p>
+    <div class="modal-card" style="border: 3px solid #10b981;">
+      <div class="modal-icon" style="animation: floatEmoji 1.5s infinite ease-in-out;">🎉</div>
+      <h2 class="modal-title" style="color: #059669; font-size: 1.875rem; margin-bottom: 20px;">Congratulations!</h2>
       
-      <div class="word-reveal-box" style="background: var(--success-bg); border-color: var(--success-color);">
-        <div id="victoryWord" class="word" style="color: var(--success-color);">WORD</div>
+      <div class="word-reveal-box" style="background: #ecfdf5; border-color: #10b981; box-shadow: 0 4px 12px rgba(16,185,129,0.15);">
+        <div id="victoryWord" class="word" style="color: #047857;">WORD</div>
         <div id="victoryMeaning" class="meaning">Arti kata...</div>
       </div>
 
-      <div style="display: flex; gap: 10px; justify-content: center;">
+      <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
         <button class="btn-game btn-check" onclick="speakCurrentWord(document.getElementById('victoryWord').innerText)">🔊 Dengar Pelafalan</button>
-        <button class="btn-game btn-next" onclick="closeVictoryModalAndNext()">⏭️ Lanjut Kata Berikutnya</button>
+        <button class="btn-game btn-next" onclick="closeVictoryModalAndNext()">⏭️ Lanjut Pemain Berikutnya</button>
       </div>
     </div>
   </div>
@@ -598,75 +723,182 @@
   <!-- Javascript Game Engine -->
   <script>
     /* ==========================================================================
-       VOCABULARY & SENTENCE DATASETS (GRADES 7, 8, 9)
+       50 RANDOM QUESTIONS PER GRADE (TOTAL 150 QUESTIONS: WORD & SENTENCE)
        ========================================================================== */
-    const WORD_DATASET = [
-      // KELAS VII
-      { word: "AGE", meaning: "Usia / Umur", grade: "7", pos: "Noun", hint: "Jumlah tahun kehidupan seseorang." },
-      { word: "RICE", meaning: "Nasi / Beras", grade: "7", pos: "Noun", hint: "Makanan pokok utama di Indonesia." },
-      { word: "SOUP", meaning: "Sup / Kuah", grade: "7", pos: "Noun", hint: "Makanan berkuah hangat." },
-      { word: "MILK", meaning: "Susu", grade: "7", pos: "Noun", hint: "Minuman sehat kaya kalsium." },
-      { word: "DESK", meaning: "Meja Tulis", grade: "7", pos: "Noun", hint: "Tempat menulis di dalam kelas." },
-      { word: "PARK", meaning: "Taman", grade: "7", pos: "Noun", hint: "Area terbuka hijau untuk bersantai." },
-      { word: "STUDY", meaning: "Belajar", grade: "7", pos: "Verb", hint: "Kegiatan menuntut ilmu di sekolah." },
-      { word: "HOBBY", meaning: "Hobi / Kegemaran", grade: "7", pos: "Noun", hint: "Aktivitas menyenangkan di waktu luang." },
-      { word: "FRIEND", meaning: "Teman / Sahabat", grade: "7", pos: "Noun", hint: "Seseorang yang dekat dan baik dengan kita." },
-      { word: "FAMILY", meaning: "Keluarga", grade: "7", pos: "Noun", hint: "Orang tua, kakak, dan adik." },
-      { word: "SCHOOL", meaning: "Sekolah", grade: "7", pos: "Noun", hint: "Tempat menuntut ilmu formal." },
-      { word: "SISTER", meaning: "Saudara Perempuan", grade: "7", pos: "Noun", hint: "Kakak atau adik perempuan." },
-      { word: "GARDEN", meaning: "Kebun / Halaman", grade: "7", pos: "Noun", hint: "Area rumah yang ditanami bunga/pohon." },
-      { word: "CANTEEN", meaning: "Kantin Sekolah", grade: "7", pos: "Noun", hint: "Tempat santri membeli makanan saat istirahat." },
-      { word: "CULINARY", meaning: "Kuliner / Masakan", grade: "7", pos: "Adjective", hint: "Berhubungan dengan seni memasak dan makanan." },
-      { word: "BREAKFAST", meaning: "Sarapan Pagi", grade: "7", pos: "Noun", hint: "Makan di pagi hari sebelum beraktivitas." },
+    const MASTER_DATASET = [
+      /* ------------------------------------------------------------------------
+         KELAS VII (50 SOAL: 35 WORD + 15 SENTENCE)
+         ------------------------------------------------------------------------ */
+      { id: "7-W01", type: "word", word: "AGE", meaning: "Usia / Umur", grade: "7", pos: "Noun", hint: "Jumlah tahun kehidupan seseorang." },
+      { id: "7-W02", type: "word", word: "RICE", meaning: "Nasi / Beras", grade: "7", pos: "Noun", hint: "Makanan pokok utama di Indonesia." },
+      { id: "7-W03", type: "word", word: "SOUP", meaning: "Sup / Kuah", grade: "7", pos: "Noun", hint: "Makanan berkuah hangat." },
+      { id: "7-W04", type: "word", word: "MILK", meaning: "Susu", grade: "7", pos: "Noun", hint: "Minuman sehat kaya kalsium." },
+      { id: "7-W05", type: "word", word: "DESK", meaning: "Meja Tulis", grade: "7", pos: "Noun", hint: "Tempat menulis di dalam kelas." },
+      { id: "7-W06", type: "word", word: "PARK", meaning: "Taman", grade: "7", pos: "Noun", hint: "Area terbuka hijau untuk bersantai." },
+      { id: "7-W07", type: "word", word: "BOOK", meaning: "Buku Bacaan", grade: "7", pos: "Noun", hint: "Kumpulan kertas berisi ilmu atau cerita." },
+      { id: "7-W08", type: "word", word: "PENCIL", meaning: "Pensil Tulis", grade: "7", pos: "Noun", hint: "Alat tulis berbahan kayu dan grafit." },
+      { id: "7-W09", type: "word", word: "ERASER", meaning: "Penghapus", grade: "7", pos: "Noun", hint: "Alat untuk menghapus tulisan pensil." },
+      { id: "7-W10", type: "word", word: "READ", meaning: "Membaca", grade: "7", pos: "Verb", hint: "Aktivitas melafalkan tulisan." },
+      { id: "7-W11", type: "word", word: "SING", meaning: "Menyanyi", grade: "7", pos: "Verb", hint: "Melantunkan nada dengan suara." },
+      { id: "7-W12", type: "word", word: "SWIM", meaning: "Berenang", grade: "7", pos: "Verb", hint: "Olahraga mengapung di air." },
+      { id: "7-W13", type: "word", word: "HOBBY", meaning: "Hobi / Kegemaran", grade: "7", pos: "Noun", hint: "Aktivitas menyenangkan di waktu luang." },
+      { id: "7-W14", type: "word", word: "FRIEND", meaning: "Teman / Sahabat", grade: "7", pos: "Noun", hint: "Seseorang yang dekat dan baik dengan kita." },
+      { id: "7-W15", type: "word", word: "FAMILY", meaning: "Keluarga", grade: "7", pos: "Noun", hint: "Orang tua, kakak, dan adik." },
+      { id: "7-W16", type: "word", word: "SCHOOL", meaning: "Sekolah", grade: "7", pos: "Noun", hint: "Tempat menuntut ilmu formal." },
+      { id: "7-W17", type: "word", word: "SISTER", meaning: "Saudara Perempuan", grade: "7", pos: "Noun", hint: "Kakak atau adik perempuan." },
+      { id: "7-W18", type: "word", word: "BROTHER", meaning: "Saudara Laki-laki", grade: "7", pos: "Noun", hint: "Kakak atau adik laki-laki." },
+      { id: "7-W19", type: "word", word: "GARDEN", meaning: "Kebun / Halaman", grade: "7", pos: "Noun", hint: "Area rumah yang ditanami bunga/pohon." },
+      { id: "7-W20", type: "word", word: "CANTEEN", meaning: "Kantin Sekolah", grade: "7", pos: "Noun", hint: "Tempat santri membeli makanan saat istirahat." },
+      { id: "7-W21", type: "word", word: "KITCHEN", meaning: "Dapur", grade: "7", pos: "Noun", hint: "Ruangan untuk memasak makanan." },
+      { id: "7-W22", type: "word", word: "TEACHER", meaning: "Guru / Pengajar", grade: "7", pos: "Noun", hint: "Sosok pendidik di sekolah." },
+      { id: "7-W23", type: "word", word: "STUDENT", meaning: "Siswa / Santri", grade: "7", pos: "Noun", hint: "Orang yang sedang menuntut ilmu." },
+      { id: "7-W24", type: "word", word: "MORNING", meaning: "Pagi Hari", grade: "7", pos: "Noun", hint: "Waktu terbit matahari." },
+      { id: "7-W25", type: "word", word: "EVENING", meaning: "Sore / Malam Hari", grade: "7", pos: "Noun", hint: "Waktu menjelang malam." },
+      { id: "7-W26", type: "word", word: "BREAKFAST", meaning: "Sarapan Pagi", grade: "7", pos: "Noun", hint: "Makan di pagi hari sebelum beraktivitas." },
+      { id: "7-W27", type: "word", word: "LUNCH", meaning: "Makan Siang", grade: "7", pos: "Noun", hint: "Makan di tengah hari." },
+      { id: "7-W28", type: "word", word: "DINNER", meaning: "Makan Malam", grade: "7", pos: "Noun", hint: "Santap malam bersama keluarga." },
+      { id: "7-W29", type: "word", word: "UNIFORM", meaning: "Seragam Sekolah", grade: "7", pos: "Noun", hint: "Pakaian resmi murid sekolah." },
+      { id: "7-W30", type: "word", word: "CULINARY", meaning: "Kuliner / Masakan", grade: "7", pos: "Adjective", hint: "Berhubungan dengan seni memasak dan makanan." },
+      { id: "7-W31", type: "word", word: "DELICIOUS", meaning: "Lezat / Enak", grade: "7", pos: "Adjective", hint: "Rasa makanan yang nikmat." },
+      { id: "7-W32", type: "word", word: "BICYCLE", meaning: "Sepeda Kayuh", grade: "7", pos: "Noun", hint: "Kendaraan roda dua tanpa mesin." },
+      { id: "7-W33", type: "word", word: "CLASSROOM", meaning: "Ruang Kelas", grade: "7", pos: "Noun", hint: "Ruang tempat belajar mengajar." },
+      { id: "7-W34", type: "word", word: "SCHEDULE", meaning: "Jadwal Pelajaran", grade: "7", pos: "Noun", hint: "Urutan kegiatan belajar harian." },
+      { id: "7-W35", type: "word", word: "LIBRARY", meaning: "Perpustakaan", grade: "7", pos: "Noun", hint: "Gedung tempat menyimpan koleksi buku." },
 
-      // KELAS VIII
-      { word: "PLANT", meaning: "Tanaman / Menanam", grade: "8", pos: "Noun/Verb", hint: "Flora yang tumbuh di tanah." },
-      { word: "TRASH", meaning: "Sampah", grade: "8", pos: "Noun", hint: "Barang sisa yang tidak terpakai." },
-      { word: "CLEAN", meaning: "Bersih", grade: "8", pos: "Adjective", hint: "Bebas dari kotoran atau kuman." },
-      { word: "STAGE", meaning: "Panggung", grade: "8", pos: "Noun", hint: "Tempat tampil dalam acara sekolah." },
-      { word: "PRIZE", meaning: "Hadiah / Penghargaan", grade: "8", pos: "Noun", hint: "Penghargaan untuk pemenang lomba." },
-      { word: "BRAVE", meaning: "Pemberani", grade: "8", pos: "Adjective", hint: "Tidak takut menghadapi tantangan." },
-      { word: "FESTIVAL", meaning: "Festival / Perayaan", grade: "8", pos: "Noun", hint: "Acara perayaan yang meriah." },
-      { word: "RECYCLE", meaning: "Daur Ulang", grade: "8", pos: "Verb", hint: "Mengolah kembali barang bekas menjadi berguna." },
-      { word: "KINDNESS", meaning: "Kebaikan Hati", grade: "8", pos: "Noun", hint: "Sifat suka menolong sesama." },
-      { word: "FRIENDSHIP", meaning: "Persahabatan", grade: "8", pos: "Noun", hint: "Hubungan erat antar kawan." },
-      { word: "ENVIRONMENT", meaning: "Lingkungan Hidup", grade: "8", pos: "Noun", hint: "Alam dan sekitar tempat kita tinggal." },
-      { word: "CELEBRATING", meaning: "Merayakan", grade: "8", pos: "Verb", hint: "Memperingati momen bahagia bersama." },
-      { word: "COMPETITION", meaning: "Perlombaan / Kompetisi", grade: "8", pos: "Noun", hint: "Ajang bertanding meraih juara." },
-      { word: "PERFORMANCE", meaning: "Pertunjukan", grade: "8", pos: "Noun", hint: "Aksi seni di atas panggung." },
+      { id: "7-S01", type: "sentence", sentence: "SHE BUYS DELICIOUS FOOD", meaning: "Dia membeli makanan yang lezat", grade: "7", pos: "Sentence", hint: "Kalimat tentang membeli makanan." },
+      { id: "7-S02", type: "sentence", sentence: "WE STUDY ENGLISH TOGETHER", meaning: "Kita belajar Bahasa Inggris bersama", grade: "7", pos: "Sentence", hint: "Kalimat tentang belajar bersama." },
+      { id: "7-S03", type: "sentence", sentence: "MY HOBBY IS READING BOOKS", meaning: "Hobiku adalah membaca buku", grade: "7", pos: "Sentence", hint: "Kalimat menyatakan kegemaran." },
+      { id: "7-S04", type: "sentence", sentence: "HE GOES TO SCHOOL BY BIKE", meaning: "Dia pergi ke sekolah naik sepeda", grade: "7", pos: "Sentence", hint: "Kalimat transportasi ke sekolah." },
+      { id: "7-S05", type: "sentence", sentence: "THEY EAT LUNCH IN CANTEEN", meaning: "Mereka makan siang di kantin", grade: "7", pos: "Sentence", hint: "Kalimat tentang makan di kantin." },
+      { id: "7-S06", type: "sentence", sentence: "I HAVE A HAPPY FAMILY", meaning: "Saya memiliki keluarga yang bahagia", grade: "7", pos: "Sentence", hint: "Kalimat tentang keluarga." },
+      { id: "7-S07", type: "sentence", sentence: "THE CLASSROOM IS VERY CLEAN", meaning: "Ruang kelas itu sangat bersih", grade: "7", pos: "Sentence", hint: "Kalimat tentang kondisi kelas." },
+      { id: "7-S08", type: "sentence", sentence: "MY TEACHER IS KIND AND HELPFUL", meaning: "Guruku baik hati dan suka menolong", grade: "7", pos: "Sentence", hint: "Kalimat memuji guru." },
+      { id: "7-S09", type: "sentence", sentence: "WE CLEAN THE BOARD TOGETHER", meaning: "Kami membersihkan papan tulis bersama", grade: "7", pos: "Sentence", hint: "Kalimat tugas kelas." },
+      { id: "7-S10", type: "sentence", sentence: "MY SISTER LOVES SINGING SONGS", meaning: "Kakak perempuanku suka menyanyikan lagu", grade: "7", pos: "Sentence", hint: "Kalimat tentang kegemaran saudara." },
+      { id: "7-S11", type: "sentence", sentence: "DO YOU LIKE DRINKING MILK", meaning: "Apakah kamu suka minum susu", grade: "7", pos: "Sentence", hint: "Kalimat tanya minuman." },
+      { id: "7-S12", type: "sentence", sentence: "WE HAVE A NEW SCHEDULE TODAY", meaning: "Kami memiliki jadwal baru hari ini", grade: "7", pos: "Sentence", hint: "Kalimat tentang jadwal." },
+      { id: "7-S13", type: "sentence", sentence: "SHE PUTS PENCIL IN BAG", meaning: "Dia memasukkan pensil ke dalam tas", grade: "7", pos: "Sentence", hint: "Kalimat meletakkan pensil." },
+      { id: "7-S14", type: "sentence", sentence: "I PLAY FOOTBALL IN PARK", meaning: "Saya bermain sepak bola di taman", grade: "7", pos: "Sentence", hint: "Kalimat olahraga di taman." },
+      { id: "7-S15", type: "sentence", sentence: "WE READ BOOKS IN LIBRARY", meaning: "Kami membaca buku di perpustakaan", grade: "7", pos: "Sentence", hint: "Kalimat membaca di perpustakaan." },
 
-      // KELAS IX
-      { word: "FAUNA", meaning: "Dunia Hewan", grade: "9", pos: "Noun", hint: "Segala jenis hewan di suatu wilayah." },
-      { word: "TICKET", meaning: "Tiket / Karcis", grade: "9", pos: "Noun", hint: "Tanda masuk perjalanan atau tempat wisata." },
-      { word: "JOURNEY", meaning: "Perjalanan", grade: "9", pos: "Noun", hint: "Pengalaman menempuh jarak jauh." },
-      { word: "DRAGON", meaning: "Naga", grade: "9", pos: "Noun", hint: "Makhluk mitos bersayap dan bernapas api." },
-      { word: "CASTLE", meaning: "Istana / Kastil", grade: "9", pos: "Noun", hint: "Bangunan megah kerajaan." },
-      { word: "DIGITAL", meaning: "Serba Digital", grade: "9", pos: "Adjective", hint: "Berhubungan dengan teknologi komputer." },
-      { word: "ANIMAL", meaning: "Hewan / Satwa", grade: "9", pos: "Noun", hint: "Makhluk hidup bernyawa non-manusia." },
-      { word: "REUSE", meaning: "Gunakan Kembali", grade: "9", pos: "Verb", hint: "Memakai kembali wadah bekas." },
-      { word: "UPCYCLING", meaning: "Daur Ulang Kreatif", grade: "9", pos: "Noun", hint: "Meningkatkan nilai guna sampah bekas." },
-      { word: "CONSERVATION", meaning: "Konservasi / Perlindungan", grade: "9", pos: "Noun", hint: "Pelestarian alam dan satwa langka." },
-      { word: "ECOFRIENDLY", meaning: "Ramah Lingkungan", grade: "9", pos: "Adjective", hint: "Produk yang tidak merusak alam." },
-      { word: "SMARTPHONE", meaning: "Ponsel Pintar", grade: "9", pos: "Noun", hint: "Perangkat komunikasi canggih genggam." },
-      { word: "APPLICATION", meaning: "Aplikasi Komputer", grade: "9", pos: "Noun", hint: "Program lunak untuk membantu tugas." },
-      { word: "ENDANGERED", meaning: "Terancam Punah", grade: "9", pos: "Adjective", hint: "Satwa yang jumlahnya sangat sedikit di alam." }
-    ];
 
-    const SENTENCE_DATASET = [
-      { sentence: "SHE BUYS DELICIOUS FOOD", meaning: "Dia membeli makanan yang lezat", grade: "7" },
-      { sentence: "WE STUDY ENGLISH TOGETHER", meaning: "Kita belajar Bahasa Inggris bersama", grade: "7" },
-      { sentence: "PLEASE KEEP OUR CLASSROOM CLEAN", meaning: "Tolong jaga kebersihan kelas kita", grade: "8" },
-      { sentence: "WE MUST RECYCLE PLASTIC BOTTLES", meaning: "Kita harus mendaur ulang botol plastik", grade: "8" },
-      { sentence: "INDONESIA HAS UNIQUE WILD FAUNA", meaning: "Indonesia memiliki satwa liar yang unik", grade: "9" },
-      { sentence: "ALWAYS USE DIGITAL MEDIA WISELY", meaning: "Selalu gunakan media digital dengan bijak", grade: "9" }
+      /* ------------------------------------------------------------------------
+         KELAS VIII (50 SOAL: 35 WORD + 15 SENTENCE)
+         ------------------------------------------------------------------------ */
+      { id: "8-W01", type: "word", word: "PLANT", meaning: "Tanaman / Menanam", grade: "8", pos: "Noun/Verb", hint: "Flora yang tumbuh di tanah." },
+      { id: "8-W02", type: "word", word: "TRASH", meaning: "Sampah / Limbah", grade: "8", pos: "Noun", hint: "Barang sisa yang tidak terpakai." },
+      { id: "8-W03", type: "word", word: "CLEAN", meaning: "Bersih / Suci", grade: "8", pos: "Adjective", hint: "Bebas dari kotoran atau kuman." },
+      { id: "8-W04", type: "word", word: "STAGE", meaning: "Panggung", grade: "8", pos: "Noun", hint: "Tempat tampil dalam acara sekolah." },
+      { id: "8-W05", type: "word", word: "PRIZE", meaning: "Hadiah / Penghargaan", grade: "8", pos: "Noun", hint: "Penghargaan untuk pemenang lomba." },
+      { id: "8-W06", type: "word", word: "BRAVE", meaning: "Pemberani", grade: "8", pos: "Adjective", hint: "Tidak takut menghadapi tantangan." },
+      { id: "8-W07", type: "word", word: "HERO", meaning: "Pahlawan", grade: "8", pos: "Noun", hint: "Sosok berjasa bagi bangsa." },
+      { id: "8-W08", type: "word", word: "CROWD", meaning: "Kerumunan Penonton", grade: "8", pos: "Noun", hint: "Kumpulan orang yang menyaksikan." },
+      { id: "8-W09", type: "word", word: "TROPHY", meaning: "Piala Lomba", grade: "8", pos: "Noun", hint: "Simbol kemenangan kompetisi." },
+      { id: "8-W10", type: "word", word: "SPEECH", meaning: "Pidato", grade: "8", pos: "Noun", hint: "Berbicara di depan umum." },
+      { id: "8-W11", type: "word", word: "BOTTLE", meaning: "Botol Wadah", grade: "8", pos: "Noun", hint: "Wadah penampung air." },
+      { id: "8-W12", type: "word", word: "PLASTIC", meaning: "Plastik", grade: "8", pos: "Noun", hint: "Bahan buatan yang sulit terurai." },
+      { id: "8-W13", type: "word", word: "FESTIVAL", meaning: "Festival / Perayaan", grade: "8", pos: "Noun", hint: "Acara perayaan yang meriah." },
+      { id: "8-W14", type: "word", word: "RECYCLE", meaning: "Daur Ulang", grade: "8", pos: "Verb", hint: "Mengolah kembali barang bekas." },
+      { id: "8-W15", type: "word", word: "KINDNESS", meaning: "Kebaikan Hati", grade: "8", pos: "Noun", hint: "Sifat suka menolong sesama." },
+      { id: "8-W16", type: "word", word: "FRIENDSHIP", meaning: "Persahabatan", grade: "8", pos: "Noun", hint: "Hubungan erat antar kawan." },
+      { id: "8-W17", type: "word", word: "ENVIRONMENT", meaning: "Lingkungan Hidup", grade: "8", pos: "Noun", hint: "Alam sekitar tempat kita tinggal." },
+      { id: "8-W18", type: "word", word: "CELEBRATING", meaning: "Merayakan", grade: "8", pos: "Verb", hint: "Memperingati momen bahagia." },
+      { id: "8-W19", type: "word", word: "COMPETITION", meaning: "Perlombaan / Kompetisi", grade: "8", pos: "Noun", hint: "Ajang bertanding meraih juara." },
+      { id: "8-W20", type: "word", word: "PERFORMANCE", meaning: "Pertunjukan Seni", grade: "8", pos: "Noun", hint: "Aksi seni di atas panggung." },
+      { id: "8-W21", type: "word", word: "PARADE", meaning: "Pawai Kemerdekaan", grade: "8", pos: "Noun", hint: "Iring-iringan jalan bersama." },
+      { id: "8-W22", type: "word", word: "VOLUNTEER", meaning: "Relawan / Sukarelawan", grade: "8", pos: "Noun", hint: "Orang yang bekerja tanpa pamrih." },
+      { id: "8-W23", type: "word", word: "DONATION", meaning: "Sumbangan / Donasi", grade: "8", pos: "Noun", hint: "Bantuan barang/uang untuk amal." },
+      { id: "8-W24", type: "word", word: "CEREMONY", meaning: "Upacara Bendera", grade: "8", pos: "Noun", hint: "Kegiatan khidmat di hari Senin." },
+      { id: "8-W25", type: "word", word: "ANTHEM", meaning: "Lagu Kebangsaan", grade: "8", pos: "Noun", hint: "Lagu Indonesia Raya." },
+      { id: "8-W26", type: "word", word: "DECORATE", meaning: "Menghias Kelas", grade: "8", pos: "Verb", hint: " mempercantik ruangan." },
+      { id: "8-W27", type: "word", word: "COSTUME", meaning: "Kostum Lomba", grade: "8", pos: "Noun", hint: "Pakaian khusus acara festival." },
+      { id: "8-W28", type: "word", word: "COMMUNITY", meaning: "Komunitas / Warga", grade: "8", pos: "Noun", hint: "Kelompok masyarakat." },
+      { id: "8-W29", type: "word", word: "TRADITION", meaning: "Tradisi / Budaya", grade: "8", pos: "Noun", hint: "Kebiasaan kebudayaan." },
+      { id: "8-W30", type: "word", word: "INDEPENDENCE", meaning: "Kemerdekaan", grade: "8", pos: "Noun", hint: "Bebas dari penjajahan." },
+      { id: "8-W31", type: "word", word: "COMPLIMENT", meaning: "Pujian", grade: "8", pos: "Noun", hint: "Ucapan penghargaan pada seseorang." },
+      { id: "8-W32", type: "word", word: "DISCIPLINE", meaning: "Disiplin Sikap", grade: "8", pos: "Noun", hint: "Kepatuhan pada aturan." },
+      { id: "8-W33", type: "word", word: "APPRECIATE", meaning: "Menghargai", grade: "8", pos: "Verb", hint: "Menghormati hasil karya orang lain." },
+      { id: "8-W34", type: "word", word: "TOGETHERNESS", meaning: "Kebersamaan", grade: "8", pos: "Noun", hint: "Suasana ikatan rasa kekeluargaan." },
+      { id: "8-W35", type: "word", word: "CREATIVITY", meaning: "Kreativitas Karya", grade: "8", pos: "Noun", hint: "Daya cipta ide baru." },
+
+      { id: "8-S01", type: "sentence", sentence: "PLEASE KEEP OUR CLASSROOM CLEAN", meaning: "Tolong jaga kebersihan kelas kita", grade: "8", pos: "Sentence", hint: "Himbauan menjaga kelas." },
+      { id: "8-S02", type: "sentence", sentence: "WE MUST RECYCLE PLASTIC BOTTLES", meaning: "Kita harus mendaur ulang botol plastik", grade: "8", pos: "Sentence", hint: "Kalimat ramah lingkungan." },
+      { id: "8-S03", type: "sentence", sentence: "THEY WON THE FIRST PRIZE", meaning: "Mereka memenangkan juara pertama", grade: "8", pos: "Sentence", hint: "Kalimat tentang juara lomba." },
+      { id: "8-S04", type: "sentence", sentence: "SANTRI JOIN THE FREEDOM PARADE", meaning: "Santri mengikuti pawai kemerdekaan", grade: "8", pos: "Sentence", hint: "Kalimat pawai 17 Agustus." },
+      { id: "8-S05", type: "sentence", sentence: "WE DECORATE OUR CLASSROOM TOGETHER", meaning: "Kami menghias kelas kami bersama", grade: "8", pos: "Sentence", hint: "Kalimat menghias kelas." },
+      { id: "8-S06", type: "sentence", sentence: "SHE GAVE A WONDERFUL SPEECH", meaning: "Dia memberikan pidato yang luar biasa", grade: "8", pos: "Sentence", hint: "Kalimat pidato di panggung." },
+      { id: "8-S07", type: "sentence", sentence: "KINDNESS MAKES THE WORLD BETTER", meaning: "Kebaikan membuat dunia lebih baik", grade: "8", pos: "Sentence", hint: "Motto kebaikan hati." },
+      { id: "8-S08", type: "sentence", sentence: "DO NOT THROW TRASH ON FLOOR", meaning: "Jangan membuang sampah di lantai", grade: "8", pos: "Sentence", hint: "Peringatan buang sampah." },
+      { id: "8-S09", type: "sentence", sentence: "WE SING NATIONAL ANTHEM PROUDLY", meaning: "Kami menyanyikan lagu kebangsaan dengan bangga", grade: "8", pos: "Sentence", hint: "Kalimat upacara bendera." },
+      { id: "8-S10", type: "sentence", sentence: "THE STAGE LIGHTS ARE BRIGHT", meaning: "Lampu panggung itu sangat terang", grade: "8", pos: "Sentence", hint: "Kalimat suasana pertunjukan." },
+      { id: "8-S11", type: "sentence", sentence: "HE IS A BRAVE VOLUNTEER", meaning: "Dia adalah seorang relawan yang berani", grade: "8", pos: "Sentence", hint: "Kalimat tentang relawan." },
+      { id: "8-S12", type: "sentence", sentence: "WE APPRECIATE YOUR HARD WORK", meaning: "Kami menghargai kerja kerasmu", grade: "8", pos: "Sentence", hint: "Kalimat pujian kerja keras." },
+      { id: "8-S13", type: "sentence", sentence: "CREATIVITY IS IMPORTANT FOR US", meaning: "Kreativitas sangat penting bagi kita", grade: "8", pos: "Sentence", hint: "Pentingnya daya cipta." },
+      { id: "8-S14", type: "sentence", sentence: "THEY CELEBRATE FESTIVAL WITH JOY", meaning: "Mereka merayakan festival dengan gembira", grade: "8", pos: "Sentence", hint: "Kalimat kegembiraan perayaan." },
+      { id: "8-S15", type: "sentence", sentence: "CLEAN ENVIRONMENT MAKES US HEALTHY", meaning: "Lingkungan bersih membuat kita sehat", grade: "8", pos: "Sentence", hint: "Manfaat lingkungan bersih." },
+
+
+      /* ------------------------------------------------------------------------
+         KELAS IX (50 SOAL: 35 WORD + 15 SENTENCE)
+         ------------------------------------------------------------------------ */
+      { id: "9-W01", type: "word", word: "FAUNA", meaning: "Dunia Satwa / Hewan", grade: "9", pos: "Noun", hint: "Segala jenis hewan di suatu wilayah." },
+      { id: "9-W02", type: "word", word: "TICKET", meaning: "Tiket Perjalanan", grade: "9", pos: "Noun", hint: "Tanda masuk tempat wisata/transportasi." },
+      { id: "9-W03", type: "word", word: "JOURNEY", meaning: "Perjalanan Jauh", grade: "9", pos: "Noun", hint: "Pengalaman menempuh perjalanan." },
+      { id: "9-W04", type: "word", word: "DRAGON", meaning: "Naga Mitos", grade: "9", pos: "Noun", hint: "Makhluk mitos bersayap api." },
+      { id: "9-W05", type: "word", word: "CASTLE", meaning: "Istana Megah", grade: "9", pos: "Noun", hint: "Bangunan tempat raja tinggal dalam dongeng." },
+      { id: "9-W06", type: "word", word: "DIGITAL", meaning: "Teknologi Digital", grade: "9", pos: "Adjective", hint: "Berhubungan dengan komputer & siber." },
+      { id: "9-W07", type: "word", word: "ANIMAL", meaning: "Hewan Satwa", grade: "9", pos: "Noun", hint: "Makhluk hidup bernyawa." },
+      { id: "9-W08", type: "word", word: "REUSE", meaning: "Gunakan Kembali", grade: "9", pos: "Verb", hint: "Memakai ulang barang yang masih bagus." },
+      { id: "9-W09", type: "word", word: "FOREST", meaning: "Hutan Rimba", grade: "9", pos: "Noun", hint: "Kawasan pohon lebat di alam." },
+      { id: "9-W10", type: "word", word: "MONKEY", meaning: "Monyet Kera", grade: "9", pos: "Noun", hint: "Primata lincah pemakan pisang." },
+      { id: "9-W11", type: "word", word: "ORANGUTAN", meaning: "Orangutan Khas", grade: "9", pos: "Noun", hint: "Kera besar khas Kalimantan & Sumatra." },
+      { id: "9-W12", type: "word", word: "LEGEND", meaning: "Cerita Legenda", grade: "9", pos: "Noun", hint: "Cerita rakyat zaman dahulu." },
+      { id: "9-W13", type: "word", word: "FABLE", meaning: "Fabel Hewan", grade: "9", pos: "Noun", hint: "Cerita dongeng berkarakter hewan." },
+      { id: "9-W14", type: "word", word: "ONLINE", meaning: "Terhubung Daring", grade: "9", pos: "Adjective", hint: "Kondisi terhubung ke jaringan internet." },
+      { id: "9-W15", type: "word", word: "DEVICE", meaning: "Perangkat Gadget", grade: "9", pos: "Noun", hint: "Alat elektronik pintar." },
+      { id: "9-W16", type: "word", word: "WEBSITE", meaning: "Situs Laman Web", grade: "9", pos: "Noun", hint: "Halaman informasi di internet." },
+      { id: "9-W17", type: "word", word: "INTERNET", meaning: "Jaringan Internet", grade: "9", pos: "Noun", hint: "Jaringan komunikasi global." },
+      { id: "9-W18", type: "word", word: "MEDIA", meaning: "Media Informasi", grade: "9", pos: "Noun", hint: "Sarana penyebar berita." },
+      { id: "9-W19", type: "word", word: "UPCYCLING", meaning: "Daur Ulang Kreatif", grade: "9", pos: "Noun", hint: "Meningkatkan nilai sampah jadi barang baru." },
+      { id: "9-W20", type: "word", word: "CONSERVATION", meaning: "Konservasi Alam", grade: "9", pos: "Noun", hint: "Pelestarian alam & satwa langka." },
+      { id: "9-W21", type: "word", word: "ECOFRIENDLY", meaning: "Ramah Lingkungan", grade: "9", pos: "Adjective", hint: "Produk yang aman bagi bumi." },
+      { id: "9-W22", type: "word", word: "SMARTPHONE", meaning: "Ponsel Pintar", grade: "9", pos: "Noun", hint: "Telepon genggam canggih." },
+      { id: "9-W23", type: "word", word: "APPLICATION", meaning: "Aplikasi Komputer", grade: "9", pos: "Noun", hint: "Program lunak pembantu tugas." },
+      { id: "9-W24", type: "word", word: "ENDANGERED", meaning: "Terancam Punah", grade: "9", pos: "Adjective", hint: "Satwa langka yang hampir habis." },
+      { id: "9-W25", type: "word", word: "HABITAT", meaning: "Habitat Alami", grade: "9", pos: "Noun", hint: "Tempat hidup asli makhluk di alam." },
+      { id: "9-W26", type: "word", word: "SANCTUARY", meaning: "Suaka Margasatwa", grade: "9", pos: "Noun", hint: "Kawasan perlindungan satwa." },
+      { id: "9-W27", type: "word", word: "TECHNOLOGY", meaning: "Teknologi Canggih", grade: "9", pos: "Noun", hint: "Penerapan ilmu pengetahuan modern." },
+      { id: "9-W28", type: "word", word: "ADVENTURE", meaning: "Petualangan", grade: "9", pos: "Noun", hint: "Pengalaman seru penuh tantangan." },
+      { id: "9-W29", type: "word", word: "BIODIVERSITY", meaning: "Keanekaragaman Hayati", grade: "9", pos: "Noun", hint: "Keragaman spesies flora & fauna." },
+      { id: "9-W30", type: "word", word: "EXTINCTION", meaning: "Kepunahan Satwa", grade: "9", pos: "Noun", hint: "Musnahnya spesies dari bumi." },
+      { id: "9-W31", type: "word", word: "PROTECTION", meaning: "Perlindungan Alam", grade: "9", pos: "Noun", hint: "Upaya menjaga keselamatan." },
+      { id: "9-W32", type: "word", word: "CREATURE", meaning: "Makhluk Ciptaan", grade: "9", pos: "Noun", hint: "Makhluk bernyawa." },
+      { id: "9-W33", type: "word", word: "INNOVATION", meaning: "Inovasi Baru", grade: "9", pos: "Noun", hint: "Penemuan gagasan anyar." },
+      { id: "9-W34", type: "word", word: "CYBERSPACE", meaning: "Dunia Maya", grade: "9", pos: "Noun", hint: "Lingkungan virtual internet." },
+      { id: "9-W35", type: "word", word: "SOCIALMEDIA", meaning: "Media Sosial", grade: "9", pos: "Noun", hint: "Platform interaksi online." },
+
+      { id: "9-S01", type: "sentence", sentence: "INDONESIA HAS UNIQUE WILD FAUNA", meaning: "Indonesia memiliki satwa liar yang unik", grade: "9", pos: "Sentence", hint: "Kekayaan hewan Indonesia." },
+      { id: "9-S02", type: "sentence", sentence: "ALWAYS USE DIGITAL MEDIA WISELY", meaning: "Selalu gunakan media digital dengan bijak", grade: "9", pos: "Sentence", hint: "Pesan bijak ber-internet." },
+      { id: "9-S03", type: "sentence", sentence: "ORANGUTANS LIVE IN TROPICAL FOREST", meaning: "Orangutan hidup di hutan tropis", grade: "9", pos: "Sentence", hint: "Habitat kera langka." },
+      { id: "9-S04", type: "sentence", sentence: "WE MUST PROTECT ENDANGERED ANIMALS", meaning: "Kita harus melindungi hewan terancam punah", grade: "9", pos: "Sentence", hint: "Kewajiban pelestarian satwa." },
+      { id: "9-S05", type: "sentence", sentence: "SMARTPHONES CONNECT PEOPLE EVERYWHERE", meaning: "Ponsel pintar menghubungkan orang di mana saja", grade: "9", pos: "Sentence", hint: "Manfaat ponsel cerdas." },
+      { id: "9-S06", type: "sentence", sentence: "ONCE UPON A TIME IN CASTLE", meaning: "Pada zaman dahulu di sebuah istana", grade: "9", pos: "Sentence", hint: "Awal cerita dongeng." },
+      { id: "9-S07", type: "sentence", sentence: "CREATIVE UPCYCLING REDUCES PLASTIC WASTE", meaning: "Daur ulang kreatif mengurangi sampah plastik", grade: "9", pos: "Sentence", hint: "Solusi sampah daur ulang." },
+      { id: "9-S08", type: "sentence", sentence: "DO NOT SHARE UNVERIFIED NEWS", meaning: "Jangan membagikan berita yang belum terverifikasi", grade: "9", pos: "Sentence", hint: "Pencegahan hoax." },
+      { id: "9-S09", type: "sentence", sentence: "NATIONAL PARK IS SATWA HABITAT", meaning: "Taman nasional adalah habitat satwa", grade: "9", pos: "Sentence", hint: "Fungsi taman nasional." },
+      { id: "9-S10", type: "sentence", sentence: "TECHNOLOGY HELPS US LEARN FASTER", meaning: "Teknologi membantu kita belajar lebih cepat", grade: "9", pos: "Sentence", hint: "Manfaat teknologi belajar." },
+      { id: "9-S11", type: "sentence", sentence: "THE HERO DEFEATED THE FIERCE DRAGON", meaning: "Sang pahlawan mengalahkan naga yang ganas", grade: "9", pos: "Sentence", hint: "Kisah petualangan heroik." },
+      { id: "9-S12", type: "sentence", sentence: "REUSING BAGS SAVES OUR ENVIRONMENT", meaning: "Menggunakan kembali tas menyelamatkan lingkungan kita", grade: "9", pos: "Sentence", hint: "Gerakan pengurangan plastik." },
+      { id: "9-S13", type: "sentence", sentence: "INTERNET PROVIDES VALUABLE INFORMATION USEFUL", meaning: "Internet menyediakan informasi berharga yang berguna", grade: "9", pos: "Sentence", hint: "Fungsi utama internet." },
+      { id: "9-S14", type: "sentence", sentence: "WE ENJOY OUR ADVENTURE IN FOREST", meaning: "Kami menikmati petualangan kami di hutan", grade: "9", pos: "Sentence", hint: "Kisah petualangan di alam." },
+      { id: "9-S15", type: "sentence", sentence: "SAVE BIODIVERSITY FOR OUR FUTURE", meaning: "Selamatkan keanekaragaman hayati demi masa depan kita", grade: "9", pos: "Sentence", hint: "Slogan kelestarian bumi." }
     ];
 
     /* ==========================================================================
-       GAME STATE VARIABLES
+       GAME STATE MANAGEMENT & TURN-BASED ENGINE
        ========================================================================== */
-    let currentMode = 'word'; // 'word' or 'sentence'
-    let currentGrade = 'all';
-    let currentDifficulty = 'medium';
+    let currentModeFilter = 'word'; // 'word' or 'sentence'
+    let currentGradeFilter = 'all'; // 'all', '7', '8', '9'
     let currentQuestion = null;
     let poolLetters = [];
     let placedLetters = [];
@@ -674,23 +906,19 @@
     let lives = 3;
     let score = 0;
     let streak = 0;
+    let turnCount = 1;
     let timerInterval = null;
-    let timeRemaining = 45;
+    let timeRemaining = 120;
     let wrongAttemptsInRound = 0;
+    let isQuestionActive = false;
 
-    /* ==========================================================================
-       AUDIO SYNTHESIZER (WEB AUDIO API)
-       ========================================================================== */
+    /* Web Audio Synthesizer */
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     let audioCtx = null;
 
     function initAudio() {
-      if (!audioCtx) {
-        audioCtx = new AudioContext();
-      }
-      if (audioCtx.state === 'suspended') {
-        audioCtx.resume();
-      }
+      if (!audioCtx) audioCtx = new AudioContext();
+      if (audioCtx.state === 'suspended') audioCtx.resume();
     }
 
     function playSound(type) {
@@ -700,61 +928,98 @@
         const gain = audioCtx.createGain();
         osc.connect(gain);
         gain.connect(audioCtx.destination);
-
         const now = audioCtx.currentTime;
 
         if (type === 'click') {
-          osc.frequency.setValueAtTime(400, now);
-          osc.frequency.exponentialRampToValueAtTime(800, now + 0.05);
-          gain.gain.setValueAtTime(0.15, now);
+          osc.frequency.setValueAtTime(450, now);
+          osc.frequency.exponentialRampToValueAtTime(900, now + 0.05);
+          gain.gain.setValueAtTime(0.18, now);
           gain.gain.linearRampToValueAtTime(0.01, now + 0.05);
           osc.start(now);
           osc.stop(now + 0.05);
-        } else if (type === 'success') {
-          osc.frequency.setValueAtTime(523.25, now); // C5
-          osc.frequency.setValueAtTime(659.25, now + 0.08); // E5
-          osc.frequency.setValueAtTime(783.99, now + 0.16); // G5
-          gain.gain.setValueAtTime(0.2, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.3);
-          osc.start(now);
-          osc.stop(now + 0.3);
-        } else if (type === 'error') {
-          // Fun Retro Game Show Wrong Buzzer ("Bzz-Bzz!")
-          [0, 0.12].forEach(offset => {
-            const osc1 = audioCtx.createOscillator();
-            const osc2 = audioCtx.createOscillator();
-            const g = audioCtx.createGain();
-
-            osc1.type = 'square';
-            osc2.type = 'sawtooth';
-
-            osc1.frequency.setValueAtTime(160, now + offset);
-            osc2.frequency.setValueAtTime(168, now + offset);
-
-            g.gain.setValueAtTime(0.18, now + offset);
-            g.gain.linearRampToValueAtTime(0.01, now + offset + 0.09);
-
-            osc1.connect(g);
-            osc2.connect(g);
-            g.connect(audioCtx.destination);
-
-            osc1.start(now + offset);
-            osc2.start(now + offset);
-            osc1.stop(now + offset + 0.09);
-            osc2.stop(now + offset + 0.09);
-          });
-        } else if (type === 'gameover') {
-          osc.type = 'sawtooth';
+        } else if (type === 'start') {
           osc.frequency.setValueAtTime(300, now);
-          osc.frequency.linearRampToValueAtTime(150, now + 0.4);
-          gain.gain.setValueAtTime(0.25, now);
-          gain.gain.linearRampToValueAtTime(0.01, now + 0.45);
+          osc.frequency.exponentialRampToValueAtTime(600, now + 0.12);
+          gain.gain.setValueAtTime(0.2, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.15);
           osc.start(now);
-          osc.stop(now + 0.45);
+          osc.stop(now + 0.15);
+        } else if (type === 'success') {
+          // Play Festive 5-Note Victory Fanfare (C5, E5, G5, C6, E6)
+          const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
+          notes.forEach((freq, idx) => {
+            const oscN = audioCtx.createOscillator();
+            const gainN = audioCtx.createGain();
+            oscN.type = idx === notes.length - 1 ? 'triangle' : 'sine';
+            oscN.frequency.setValueAtTime(freq, now + idx * 0.08);
+            gainN.gain.setValueAtTime(0.2, now + idx * 0.08);
+            gainN.gain.linearRampToValueAtTime(0.01, now + idx * 0.08 + 0.28);
+            oscN.connect(gainN);
+            gainN.connect(audioCtx.destination);
+            oscN.start(now + idx * 0.08);
+            oscN.stop(now + idx * 0.08 + 0.28);
+          });
+        } else if (type === 'error') {
+          // Loud Nintendo NES Mario Short Loss Sound Effect (High Volume)
+          const marioShort = [
+            { freq: 349.23, duration: 0.10, delay: 0 },       // F4
+            { freq: 233.08, duration: 0.12, delay: 0.11 },    // Bb3
+            { freq: 140.00, duration: 0.25, delay: 0.23, slide: 70 } // Low Thud Drop
+          ];
+          marioShort.forEach(note => {
+            const oscM = audioCtx.createOscillator();
+            const gM = audioCtx.createGain();
+            oscM.type = 'square'; // NES 8-bit Square Wave
+            const startTime = now + note.delay;
+            oscM.frequency.setValueAtTime(note.freq, startTime);
+            if (note.slide) {
+              oscM.frequency.exponentialRampToValueAtTime(note.slide, startTime + note.duration);
+            }
+            gM.gain.setValueAtTime(0.48, startTime); // Loud Punchy Volume
+            gM.gain.linearRampToValueAtTime(0.01, startTime + note.duration);
+            oscM.connect(gM);
+            gM.connect(audioCtx.destination);
+            oscM.start(startTime);
+            oscM.stop(startTime + note.duration);
+          });
+        } else if (type === 'tick') {
+          // Warning countdown beep for last 10 seconds
+          osc.type = 'sine';
+          osc.frequency.setValueAtTime(880, now);
+          gain.gain.setValueAtTime(0.15, now);
+          gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
+          osc.start(now);
+          osc.stop(now + 0.08);
+        } else if (type === 'gameover') {
+          // Loud & Iconic Nintendo Super Mario Bros NES Death / Game Over Tune
+          const marioDeath = [
+            { freq: 493.88, duration: 0.10, delay: 0 },       // B4
+            { freq: 698.46, duration: 0.11, delay: 0.12 },    // F5
+            { freq: 698.46, duration: 0.11, delay: 0.25 },    // F5
+            { freq: 698.46, duration: 0.11, delay: 0.38 },    // F5
+            { freq: 659.25, duration: 0.11, delay: 0.50 },    // E5
+            { freq: 587.33, duration: 0.12, delay: 0.62 },    // D5
+            { freq: 523.25, duration: 0.40, delay: 0.75, slide: 120 } // C5 pitch slide to low 120Hz
+          ];
+
+          marioDeath.forEach(note => {
+            const oscM = audioCtx.createOscillator();
+            const gM = audioCtx.createGain();
+            oscM.type = 'square'; // Iconic NES 8-bit Pulse/Square Wave
+            const startTime = now + note.delay;
+            oscM.frequency.setValueAtTime(note.freq, startTime);
+            if (note.slide) {
+              oscM.frequency.exponentialRampToValueAtTime(note.slide, startTime + note.duration);
+            }
+            gM.gain.setValueAtTime(0.50, startTime); // Extra Loud Retro Volume
+            gM.gain.linearRampToValueAtTime(0.01, startTime + note.duration);
+            oscM.connect(gM);
+            gM.connect(audioCtx.destination);
+            oscM.start(startTime);
+            oscM.stop(startTime + note.duration);
+          });
         }
-      } catch (e) {
-        // Audio error fallback silent
-      }
+      } catch (e) {}
     }
 
     function speakCurrentWord(text) {
@@ -770,20 +1035,21 @@
     }
 
     /* ==========================================================================
-       GAME ENGINE CORE LOGIC
+       CORE ENGINE CONTROLLER
        ========================================================================== */
     window.addEventListener('DOMContentLoaded', () => {
       initGameSession();
 
-      // Support keyboard input
+      // Support Physical Keyboard Typing
       window.addEventListener('keydown', (e) => {
+        if (!isQuestionActive) return;
         if (e.key === 'Backspace') {
           removeLastAnswerTile();
         } else if (e.key === 'Enter') {
           checkAnswer();
         } else {
           const char = e.key.toUpperCase();
-          if (/^[A-Z]$/.test(char) && currentMode === 'word') {
+          if (/^[A-Z]$/.test(char) && currentQuestion && currentQuestion.type === 'word') {
             pickLetterFromKey(char);
           }
         }
@@ -791,92 +1057,99 @@
     });
 
     function switchGameMode(mode) {
-      currentMode = mode;
+      currentModeFilter = mode;
       document.getElementById('tabWordMode').classList.toggle('active', mode === 'word');
       document.getElementById('tabSentenceMode').classList.toggle('active', mode === 'sentence');
       initGameSession();
     }
 
+    let usedQuestionIds = [];
+
     function resetGameStats() {
       lives = 3;
       score = 0;
       streak = 0;
+      turnCount = 1;
+      usedQuestionIds = [];
       updateStatusDisplay();
       initGameSession();
     }
 
     function initGameSession() {
-      currentGrade = document.getElementById('gradeSelect').value;
-      currentDifficulty = document.getElementById('difficultySelect').value;
+      stopTimer();
+      isQuestionActive = false;
+      currentGradeFilter = document.getElementById('gradeSelect').value;
       wrongAttemptsInRound = 0;
 
-      // Filter dataset based on Grade and Difficulty
-      let dataset = currentMode === 'word' ? WORD_DATASET : SENTENCE_DATASET;
+      // Filter dataset based on Grade and Type
+      let dataset = MASTER_DATASET;
 
-      if (currentGrade !== 'all') {
-        dataset = dataset.filter(item => item.grade === currentGrade);
+      if (currentGradeFilter !== 'all') {
+        dataset = dataset.filter(item => item.grade === currentGradeFilter);
       }
 
-      if (currentMode === 'word') {
-        if (currentDifficulty === 'easy') {
-          dataset = dataset.filter(item => item.word.length <= 5);
-        } else if (currentDifficulty === 'medium') {
-          dataset = dataset.filter(item => item.word.length > 4 && item.word.length <= 7);
-        } else if (currentDifficulty === 'hard') {
-          dataset = dataset.filter(item => item.word.length >= 7);
-        }
+      if (currentModeFilter !== 'all') {
+        dataset = dataset.filter(item => item.type === currentModeFilter);
       }
 
       if (dataset.length === 0) {
-        dataset = currentMode === 'word' ? WORD_DATASET : SENTENCE_DATASET;
+        dataset = MASTER_DATASET;
       }
 
-      // Pick random question
-      const randomIndex = Math.floor(Math.random() * dataset.length);
-      currentQuestion = dataset[randomIndex];
+      // Filter out questions played in current session so they don't repeat
+      let availableDataset = dataset.filter(item => !usedQuestionIds.includes(item.id));
+      if (availableDataset.length === 0) {
+        // Reset pool history if all questions in this category have been played
+        usedQuestionIds = usedQuestionIds.filter(id => !dataset.some(item => item.id === id));
+        availableDataset = dataset;
+      }
 
-      // Setup round UI
+      // Pick Truly Random Question
+      const randomIndex = Math.floor(Math.random() * availableDataset.length);
+      currentQuestion = availableDataset[randomIndex];
+      usedQuestionIds.push(currentQuestion.id);
+
+      // Setup Round Elements
       setupRoundUI();
-      startTimer();
+
+      // Show Turn Cover Overlay (Hides question & timer until Start is clicked)
+      document.getElementById('coverPlayerBadge').innerText = `🎲 SIAP-SIAP PEMAIN #${turnCount}!`;
+      document.getElementById('startCoverOverlay').classList.add('active');
+
       updateStatusDisplay();
     }
 
+    function revealQuestionAndStart() {
+      playSound('start');
+      document.getElementById('startCoverOverlay').classList.remove('active');
+      isQuestionActive = true;
+      startTimer();
+    }
+
     function setupRoundUI() {
-      // Clear action buttons
       document.getElementById('btnNext').style.display = 'none';
       document.getElementById('btnCheck').style.display = 'inline-flex';
       document.getElementById('btnHint').disabled = false;
 
-      // Setup Badges & Clues
-      const targetText = currentMode === 'word' ? currentQuestion.word : currentQuestion.sentence;
-      
-      const badgeDiff = document.getElementById('badgeDiff');
-      badgeDiff.className = 'badge-tag badge-' + currentDifficulty;
-      badgeDiff.innerText = currentDifficulty.toUpperCase();
+      // Setup Badges
+      const isWord = currentQuestion.type === 'word';
+      const targetText = isWord ? currentQuestion.word : currentQuestion.sentence;
+
+      const badgeType = document.getElementById('badgeType');
+      badgeType.innerText = isWord ? '🔤 SUSUN KATA' : '📝 SUSUN KALIMAT';
+      badgeType.className = 'badge-tag ' + (isWord ? 'badge-type' : 'badge-easy');
 
       document.getElementById('badgeCategory').innerText = 'Kelas ' + currentQuestion.grade;
-      document.getElementById('badgePos').innerText = currentMode === 'word' ? `(${currentQuestion.pos.toUpperCase()})` : '(SENTENCE)';
+      document.getElementById('badgePos').innerText = `(${currentQuestion.pos.toUpperCase()})`;
 
-      const clueText = document.getElementById('clueText');
-      if (currentDifficulty === 'easy' || currentMode === 'sentence') {
-        clueText.innerHTML = `💡 <strong>Arti:</strong> ${currentQuestion.meaning} <br><small style="color: var(--text-muted);">${currentQuestion.hint || ''}</small>`;
-      } else {
-        clueText.innerHTML = `💡 <strong>Arti:</strong> Klik tombol Petunjuk untuk bantuan.`;
-      }
+      document.getElementById('clueText').innerHTML = `🔒 <strong>Clue:</strong> <i>(Tersembunyi - Klik tombol "Petunjuk" di bawah untuk melihat clue)</i>`;
 
-      // Split into units (letters for word mode, words for sentence mode)
-      let items = [];
-      if (currentMode === 'word') {
-        items = targetText.split('');
-      } else {
-        items = targetText.split(' ');
-      }
-
+      // Split target items
+      let items = isWord ? targetText.split('') : targetText.split(' ');
       placedLetters = new Array(items.length).fill(null);
 
-      // Scramble items
+      // Scramble letters or words
       poolLetters = shuffleArray([...items]);
-      // Ensure pool is not identical to target
       if (poolLetters.join('') === items.join('') && items.length > 1) {
         poolLetters.reverse();
       }
@@ -891,7 +1164,7 @@
       answerSlotsEl.innerHTML = '';
       poolTilesEl.innerHTML = '';
 
-      // Render Slots
+      // Render Answer Slots
       placedLetters.forEach((letterObj, idx) => {
         const slot = document.createElement('div');
         if (letterObj === null) {
@@ -923,9 +1196,8 @@
     }
 
     function placeTile(poolIdx) {
-      if (isTileUsed(poolIdx)) return;
+      if (!isQuestionActive || isTileUsed(poolIdx)) return;
 
-      // Find first empty slot
       const emptySlotIdx = placedLetters.findIndex(val => val === null);
       if (emptySlotIdx !== -1) {
         playSound('click');
@@ -938,6 +1210,7 @@
     }
 
     function unplaceTile(slotIdx) {
+      if (!isQuestionActive) return;
       if (placedLetters[slotIdx] !== null) {
         playSound('click');
         placedLetters[slotIdx] = null;
@@ -962,51 +1235,49 @@
     }
 
     function clearAnswerSlots() {
+      if (!isQuestionActive) return;
       playSound('click');
       placedLetters.fill(null);
       renderSlotsAndPool();
     }
 
-    function shuffleCurrentPool() {
-      playSound('click');
-      poolLetters = shuffleArray(poolLetters);
-      renderSlotsAndPool();
-    }
-
     function useHint() {
-      if (timeRemaining <= 30) {
-        alert('Sisa waktu kurang dari 30 detik untuk menggunakan petunjuk!');
+      if (!isQuestionActive) return;
+      if (timeRemaining <= 60) {
+        alert('Sisa waktu kurang dari 1 menit untuk menggunakan petunjuk!');
         return;
       }
       
-      const targetText = currentMode === 'word' ? currentQuestion.word : currentQuestion.sentence;
-      document.getElementById('clueText').innerHTML = `💡 <strong>Arti:</strong> ${currentQuestion.meaning} <br><small style="color: var(--text-muted);">${currentQuestion.hint || ''}</small>`;
-      
-      timeRemaining -= 30;
+      timeRemaining -= 60;
       updateTimerDisplay();
+      
+      const clueContent = currentQuestion.meaning + (currentQuestion.hint ? ` <br><small style="color: var(--text-muted); font-weight: 600;">💡 ${currentQuestion.hint}</small>` : '');
+      document.getElementById('clueText').innerHTML = `💡 <strong>Clue:</strong> ${clueContent}`;
       document.getElementById('btnHint').disabled = true;
       playSound('click');
     }
 
     function checkAnswer() {
-      const targetStr = currentMode === 'word' ? currentQuestion.word : currentQuestion.sentence;
-      const userStr = placedLetters.map(item => item ? item.value : '').join(currentMode === 'word' ? '' : ' ');
+      if (!isQuestionActive || !currentQuestion) return;
+      const isWord = currentQuestion.type === 'word';
+      const targetStr = isWord ? currentQuestion.word : currentQuestion.sentence;
+      const userStr = placedLetters.map(item => item ? item.value : '').join(isWord ? '' : ' ');
 
       if (userStr.length < targetStr.length) {
-        alert('Lengkapi semua huruf terlebih dahulu!');
+        alert('Lengkapi semua huruf/kata terlebih dahulu!');
         return;
       }
 
       if (userStr === targetStr) {
         // BENAR!
         stopTimer();
+        isQuestionActive = false;
         playSound('success');
         triggerConfetti();
 
-        let basePoints = currentDifficulty === 'easy' ? 50 : (currentDifficulty === 'medium' ? 100 : 200);
+        let basePoints = isWord ? 100 : 200;
         streak += 1;
-        let streakBonus = streak * 10;
-        score += basePoints + streakBonus;
+        score += basePoints + (streak * 15);
 
         updateStatusDisplay();
 
@@ -1029,8 +1300,9 @@
         setTimeout(() => board.classList.remove('shake-animation'), 400);
 
         if (lives <= 0 || wrongAttemptsInRound >= 3) {
-          // GAME OVER! (3x Salah)
+          // GAME OVER ROUND
           stopTimer();
+          isQuestionActive = false;
           playSound('gameover');
 
           document.getElementById('revealWord').innerText = targetStr;
@@ -1044,28 +1316,38 @@
 
     function closeGameOverModalAndNext() {
       document.getElementById('gameOverModal').classList.remove('active');
-      lives = 3; // Reset lives for new question
+      lives = 3; // Reset lives for next turn
+      turnCount += 1;
       updateStatusDisplay();
       initGameSession();
     }
 
     function closeVictoryModalAndNext() {
       document.getElementById('victoryModal').classList.remove('active');
+      turnCount += 1;
       initGameSession();
     }
 
     function nextQuestion() {
+      turnCount += 1;
       initGameSession();
     }
 
     /* ==========================================================================
-       TIMER & HELPER FUNCTIONS
+       TIMER & AUXILIARY HELPERS
        ========================================================================== */
     function updateTimerDisplay() {
       const mins = Math.floor(timeRemaining / 60);
       const secs = timeRemaining % 60;
       const formattedSecs = secs < 10 ? '0' + secs : secs;
-      document.getElementById('timerDisplay').innerText = `⏰ ${mins}m ${formattedSecs}s`;
+      const timerEl = document.getElementById('timerDisplay');
+      timerEl.innerText = `⏰ ${mins}m ${formattedSecs}s`;
+      if (timeRemaining <= 10 && timeRemaining > 0) {
+        timerEl.style.color = '#ef4444';
+        timerEl.style.fontWeight = '900';
+      } else {
+        timerEl.style.color = 'var(--primary-color)';
+      }
     }
 
     function startTimer() {
@@ -1077,13 +1359,19 @@
         timeRemaining--;
         updateTimerDisplay();
 
+        if (timeRemaining <= 10 && timeRemaining > 0) {
+          playSound('tick');
+        }
+
         if (timeRemaining <= 0) {
           stopTimer();
+          isQuestionActive = false;
           lives -= 1;
           playSound('gameover');
           updateStatusDisplay();
 
-          const targetStr = currentMode === 'word' ? currentQuestion.word : currentQuestion.sentence;
+          const isWord = currentQuestion.type === 'word';
+          const targetStr = isWord ? currentQuestion.word : currentQuestion.sentence;
           document.getElementById('revealWord').innerText = targetStr;
           document.getElementById('revealMeaning').innerText = currentQuestion.meaning;
           document.getElementById('gameOverModal').classList.add('active');
@@ -1103,6 +1391,7 @@
       document.getElementById('livesDisplay').innerText = hearts;
       document.getElementById('scoreDisplay').innerText = score;
       document.getElementById('streakDisplay').innerText = `🔥 ${streak}`;
+      document.getElementById('turnNumberText').innerText = `#${turnCount}`;
     }
 
     function shuffleArray(array) {
@@ -1113,9 +1402,7 @@
       return array;
     }
 
-    /* ==========================================================================
-       CONFETTI ANIMATION ENGINE
-       ========================================================================== */
+    /* Festive Confetti Cannon FX Engine */
     function triggerConfetti() {
       const canvas = document.getElementById('confettiCanvas');
       const ctx = canvas.getContext('2d');
@@ -1123,17 +1410,22 @@
       canvas.height = window.innerHeight;
 
       const particles = [];
-      const colors = ['#0b4f57', '#187781', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6'];
+      const colors = ['#0b4f57', '#187781', '#f59e0b', '#10b981', '#ef4444', '#8b5cf6', '#ec4899', '#fbbf24'];
 
-      for (let i = 0; i < 70; i++) {
+      // Spawn 160 Festive Particles from bottom-left & bottom-right cannons
+      for (let i = 0; i < 160; i++) {
+        const isLeft = Math.random() < 0.5;
         particles.push({
-          x: Math.random() * canvas.width,
-          y: Math.random() * canvas.height - canvas.height,
-          size: Math.random() * 8 + 4,
+          x: isLeft ? canvas.width * 0.15 : canvas.width * 0.85,
+          y: canvas.height * 0.85,
+          size: Math.random() * 9 + 5,
           color: colors[Math.floor(Math.random() * colors.length)],
-          speedY: Math.random() * 4 + 2,
-          speedX: Math.random() * 2 - 1,
-          rot: Math.random() * 360
+          speedY: -(Math.random() * 12 + 8),
+          speedX: isLeft ? (Math.random() * 6 + 2) : -(Math.random() * 6 + 2),
+          gravity: 0.28,
+          rot: Math.random() * 360,
+          rotSpeed: Math.random() * 8 - 4,
+          shape: Math.random() < 0.3 ? 'star' : 'square'
         });
       }
 
@@ -1141,19 +1433,32 @@
       function animate() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         particles.forEach(p => {
-          p.y += p.speedY;
           p.x += p.speedX;
-          p.rot += 3;
+          p.y += p.speedY;
+          p.speedY += p.gravity;
+          p.rot += p.rotSpeed;
+
           ctx.save();
           ctx.translate(p.x, p.y);
           ctx.rotate((p.rot * Math.PI) / 180);
           ctx.fillStyle = p.color;
-          ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+
+          if (p.shape === 'star') {
+            ctx.beginPath();
+            for (let i = 0; i < 5; i++) {
+              ctx.lineTo(Math.cos((18 + i * 72) * Math.PI / 180) * p.size, -Math.sin((18 + i * 72) * Math.PI / 180) * p.size);
+              ctx.lineTo(Math.cos((54 + i * 72) * Math.PI / 180) * (p.size / 2), -Math.sin((54 + i * 72) * Math.PI / 180) * (p.size / 2));
+            }
+            ctx.closePath();
+            ctx.fill();
+          } else {
+            ctx.fillRect(-p.size / 2, -p.size / 2, p.size, p.size);
+          }
           ctx.restore();
         });
 
         frame++;
-        if (frame < 120) {
+        if (frame < 140) {
           requestAnimationFrame(animate);
         } else {
           ctx.clearRect(0, 0, canvas.width, canvas.height);
