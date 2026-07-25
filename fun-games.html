@@ -959,33 +959,59 @@
             oscN.start(now + idx * 0.08);
             oscN.stop(now + idx * 0.08 + 0.28);
           });
-        } else if (type === 'error' || type === 'gameover') {
-          // Punchy Retro "DENG-DOT!" Wrong/Fail Sound Effect (High Volume)
-          // Note 1: "DENG!" (Medium pitch punch)
-          const osc1 = audioCtx.createOscillator();
-          const g1 = audioCtx.createGain();
-          osc1.type = 'triangle';
-          osc1.frequency.setValueAtTime(360, now);
-          osc1.frequency.linearRampToValueAtTime(310, now + 0.14);
-          g1.gain.setValueAtTime(0.42, now);
-          g1.gain.linearRampToValueAtTime(0.01, now + 0.14);
-          osc1.connect(g1);
-          g1.connect(audioCtx.destination);
-          osc1.start(now);
-          osc1.stop(now + 0.14);
+        } else if (type === 'error') {
+          // Brief wrong attempt buzz ("Tet!")
+          const oscE = audioCtx.createOscillator();
+          const gE = audioCtx.createGain();
+          oscE.type = 'sawtooth';
+          oscE.frequency.setValueAtTime(330, now);
+          oscE.frequency.linearRampToValueAtTime(260, now + 0.12);
+          gE.gain.setValueAtTime(0.35, now);
+          gE.gain.linearRampToValueAtTime(0.01, now + 0.12);
+          oscE.connect(gE);
+          gE.connect(audioCtx.destination);
+          oscE.start(now);
+          oscE.stop(now + 0.12);
+        } else if (type === 'gameover') {
+          // Iconic Fun Game-Show "TET-TOT! 💥" Sound Effect (Waktu/Kesempatan Habis)
+          // 1. "TET!" (High sharp dual-tone buzzer)
+          const oscTet1 = audioCtx.createOscillator();
+          const oscTet2 = audioCtx.createOscillator();
+          const gTet = audioCtx.createGain();
+          oscTet1.type = 'sawtooth';
+          oscTet2.type = 'square';
+          oscTet1.frequency.setValueAtTime(466.16, now); // Bb4
+          oscTet2.frequency.setValueAtTime(349.23, now); // F4 (harmonized buzzer)
+          gTet.gain.setValueAtTime(0.45, now);
+          gTet.gain.linearRampToValueAtTime(0.01, now + 0.18);
+          oscTet1.connect(gTet);
+          oscTet2.connect(gTet);
+          gTet.connect(audioCtx.destination);
+          oscTet1.start(now);
+          oscTet2.start(now);
+          oscTet1.stop(now + 0.18);
+          oscTet2.stop(now + 0.18);
 
-          // Note 2: "DOT!" (Low thud drop)
-          const osc2 = audioCtx.createOscillator();
-          const g2 = audioCtx.createGain();
-          osc2.type = 'square';
-          osc2.frequency.setValueAtTime(140, now + 0.16);
-          osc2.frequency.exponentialRampToValueAtTime(75, now + 0.38);
-          g2.gain.setValueAtTime(0.48, now + 0.16);
-          g2.gain.linearRampToValueAtTime(0.01, now + 0.38);
-          osc2.connect(g2);
-          g2.connect(audioCtx.destination);
-          osc2.start(now + 0.16);
-          osc2.stop(now + 0.38);
+          // 2. "TOT!" (Low heavy game-over buzzer drop)
+          const startTot = now + 0.21;
+          const oscTot1 = audioCtx.createOscillator();
+          const oscTot2 = audioCtx.createOscillator();
+          const gTot = audioCtx.createGain();
+          oscTot1.type = 'square';
+          oscTot2.type = 'sawtooth';
+          oscTot1.frequency.setValueAtTime(233.08, startTot); // Bb3
+          oscTot1.frequency.exponentialRampToValueAtTime(110.00, startTot + 0.45); // Pitch drop to low 110Hz
+          oscTot2.frequency.setValueAtTime(174.61, startTot); // F3
+          oscTot2.frequency.exponentialRampToValueAtTime(80.00, startTot + 0.45);
+          gTot.gain.setValueAtTime(0.50, startTot);
+          gTot.gain.linearRampToValueAtTime(0.01, startTot + 0.45);
+          oscTot1.connect(gTot);
+          oscTot2.connect(gTot);
+          gTot.connect(audioCtx.destination);
+          oscTot1.start(startTot);
+          oscTot2.start(startTot);
+          oscTot1.stop(startTot + 0.45);
+          oscTot2.stop(startTot + 0.45);
         } else if (type === 'tick') {
           // Warning countdown beep for last 10 seconds
           osc.type = 'sine';
