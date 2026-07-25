@@ -959,29 +959,33 @@
             oscN.start(now + idx * 0.08);
             oscN.stop(now + idx * 0.08 + 0.28);
           });
-        } else if (type === 'error') {
-          // Loud Nintendo NES Mario Short Loss Sound Effect (High Volume)
-          const marioShort = [
-            { freq: 349.23, duration: 0.10, delay: 0 },       // F4
-            { freq: 233.08, duration: 0.12, delay: 0.11 },    // Bb3
-            { freq: 140.00, duration: 0.25, delay: 0.23, slide: 70 } // Low Thud Drop
-          ];
-          marioShort.forEach(note => {
-            const oscM = audioCtx.createOscillator();
-            const gM = audioCtx.createGain();
-            oscM.type = 'square'; // NES 8-bit Square Wave
-            const startTime = now + note.delay;
-            oscM.frequency.setValueAtTime(note.freq, startTime);
-            if (note.slide) {
-              oscM.frequency.exponentialRampToValueAtTime(note.slide, startTime + note.duration);
-            }
-            gM.gain.setValueAtTime(0.48, startTime); // Loud Punchy Volume
-            gM.gain.linearRampToValueAtTime(0.01, startTime + note.duration);
-            oscM.connect(gM);
-            gM.connect(audioCtx.destination);
-            oscM.start(startTime);
-            oscM.stop(startTime + note.duration);
-          });
+        } else if (type === 'error' || type === 'gameover') {
+          // Punchy Retro "DENG-DOT!" Wrong/Fail Sound Effect (High Volume)
+          // Note 1: "DENG!" (Medium pitch punch)
+          const osc1 = audioCtx.createOscillator();
+          const g1 = audioCtx.createGain();
+          osc1.type = 'triangle';
+          osc1.frequency.setValueAtTime(360, now);
+          osc1.frequency.linearRampToValueAtTime(310, now + 0.14);
+          g1.gain.setValueAtTime(0.42, now);
+          g1.gain.linearRampToValueAtTime(0.01, now + 0.14);
+          osc1.connect(g1);
+          g1.connect(audioCtx.destination);
+          osc1.start(now);
+          osc1.stop(now + 0.14);
+
+          // Note 2: "DOT!" (Low thud drop)
+          const osc2 = audioCtx.createOscillator();
+          const g2 = audioCtx.createGain();
+          osc2.type = 'square';
+          osc2.frequency.setValueAtTime(140, now + 0.16);
+          osc2.frequency.exponentialRampToValueAtTime(75, now + 0.38);
+          g2.gain.setValueAtTime(0.48, now + 0.16);
+          g2.gain.linearRampToValueAtTime(0.01, now + 0.38);
+          osc2.connect(g2);
+          g2.connect(audioCtx.destination);
+          osc2.start(now + 0.16);
+          osc2.stop(now + 0.38);
         } else if (type === 'tick') {
           // Warning countdown beep for last 10 seconds
           osc.type = 'sine';
@@ -990,34 +994,6 @@
           gain.gain.linearRampToValueAtTime(0.01, now + 0.08);
           osc.start(now);
           osc.stop(now + 0.08);
-        } else if (type === 'gameover') {
-          // Loud & Iconic Nintendo Super Mario Bros NES Death / Game Over Tune
-          const marioDeath = [
-            { freq: 493.88, duration: 0.10, delay: 0 },       // B4
-            { freq: 698.46, duration: 0.11, delay: 0.12 },    // F5
-            { freq: 698.46, duration: 0.11, delay: 0.25 },    // F5
-            { freq: 698.46, duration: 0.11, delay: 0.38 },    // F5
-            { freq: 659.25, duration: 0.11, delay: 0.50 },    // E5
-            { freq: 587.33, duration: 0.12, delay: 0.62 },    // D5
-            { freq: 523.25, duration: 0.40, delay: 0.75, slide: 120 } // C5 pitch slide to low 120Hz
-          ];
-
-          marioDeath.forEach(note => {
-            const oscM = audioCtx.createOscillator();
-            const gM = audioCtx.createGain();
-            oscM.type = 'square'; // Iconic NES 8-bit Pulse/Square Wave
-            const startTime = now + note.delay;
-            oscM.frequency.setValueAtTime(note.freq, startTime);
-            if (note.slide) {
-              oscM.frequency.exponentialRampToValueAtTime(note.slide, startTime + note.duration);
-            }
-            gM.gain.setValueAtTime(0.50, startTime); // Extra Loud Retro Volume
-            gM.gain.linearRampToValueAtTime(0.01, startTime + note.duration);
-            oscM.connect(gM);
-            gM.connect(audioCtx.destination);
-            oscM.start(startTime);
-            oscM.stop(startTime + note.duration);
-          });
         }
       } catch (e) {}
     }
