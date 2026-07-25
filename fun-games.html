@@ -8,7 +8,7 @@
   <style>
     /* Custom Styling for Fun Games Engine - Focused, Clean & Funny Edition */
     .game-container {
-      max-width: 920px;
+      max-width: 1100px;
       margin: 0 auto;
     }
 
@@ -162,13 +162,13 @@
     .game-board {
       background: white;
       border-radius: 24px;
-      padding: 32px 26px;
+      padding: 40px 34px;
       border: 2px solid var(--border-color);
       box-shadow: 0 12px 30px rgba(11,79,87,0.08);
       text-align: center;
       position: relative;
       overflow: hidden;
-      min-height: 440px;
+      min-height: 520px;
     }
 
     /* Start Cover Overlay (Turn-Based Multiplayer Cover) */
@@ -270,10 +270,10 @@
     /* Clue Box Area */
     .clue-box {
       background: #f0fdfa;
-      padding: 16px 20px;
+      padding: 20px 26px;
       border-radius: 16px;
       border-left: 6px solid var(--primary-color);
-      margin-bottom: 28px;
+      margin-bottom: 32px;
       text-align: left;
       border: 1px solid #ccfbf1;
       border-left-width: 6px;
@@ -283,14 +283,14 @@
       display: flex;
       gap: 10px;
       align-items: center;
-      margin-bottom: 6px;
+      margin-bottom: 8px;
       flex-wrap: wrap;
     }
 
     .badge-tag {
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 800;
-      padding: 4px 12px;
+      padding: 5px 14px;
       border-radius: 14px;
       text-transform: uppercase;
     }
@@ -302,7 +302,7 @@
     .badge-type { background: #f3e8ff; color: #6b21a8; }
 
     .clue-text {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
       color: var(--text-dark);
       font-weight: 700;
     }
@@ -311,13 +311,13 @@
     .answer-slots {
       display: flex;
       justify-content: center;
-      gap: 12px;
+      gap: 14px;
       flex-wrap: wrap;
-      min-height: 72px;
-      margin-bottom: 30px;
-      padding: 18px;
+      min-height: 84px;
+      margin-bottom: 34px;
+      padding: 22px;
       background: #f8fafc;
-      border-radius: 16px;
+      border-radius: 18px;
       border: 2.5px dashed #cbd5e1;
     }
 
@@ -619,10 +619,6 @@
       <div class="status-card">
         <div class="label">Sisa Nyawa</div>
         <div id="livesDisplay" class="value lives-display">❤️❤️❤️</div>
-      </div>
-      <div class="status-card">
-        <div class="label">Total Skor</div>
-        <div id="scoreDisplay" class="value">0</div>
       </div>
       <div class="status-card">
         <div class="label">Best Streak</div>
@@ -1391,7 +1387,8 @@
         hearts += i < lives ? '❤️' : '💔';
       }
       document.getElementById('livesDisplay').innerText = hearts;
-      document.getElementById('scoreDisplay').innerText = score;
+      const scoreEl = document.getElementById('scoreDisplay');
+      if (scoreEl) scoreEl.innerText = score;
       document.getElementById('streakDisplay').innerText = `🔥 ${streak}`;
       document.getElementById('turnNumberText').innerText = `#${turnCount}`;
     }
