@@ -457,6 +457,54 @@
       animation: shake 0.4s ease-in-out;
     }
 
+    /* In-Game Floating Feedback Toast */
+    .game-toast {
+      position: absolute;
+      top: 18px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-15px) scale(0.95);
+      background: #0f172a;
+      color: white;
+      padding: 12px 22px;
+      border-radius: 30px;
+      font-weight: 800;
+      font-size: 0.92rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+      z-index: 95;
+      opacity: 0;
+      pointer-events: none;
+      transition: all 0.28s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      white-space: nowrap;
+      max-width: 90%;
+    }
+
+    .game-toast.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+      pointer-events: auto;
+    }
+
+    .game-toast.toast-error {
+      background: #dc2626;
+      color: white;
+      box-shadow: 0 10px 25px rgba(220, 38, 38, 0.4);
+    }
+
+    .game-toast.toast-warning {
+      background: #f59e0b;
+      color: #0f172a;
+      box-shadow: 0 10px 25px rgba(245, 158, 11, 0.4);
+    }
+
+    .game-toast.toast-info {
+      background: #0b4f57;
+      color: white;
+      box-shadow: 0 10px 25px rgba(11, 79, 87, 0.4);
+    }
+
     /* Modal Overlay Styling */
     .modal-overlay {
       position: fixed;
@@ -632,6 +680,9 @@
 
     <!-- Main Game Board Arena -->
     <div id="gameBoard" class="game-board">
+
+      <!-- In-Game Floating Feedback Toast (No Screen Jump) -->
+      <div id="gameToast" class="game-toast"></div>
 
       <!-- START COVER OVERLAY (Turn-Based Multiplayer Cover Screen) -->
       <div id="startCoverOverlay" class="start-cover-overlay active">
@@ -1028,7 +1079,7 @@
         utterance.rate = 0.85;
         window.speechSynthesis.speak(utterance);
       } else {
-        alert('Fitur suara tidak didukung oleh peramban ini.');
+        showGameToast('Fitur suara tidak didukung oleh peramban ini.', 'warning');
       }
     }
 
@@ -1062,6 +1113,18 @@
     }
 
     let usedQuestionIds = [];
+    let toastTimeout = null;
+
+    function showGameToast(msg, type = 'info', duration = 2500) {
+      const toast = document.getElementById('gameToast');
+      if (!toast) return;
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toast.className = `game-toast toast-${type} show`;
+      toast.innerHTML = msg;
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove('show');
+      }, duration);
+    }
 
     function resetGameStats() {
       lives = 3;
@@ -1076,6 +1139,7 @@
     function initGameSession() {
       stopTimer();
       isQuestionActive = false;
+      lives = 3; // Selalu reset nyawa penuh (3) untuk setiap giliran / ronde baru
       currentGradeFilter = document.getElementById('gradeSelect').value;
       wrongAttemptsInRound = 0;
 
@@ -1122,6 +1186,11 @@
       document.getElementById('startCoverOverlay').classList.remove('active');
       isQuestionActive = true;
       startTimer();
+      // Jaga layar gameplay tetap fokus dan tidak lompat/scroll ke atas
+      const board = document.getElementById('gameBoard');
+      if (board) {
+        board.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
     }
 
     function setupRoundUI() {
@@ -1242,7 +1311,7 @@
     function useHint() {
       if (!isQuestionActive) return;
       if (timeRemaining <= 60) {
-        alert('Sisa waktu kurang dari 1 menit untuk menggunakan petunjuk!');
+        showGameToast('⚠️ Sisa waktu kurang dari 1 menit untuk petunjuk!', 'warning', 2500);
         return;
       }
       
@@ -1262,7 +1331,7 @@
       const userStr = placedLetters.map(item => item ? item.value : '').join(isWord ? '' : ' ');
 
       if (userStr.length < targetStr.length) {
-        alert('Lengkapi semua huruf/kata terlebih dahulu!');
+        showGameToast('⚠️ Lengkapi semua huruf/kata terlebih dahulu!', 'warning', 2000);
         return;
       }
 
@@ -1307,14 +1376,14 @@
           document.getElementById('revealMeaning').innerText = currentQuestion.meaning;
           document.getElementById('gameOverModal').classList.add('active');
         } else {
-          alert(`❌ Masih kurang tepat! Sisa kesempatan: ${lives}/3`);
+          showGameToast(`❌ Masih kurang tepat! Sisa kesempatan: ${lives}/3`, 'error', 2500);
         }
       }
     }
 
     function closeGameOverModalAndNext() {
       document.getElementById('gameOverModal').classList.remove('active');
-      lives = 3; // Reset lives for next turn
+      lives = 3; // Reset lives penuh untuk giliran berikutnya
       turnCount += 1;
       updateStatusDisplay();
       initGameSession();
@@ -1322,12 +1391,16 @@
 
     function closeVictoryModalAndNext() {
       document.getElementById('victoryModal').classList.remove('active');
+      lives = 3; // Reset lives penuh untuk giliran berikutnya
       turnCount += 1;
+      updateStatusDisplay();
       initGameSession();
     }
 
     function nextQuestion() {
+      lives = 3;
       turnCount += 1;
+      updateStatusDisplay();
       initGameSession();
     }
 
@@ -1364,7 +1437,7 @@
         if (timeRemaining <= 0) {
           stopTimer();
           isQuestionActive = false;
-          lives -= 1;
+          lives = 0;
           playSound('gameover');
           updateStatusDisplay();
 
