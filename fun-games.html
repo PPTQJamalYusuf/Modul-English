@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Fun Games - Susun Kata & Kalimat Bahasa Inggris | PPTQ Jamal Yusuf Al-Haddad</title>
+  <title>Fun Games - Susun Kosakata Bahasa Inggris per Kategori | PPTQ Jamal Yusuf Al-Haddad</title>
   <link rel="stylesheet" href="assets/css/style.css">
   <style>
     /* Custom Styling for Fun Games Engine - Focused, Clean & Funny Edition */
@@ -604,7 +604,7 @@
     <header style="padding: 24px 20px; margin-bottom: 20px; text-align: center;">
       <div class="brand-badge">PPTQ Jamal Yusuf Al-Haddad</div>
       <h1 style="font-size: 1.9rem; margin-bottom: 4px; font-weight: 900;">🎮 Fun Games Bahasa Inggris</h1>
-      <p style="font-size: 0.95rem; opacity: 0.95;">Susun Kata & Kalimat Bahasa Inggris • Mode Main Gantian</p>
+      <p style="font-size: 0.95rem; opacity: 0.95;">Susun Huruf Kosakata Bahasa Inggris per Kategori • 300 Kosakata Pilihan</p>
     </header>
 
     <!-- Navigation Bar -->
@@ -625,19 +625,22 @@
     <!-- Game Header Card & Settings -->
     <div class="game-header-card">
       <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <h2 style="font-size: 1.35rem; font-weight: 900;">🎯 Pengaturan Permainan</h2>
+        <h2 style="font-size: 1.35rem; font-weight: 900;">🎯 Pengaturan Kategori</h2>
         <span style="font-size: 0.85rem; background: rgba(255,255,255,0.22); padding: 5px 14px; border-radius: 20px; font-weight: 700;">Mode Gantian (3x Salah = Game Over)</span>
       </div>
 
       <div class="game-controls">
-        <!-- Grade Filter -->
+        <!-- Category Filter -->
         <div class="control-group">
-          <label for="gradeSelect">📚 Tingkat Kelas:</label>
-          <select id="gradeSelect" class="game-select" onchange="initGameSession()">
-            <option value="all">Semua Kelas (VII - IX)</option>
-            <option value="7">Kelas VII (Fase D)</option>
-            <option value="8">Kelas VIII (Fase D)</option>
-            <option value="9">Kelas IX (Fase D)</option>
+          <label for="categorySelect">📂 Kategori Kosakata:</label>
+          <select id="categorySelect" class="game-select" onchange="onCategorySelectChange()">
+            <option value="all">🌟 Semua Kategori (300 Kata)</option>
+            <option value="animals">🐾 Hewan (Animals - 50 Kata)</option>
+            <option value="food">🍎 Makanan & Minuman (Food & Drinks - 50 Kata)</option>
+            <option value="objects">🏫 Benda Sekolah & Rumah (Things - 50 Kata)</option>
+            <option value="body">👤 Anggota Tubuh (Body Parts - 50 Kata)</option>
+            <option value="verbs">🏃 Aktivitas Harian (Daily Verbs - 50 Kata)</option>
+            <option value="adjectives">✨ Sifat & Emosi (Adjectives - 50 Kata)</option>
           </select>
         </div>
 
@@ -652,14 +655,15 @@
       </div>
     </div>
 
-    <!-- Game Mode Switcher -->
-    <div class="mode-tab-container">
-      <button id="tabWordMode" class="tab-btn active" onclick="switchGameMode('word')">
-        🔤 Susun Kata (Word Scramble)
-      </button>
-      <button id="tabSentenceMode" class="tab-btn" onclick="switchGameMode('sentence')">
-        📝 Susun Kalimat (Jumbled Sentence)
-      </button>
+    <!-- Category Filter Pills (Quick Switch) -->
+    <div class="mode-tab-container" style="overflow-x: auto; padding-bottom: 6px; gap: 8px;">
+      <button id="pill-all" class="tab-btn active" onclick="selectCategory('all')">🌟 Semua (300)</button>
+      <button id="pill-animals" class="tab-btn" onclick="selectCategory('animals')">🐾 Hewan (50)</button>
+      <button id="pill-food" class="tab-btn" onclick="selectCategory('food')">🍎 Makanan (50)</button>
+      <button id="pill-objects" class="tab-btn" onclick="selectCategory('objects')">🏫 Benda (50)</button>
+      <button id="pill-body" class="tab-btn" onclick="selectCategory('body')">👤 Tubuh (50)</button>
+      <button id="pill-verbs" class="tab-btn" onclick="selectCategory('verbs')">🏃 Aktivitas (50)</button>
+      <button id="pill-adjectives" class="tab-btn" onclick="selectCategory('adjectives')">✨ Sifat (50)</button>
     </div>
 
     <!-- Status Bar / Scoreboard -->
@@ -700,7 +704,7 @@
       <div class="clue-box">
         <div class="clue-meta">
           <span id="badgeType" class="badge-tag badge-type">🔤 SUSUN KATA</span>
-          <span id="badgeCategory" class="badge-tag badge-grade">Kelas VIII</span>
+          <span id="badgeCategory" class="badge-tag badge-grade">🐾 Hewan (Animals)</span>
           <span id="badgePos" style="font-size: 0.8rem; color: var(--text-muted); font-weight: 800;">(NOUN)</span>
         </div>
         <div id="clueText" class="clue-text">
@@ -773,179 +777,312 @@
        50 RANDOM QUESTIONS PER GRADE (TOTAL 150 QUESTIONS: WORD & SENTENCE)
        ========================================================================== */
     const MASTER_DATASET = [
-      /* ------------------------------------------------------------------------
-         KELAS VII (50 SOAL: 35 WORD + 15 SENTENCE)
-         ------------------------------------------------------------------------ */
-      { id: "7-W01", type: "word", word: "AGE", meaning: "Usia / Umur", grade: "7", pos: "Noun", hint: "Jumlah tahun kehidupan seseorang." },
-      { id: "7-W02", type: "word", word: "RICE", meaning: "Nasi / Beras", grade: "7", pos: "Noun", hint: "Makanan pokok utama di Indonesia." },
-      { id: "7-W03", type: "word", word: "SOUP", meaning: "Sup / Kuah", grade: "7", pos: "Noun", hint: "Makanan berkuah hangat." },
-      { id: "7-W04", type: "word", word: "MILK", meaning: "Susu", grade: "7", pos: "Noun", hint: "Minuman sehat kaya kalsium." },
-      { id: "7-W05", type: "word", word: "DESK", meaning: "Meja Tulis", grade: "7", pos: "Noun", hint: "Tempat menulis di dalam kelas." },
-      { id: "7-W06", type: "word", word: "PARK", meaning: "Taman", grade: "7", pos: "Noun", hint: "Area terbuka hijau untuk bersantai." },
-      { id: "7-W07", type: "word", word: "BOOK", meaning: "Buku Bacaan", grade: "7", pos: "Noun", hint: "Kumpulan kertas berisi ilmu atau cerita." },
-      { id: "7-W08", type: "word", word: "PENCIL", meaning: "Pensil Tulis", grade: "7", pos: "Noun", hint: "Alat tulis berbahan kayu dan grafit." },
-      { id: "7-W09", type: "word", word: "ERASER", meaning: "Penghapus", grade: "7", pos: "Noun", hint: "Alat untuk menghapus tulisan pensil." },
-      { id: "7-W10", type: "word", word: "READ", meaning: "Membaca", grade: "7", pos: "Verb", hint: "Aktivitas melafalkan tulisan." },
-      { id: "7-W11", type: "word", word: "SING", meaning: "Menyanyi", grade: "7", pos: "Verb", hint: "Melantunkan nada dengan suara." },
-      { id: "7-W12", type: "word", word: "SWIM", meaning: "Berenang", grade: "7", pos: "Verb", hint: "Olahraga mengapung di air." },
-      { id: "7-W13", type: "word", word: "HOBBY", meaning: "Hobi / Kegemaran", grade: "7", pos: "Noun", hint: "Aktivitas menyenangkan di waktu luang." },
-      { id: "7-W14", type: "word", word: "FRIEND", meaning: "Teman / Sahabat", grade: "7", pos: "Noun", hint: "Seseorang yang dekat dan baik dengan kita." },
-      { id: "7-W15", type: "word", word: "FAMILY", meaning: "Keluarga", grade: "7", pos: "Noun", hint: "Orang tua, kakak, dan adik." },
-      { id: "7-W16", type: "word", word: "SCHOOL", meaning: "Sekolah", grade: "7", pos: "Noun", hint: "Tempat menuntut ilmu formal." },
-      { id: "7-W17", type: "word", word: "SISTER", meaning: "Saudara Perempuan", grade: "7", pos: "Noun", hint: "Kakak atau adik perempuan." },
-      { id: "7-W18", type: "word", word: "BROTHER", meaning: "Saudara Laki-laki", grade: "7", pos: "Noun", hint: "Kakak atau adik laki-laki." },
-      { id: "7-W19", type: "word", word: "GARDEN", meaning: "Kebun / Halaman", grade: "7", pos: "Noun", hint: "Area rumah yang ditanami bunga/pohon." },
-      { id: "7-W20", type: "word", word: "CANTEEN", meaning: "Kantin Sekolah", grade: "7", pos: "Noun", hint: "Tempat santri membeli makanan saat istirahat." },
-      { id: "7-W21", type: "word", word: "KITCHEN", meaning: "Dapur", grade: "7", pos: "Noun", hint: "Ruangan untuk memasak makanan." },
-      { id: "7-W22", type: "word", word: "TEACHER", meaning: "Guru / Pengajar", grade: "7", pos: "Noun", hint: "Sosok pendidik di sekolah." },
-      { id: "7-W23", type: "word", word: "STUDENT", meaning: "Siswa / Santri", grade: "7", pos: "Noun", hint: "Orang yang sedang menuntut ilmu." },
-      { id: "7-W24", type: "word", word: "MORNING", meaning: "Pagi Hari", grade: "7", pos: "Noun", hint: "Waktu terbit matahari." },
-      { id: "7-W25", type: "word", word: "EVENING", meaning: "Sore / Malam Hari", grade: "7", pos: "Noun", hint: "Waktu menjelang malam." },
-      { id: "7-W26", type: "word", word: "BREAKFAST", meaning: "Sarapan Pagi", grade: "7", pos: "Noun", hint: "Makan di pagi hari sebelum beraktivitas." },
-      { id: "7-W27", type: "word", word: "LUNCH", meaning: "Makan Siang", grade: "7", pos: "Noun", hint: "Makan di tengah hari." },
-      { id: "7-W28", type: "word", word: "DINNER", meaning: "Makan Malam", grade: "7", pos: "Noun", hint: "Santap malam bersama keluarga." },
-      { id: "7-W29", type: "word", word: "UNIFORM", meaning: "Seragam Sekolah", grade: "7", pos: "Noun", hint: "Pakaian resmi murid sekolah." },
-      { id: "7-W30", type: "word", word: "CULINARY", meaning: "Kuliner / Masakan", grade: "7", pos: "Adjective", hint: "Berhubungan dengan seni memasak dan makanan." },
-      { id: "7-W31", type: "word", word: "DELICIOUS", meaning: "Lezat / Enak", grade: "7", pos: "Adjective", hint: "Rasa makanan yang nikmat." },
-      { id: "7-W32", type: "word", word: "BICYCLE", meaning: "Sepeda Kayuh", grade: "7", pos: "Noun", hint: "Kendaraan roda dua tanpa mesin." },
-      { id: "7-W33", type: "word", word: "CLASSROOM", meaning: "Ruang Kelas", grade: "7", pos: "Noun", hint: "Ruang tempat belajar mengajar." },
-      { id: "7-W34", type: "word", word: "SCHEDULE", meaning: "Jadwal Pelajaran", grade: "7", pos: "Noun", hint: "Urutan kegiatan belajar harian." },
-      { id: "7-W35", type: "word", word: "LIBRARY", meaning: "Perpustakaan", grade: "7", pos: "Noun", hint: "Gedung tempat menyimpan koleksi buku." },
-
-      { id: "7-S01", type: "sentence", sentence: "SHE BUYS DELICIOUS FOOD", meaning: "Dia membeli makanan yang lezat", grade: "7", pos: "Sentence", hint: "Kalimat tentang membeli makanan." },
-      { id: "7-S02", type: "sentence", sentence: "WE STUDY ENGLISH TOGETHER", meaning: "Kita belajar Bahasa Inggris bersama", grade: "7", pos: "Sentence", hint: "Kalimat tentang belajar bersama." },
-      { id: "7-S03", type: "sentence", sentence: "MY HOBBY IS READING BOOKS", meaning: "Hobiku adalah membaca buku", grade: "7", pos: "Sentence", hint: "Kalimat menyatakan kegemaran." },
-      { id: "7-S04", type: "sentence", sentence: "HE GOES TO SCHOOL BY BIKE", meaning: "Dia pergi ke sekolah naik sepeda", grade: "7", pos: "Sentence", hint: "Kalimat transportasi ke sekolah." },
-      { id: "7-S05", type: "sentence", sentence: "THEY EAT LUNCH IN CANTEEN", meaning: "Mereka makan siang di kantin", grade: "7", pos: "Sentence", hint: "Kalimat tentang makan di kantin." },
-      { id: "7-S06", type: "sentence", sentence: "I HAVE A HAPPY FAMILY", meaning: "Saya memiliki keluarga yang bahagia", grade: "7", pos: "Sentence", hint: "Kalimat tentang keluarga." },
-      { id: "7-S07", type: "sentence", sentence: "THE CLASSROOM IS VERY CLEAN", meaning: "Ruang kelas itu sangat bersih", grade: "7", pos: "Sentence", hint: "Kalimat tentang kondisi kelas." },
-      { id: "7-S08", type: "sentence", sentence: "MY TEACHER IS KIND AND HELPFUL", meaning: "Guruku baik hati dan suka menolong", grade: "7", pos: "Sentence", hint: "Kalimat memuji guru." },
-      { id: "7-S09", type: "sentence", sentence: "WE CLEAN THE BOARD TOGETHER", meaning: "Kami membersihkan papan tulis bersama", grade: "7", pos: "Sentence", hint: "Kalimat tugas kelas." },
-      { id: "7-S10", type: "sentence", sentence: "MY SISTER LOVES SINGING SONGS", meaning: "Kakak perempuanku suka menyanyikan lagu", grade: "7", pos: "Sentence", hint: "Kalimat tentang kegemaran saudara." },
-      { id: "7-S11", type: "sentence", sentence: "DO YOU LIKE DRINKING MILK", meaning: "Apakah kamu suka minum susu", grade: "7", pos: "Sentence", hint: "Kalimat tanya minuman." },
-      { id: "7-S12", type: "sentence", sentence: "WE HAVE A NEW SCHEDULE TODAY", meaning: "Kami memiliki jadwal baru hari ini", grade: "7", pos: "Sentence", hint: "Kalimat tentang jadwal." },
-      { id: "7-S13", type: "sentence", sentence: "SHE PUTS PENCIL IN BAG", meaning: "Dia memasukkan pensil ke dalam tas", grade: "7", pos: "Sentence", hint: "Kalimat meletakkan pensil." },
-      { id: "7-S14", type: "sentence", sentence: "I PLAY FOOTBALL IN PARK", meaning: "Saya bermain sepak bola di taman", grade: "7", pos: "Sentence", hint: "Kalimat olahraga di taman." },
-      { id: "7-S15", type: "sentence", sentence: "WE READ BOOKS IN LIBRARY", meaning: "Kami membaca buku di perpustakaan", grade: "7", pos: "Sentence", hint: "Kalimat membaca di perpustakaan." },
-
-
-      /* ------------------------------------------------------------------------
-         KELAS VIII (50 SOAL: 35 WORD + 15 SENTENCE)
-         ------------------------------------------------------------------------ */
-      { id: "8-W01", type: "word", word: "PLANT", meaning: "Tanaman / Menanam", grade: "8", pos: "Noun/Verb", hint: "Flora yang tumbuh di tanah." },
-      { id: "8-W02", type: "word", word: "TRASH", meaning: "Sampah / Limbah", grade: "8", pos: "Noun", hint: "Barang sisa yang tidak terpakai." },
-      { id: "8-W03", type: "word", word: "CLEAN", meaning: "Bersih / Suci", grade: "8", pos: "Adjective", hint: "Bebas dari kotoran atau kuman." },
-      { id: "8-W04", type: "word", word: "STAGE", meaning: "Panggung", grade: "8", pos: "Noun", hint: "Tempat tampil dalam acara sekolah." },
-      { id: "8-W05", type: "word", word: "PRIZE", meaning: "Hadiah / Penghargaan", grade: "8", pos: "Noun", hint: "Penghargaan untuk pemenang lomba." },
-      { id: "8-W06", type: "word", word: "BRAVE", meaning: "Pemberani", grade: "8", pos: "Adjective", hint: "Tidak takut menghadapi tantangan." },
-      { id: "8-W07", type: "word", word: "HERO", meaning: "Pahlawan", grade: "8", pos: "Noun", hint: "Sosok berjasa bagi bangsa." },
-      { id: "8-W08", type: "word", word: "CROWD", meaning: "Kerumunan Penonton", grade: "8", pos: "Noun", hint: "Kumpulan orang yang menyaksikan." },
-      { id: "8-W09", type: "word", word: "TROPHY", meaning: "Piala Lomba", grade: "8", pos: "Noun", hint: "Simbol kemenangan kompetisi." },
-      { id: "8-W10", type: "word", word: "SPEECH", meaning: "Pidato", grade: "8", pos: "Noun", hint: "Berbicara di depan umum." },
-      { id: "8-W11", type: "word", word: "BOTTLE", meaning: "Botol Wadah", grade: "8", pos: "Noun", hint: "Wadah penampung air." },
-      { id: "8-W12", type: "word", word: "PLASTIC", meaning: "Plastik", grade: "8", pos: "Noun", hint: "Bahan buatan yang sulit terurai." },
-      { id: "8-W13", type: "word", word: "FESTIVAL", meaning: "Festival / Perayaan", grade: "8", pos: "Noun", hint: "Acara perayaan yang meriah." },
-      { id: "8-W14", type: "word", word: "RECYCLE", meaning: "Daur Ulang", grade: "8", pos: "Verb", hint: "Mengolah kembali barang bekas." },
-      { id: "8-W15", type: "word", word: "KINDNESS", meaning: "Kebaikan Hati", grade: "8", pos: "Noun", hint: "Sifat suka menolong sesama." },
-      { id: "8-W16", type: "word", word: "FRIENDSHIP", meaning: "Persahabatan", grade: "8", pos: "Noun", hint: "Hubungan erat antar kawan." },
-      { id: "8-W17", type: "word", word: "ENVIRONMENT", meaning: "Lingkungan Hidup", grade: "8", pos: "Noun", hint: "Alam sekitar tempat kita tinggal." },
-      { id: "8-W18", type: "word", word: "CELEBRATING", meaning: "Merayakan", grade: "8", pos: "Verb", hint: "Memperingati momen bahagia." },
-      { id: "8-W19", type: "word", word: "COMPETITION", meaning: "Perlombaan / Kompetisi", grade: "8", pos: "Noun", hint: "Ajang bertanding meraih juara." },
-      { id: "8-W20", type: "word", word: "PERFORMANCE", meaning: "Pertunjukan Seni", grade: "8", pos: "Noun", hint: "Aksi seni di atas panggung." },
-      { id: "8-W21", type: "word", word: "PARADE", meaning: "Pawai Kemerdekaan", grade: "8", pos: "Noun", hint: "Iring-iringan jalan bersama." },
-      { id: "8-W22", type: "word", word: "VOLUNTEER", meaning: "Relawan / Sukarelawan", grade: "8", pos: "Noun", hint: "Orang yang bekerja tanpa pamrih." },
-      { id: "8-W23", type: "word", word: "DONATION", meaning: "Sumbangan / Donasi", grade: "8", pos: "Noun", hint: "Bantuan barang/uang untuk amal." },
-      { id: "8-W24", type: "word", word: "CEREMONY", meaning: "Upacara Bendera", grade: "8", pos: "Noun", hint: "Kegiatan khidmat di hari Senin." },
-      { id: "8-W25", type: "word", word: "ANTHEM", meaning: "Lagu Kebangsaan", grade: "8", pos: "Noun", hint: "Lagu Indonesia Raya." },
-      { id: "8-W26", type: "word", word: "DECORATE", meaning: "Menghias Kelas", grade: "8", pos: "Verb", hint: " mempercantik ruangan." },
-      { id: "8-W27", type: "word", word: "COSTUME", meaning: "Kostum Lomba", grade: "8", pos: "Noun", hint: "Pakaian khusus acara festival." },
-      { id: "8-W28", type: "word", word: "COMMUNITY", meaning: "Komunitas / Warga", grade: "8", pos: "Noun", hint: "Kelompok masyarakat." },
-      { id: "8-W29", type: "word", word: "TRADITION", meaning: "Tradisi / Budaya", grade: "8", pos: "Noun", hint: "Kebiasaan kebudayaan." },
-      { id: "8-W30", type: "word", word: "INDEPENDENCE", meaning: "Kemerdekaan", grade: "8", pos: "Noun", hint: "Bebas dari penjajahan." },
-      { id: "8-W31", type: "word", word: "COMPLIMENT", meaning: "Pujian", grade: "8", pos: "Noun", hint: "Ucapan penghargaan pada seseorang." },
-      { id: "8-W32", type: "word", word: "DISCIPLINE", meaning: "Disiplin Sikap", grade: "8", pos: "Noun", hint: "Kepatuhan pada aturan." },
-      { id: "8-W33", type: "word", word: "APPRECIATE", meaning: "Menghargai", grade: "8", pos: "Verb", hint: "Menghormati hasil karya orang lain." },
-      { id: "8-W34", type: "word", word: "TOGETHERNESS", meaning: "Kebersamaan", grade: "8", pos: "Noun", hint: "Suasana ikatan rasa kekeluargaan." },
-      { id: "8-W35", type: "word", word: "CREATIVITY", meaning: "Kreativitas Karya", grade: "8", pos: "Noun", hint: "Daya cipta ide baru." },
-
-      { id: "8-S01", type: "sentence", sentence: "PLEASE KEEP OUR CLASSROOM CLEAN", meaning: "Tolong jaga kebersihan kelas kita", grade: "8", pos: "Sentence", hint: "Himbauan menjaga kelas." },
-      { id: "8-S02", type: "sentence", sentence: "WE MUST RECYCLE PLASTIC BOTTLES", meaning: "Kita harus mendaur ulang botol plastik", grade: "8", pos: "Sentence", hint: "Kalimat ramah lingkungan." },
-      { id: "8-S03", type: "sentence", sentence: "THEY WON THE FIRST PRIZE", meaning: "Mereka memenangkan juara pertama", grade: "8", pos: "Sentence", hint: "Kalimat tentang juara lomba." },
-      { id: "8-S04", type: "sentence", sentence: "SANTRI JOIN THE FREEDOM PARADE", meaning: "Santri mengikuti pawai kemerdekaan", grade: "8", pos: "Sentence", hint: "Kalimat pawai 17 Agustus." },
-      { id: "8-S05", type: "sentence", sentence: "WE DECORATE OUR CLASSROOM TOGETHER", meaning: "Kami menghias kelas kami bersama", grade: "8", pos: "Sentence", hint: "Kalimat menghias kelas." },
-      { id: "8-S06", type: "sentence", sentence: "SHE GAVE A WONDERFUL SPEECH", meaning: "Dia memberikan pidato yang luar biasa", grade: "8", pos: "Sentence", hint: "Kalimat pidato di panggung." },
-      { id: "8-S07", type: "sentence", sentence: "KINDNESS MAKES THE WORLD BETTER", meaning: "Kebaikan membuat dunia lebih baik", grade: "8", pos: "Sentence", hint: "Motto kebaikan hati." },
-      { id: "8-S08", type: "sentence", sentence: "DO NOT THROW TRASH ON FLOOR", meaning: "Jangan membuang sampah di lantai", grade: "8", pos: "Sentence", hint: "Peringatan buang sampah." },
-      { id: "8-S09", type: "sentence", sentence: "WE SING NATIONAL ANTHEM PROUDLY", meaning: "Kami menyanyikan lagu kebangsaan dengan bangga", grade: "8", pos: "Sentence", hint: "Kalimat upacara bendera." },
-      { id: "8-S10", type: "sentence", sentence: "THE STAGE LIGHTS ARE BRIGHT", meaning: "Lampu panggung itu sangat terang", grade: "8", pos: "Sentence", hint: "Kalimat suasana pertunjukan." },
-      { id: "8-S11", type: "sentence", sentence: "HE IS A BRAVE VOLUNTEER", meaning: "Dia adalah seorang relawan yang berani", grade: "8", pos: "Sentence", hint: "Kalimat tentang relawan." },
-      { id: "8-S12", type: "sentence", sentence: "WE APPRECIATE YOUR HARD WORK", meaning: "Kami menghargai kerja kerasmu", grade: "8", pos: "Sentence", hint: "Kalimat pujian kerja keras." },
-      { id: "8-S13", type: "sentence", sentence: "CREATIVITY IS IMPORTANT FOR US", meaning: "Kreativitas sangat penting bagi kita", grade: "8", pos: "Sentence", hint: "Pentingnya daya cipta." },
-      { id: "8-S14", type: "sentence", sentence: "THEY CELEBRATE FESTIVAL WITH JOY", meaning: "Mereka merayakan festival dengan gembira", grade: "8", pos: "Sentence", hint: "Kalimat kegembiraan perayaan." },
-      { id: "8-S15", type: "sentence", sentence: "CLEAN ENVIRONMENT MAKES US HEALTHY", meaning: "Lingkungan bersih membuat kita sehat", grade: "8", pos: "Sentence", hint: "Manfaat lingkungan bersih." },
-
-
-      /* ------------------------------------------------------------------------
-         KELAS IX (50 SOAL: 35 WORD + 15 SENTENCE)
-         ------------------------------------------------------------------------ */
-      { id: "9-W01", type: "word", word: "FAUNA", meaning: "Dunia Satwa / Hewan", grade: "9", pos: "Noun", hint: "Segala jenis hewan di suatu wilayah." },
-      { id: "9-W02", type: "word", word: "TICKET", meaning: "Tiket Perjalanan", grade: "9", pos: "Noun", hint: "Tanda masuk tempat wisata/transportasi." },
-      { id: "9-W03", type: "word", word: "JOURNEY", meaning: "Perjalanan Jauh", grade: "9", pos: "Noun", hint: "Pengalaman menempuh perjalanan." },
-      { id: "9-W04", type: "word", word: "DRAGON", meaning: "Naga Mitos", grade: "9", pos: "Noun", hint: "Makhluk mitos bersayap api." },
-      { id: "9-W05", type: "word", word: "CASTLE", meaning: "Istana Megah", grade: "9", pos: "Noun", hint: "Bangunan tempat raja tinggal dalam dongeng." },
-      { id: "9-W06", type: "word", word: "DIGITAL", meaning: "Teknologi Digital", grade: "9", pos: "Adjective", hint: "Berhubungan dengan komputer & siber." },
-      { id: "9-W07", type: "word", word: "ANIMAL", meaning: "Hewan Satwa", grade: "9", pos: "Noun", hint: "Makhluk hidup bernyawa." },
-      { id: "9-W08", type: "word", word: "REUSE", meaning: "Gunakan Kembali", grade: "9", pos: "Verb", hint: "Memakai ulang barang yang masih bagus." },
-      { id: "9-W09", type: "word", word: "FOREST", meaning: "Hutan Rimba", grade: "9", pos: "Noun", hint: "Kawasan pohon lebat di alam." },
-      { id: "9-W10", type: "word", word: "MONKEY", meaning: "Monyet Kera", grade: "9", pos: "Noun", hint: "Primata lincah pemakan pisang." },
-      { id: "9-W11", type: "word", word: "ORANGUTAN", meaning: "Orangutan Khas", grade: "9", pos: "Noun", hint: "Kera besar khas Kalimantan & Sumatra." },
-      { id: "9-W12", type: "word", word: "LEGEND", meaning: "Cerita Legenda", grade: "9", pos: "Noun", hint: "Cerita rakyat zaman dahulu." },
-      { id: "9-W13", type: "word", word: "FABLE", meaning: "Fabel Hewan", grade: "9", pos: "Noun", hint: "Cerita dongeng berkarakter hewan." },
-      { id: "9-W14", type: "word", word: "ONLINE", meaning: "Terhubung Daring", grade: "9", pos: "Adjective", hint: "Kondisi terhubung ke jaringan internet." },
-      { id: "9-W15", type: "word", word: "DEVICE", meaning: "Perangkat Gadget", grade: "9", pos: "Noun", hint: "Alat elektronik pintar." },
-      { id: "9-W16", type: "word", word: "WEBSITE", meaning: "Situs Laman Web", grade: "9", pos: "Noun", hint: "Halaman informasi di internet." },
-      { id: "9-W17", type: "word", word: "INTERNET", meaning: "Jaringan Internet", grade: "9", pos: "Noun", hint: "Jaringan komunikasi global." },
-      { id: "9-W18", type: "word", word: "MEDIA", meaning: "Media Informasi", grade: "9", pos: "Noun", hint: "Sarana penyebar berita." },
-      { id: "9-W19", type: "word", word: "UPCYCLING", meaning: "Daur Ulang Kreatif", grade: "9", pos: "Noun", hint: "Meningkatkan nilai sampah jadi barang baru." },
-      { id: "9-W20", type: "word", word: "CONSERVATION", meaning: "Konservasi Alam", grade: "9", pos: "Noun", hint: "Pelestarian alam & satwa langka." },
-      { id: "9-W21", type: "word", word: "ECOFRIENDLY", meaning: "Ramah Lingkungan", grade: "9", pos: "Adjective", hint: "Produk yang aman bagi bumi." },
-      { id: "9-W22", type: "word", word: "SMARTPHONE", meaning: "Ponsel Pintar", grade: "9", pos: "Noun", hint: "Telepon genggam canggih." },
-      { id: "9-W23", type: "word", word: "APPLICATION", meaning: "Aplikasi Komputer", grade: "9", pos: "Noun", hint: "Program lunak pembantu tugas." },
-      { id: "9-W24", type: "word", word: "ENDANGERED", meaning: "Terancam Punah", grade: "9", pos: "Adjective", hint: "Satwa langka yang hampir habis." },
-      { id: "9-W25", type: "word", word: "HABITAT", meaning: "Habitat Alami", grade: "9", pos: "Noun", hint: "Tempat hidup asli makhluk di alam." },
-      { id: "9-W26", type: "word", word: "SANCTUARY", meaning: "Suaka Margasatwa", grade: "9", pos: "Noun", hint: "Kawasan perlindungan satwa." },
-      { id: "9-W27", type: "word", word: "TECHNOLOGY", meaning: "Teknologi Canggih", grade: "9", pos: "Noun", hint: "Penerapan ilmu pengetahuan modern." },
-      { id: "9-W28", type: "word", word: "ADVENTURE", meaning: "Petualangan", grade: "9", pos: "Noun", hint: "Pengalaman seru penuh tantangan." },
-      { id: "9-W29", type: "word", word: "BIODIVERSITY", meaning: "Keanekaragaman Hayati", grade: "9", pos: "Noun", hint: "Keragaman spesies flora & fauna." },
-      { id: "9-W30", type: "word", word: "EXTINCTION", meaning: "Kepunahan Satwa", grade: "9", pos: "Noun", hint: "Musnahnya spesies dari bumi." },
-      { id: "9-W31", type: "word", word: "PROTECTION", meaning: "Perlindungan Alam", grade: "9", pos: "Noun", hint: "Upaya menjaga keselamatan." },
-      { id: "9-W32", type: "word", word: "CREATURE", meaning: "Makhluk Ciptaan", grade: "9", pos: "Noun", hint: "Makhluk bernyawa." },
-      { id: "9-W33", type: "word", word: "INNOVATION", meaning: "Inovasi Baru", grade: "9", pos: "Noun", hint: "Penemuan gagasan anyar." },
-      { id: "9-W34", type: "word", word: "CYBERSPACE", meaning: "Dunia Maya", grade: "9", pos: "Noun", hint: "Lingkungan virtual internet." },
-      { id: "9-W35", type: "word", word: "SOCIALMEDIA", meaning: "Media Sosial", grade: "9", pos: "Noun", hint: "Platform interaksi online." },
-
-      { id: "9-S01", type: "sentence", sentence: "INDONESIA HAS UNIQUE WILD FAUNA", meaning: "Indonesia memiliki satwa liar yang unik", grade: "9", pos: "Sentence", hint: "Kekayaan hewan Indonesia." },
-      { id: "9-S02", type: "sentence", sentence: "ALWAYS USE DIGITAL MEDIA WISELY", meaning: "Selalu gunakan media digital dengan bijak", grade: "9", pos: "Sentence", hint: "Pesan bijak ber-internet." },
-      { id: "9-S03", type: "sentence", sentence: "ORANGUTANS LIVE IN TROPICAL FOREST", meaning: "Orangutan hidup di hutan tropis", grade: "9", pos: "Sentence", hint: "Habitat kera langka." },
-      { id: "9-S04", type: "sentence", sentence: "WE MUST PROTECT ENDANGERED ANIMALS", meaning: "Kita harus melindungi hewan terancam punah", grade: "9", pos: "Sentence", hint: "Kewajiban pelestarian satwa." },
-      { id: "9-S05", type: "sentence", sentence: "SMARTPHONES CONNECT PEOPLE EVERYWHERE", meaning: "Ponsel pintar menghubungkan orang di mana saja", grade: "9", pos: "Sentence", hint: "Manfaat ponsel cerdas." },
-      { id: "9-S06", type: "sentence", sentence: "ONCE UPON A TIME IN CASTLE", meaning: "Pada zaman dahulu di sebuah istana", grade: "9", pos: "Sentence", hint: "Awal cerita dongeng." },
-      { id: "9-S07", type: "sentence", sentence: "CREATIVE UPCYCLING REDUCES PLASTIC WASTE", meaning: "Daur ulang kreatif mengurangi sampah plastik", grade: "9", pos: "Sentence", hint: "Solusi sampah daur ulang." },
-      { id: "9-S08", type: "sentence", sentence: "DO NOT SHARE UNVERIFIED NEWS", meaning: "Jangan membagikan berita yang belum terverifikasi", grade: "9", pos: "Sentence", hint: "Pencegahan hoax." },
-      { id: "9-S09", type: "sentence", sentence: "NATIONAL PARK IS SATWA HABITAT", meaning: "Taman nasional adalah habitat satwa", grade: "9", pos: "Sentence", hint: "Fungsi taman nasional." },
-      { id: "9-S10", type: "sentence", sentence: "TECHNOLOGY HELPS US LEARN FASTER", meaning: "Teknologi membantu kita belajar lebih cepat", grade: "9", pos: "Sentence", hint: "Manfaat teknologi belajar." },
-      { id: "9-S11", type: "sentence", sentence: "THE HERO DEFEATED THE FIERCE DRAGON", meaning: "Sang pahlawan mengalahkan naga yang ganas", grade: "9", pos: "Sentence", hint: "Kisah petualangan heroik." },
-      { id: "9-S12", type: "sentence", sentence: "REUSING BAGS SAVES OUR ENVIRONMENT", meaning: "Menggunakan kembali tas menyelamatkan lingkungan kita", grade: "9", pos: "Sentence", hint: "Gerakan pengurangan plastik." },
-      { id: "9-S13", type: "sentence", sentence: "INTERNET PROVIDES VALUABLE INFORMATION USEFUL", meaning: "Internet menyediakan informasi berharga yang berguna", grade: "9", pos: "Sentence", hint: "Fungsi utama internet." },
-      { id: "9-S14", type: "sentence", sentence: "WE ENJOY OUR ADVENTURE IN FOREST", meaning: "Kami menikmati petualangan kami di hutan", grade: "9", pos: "Sentence", hint: "Kisah petualangan di alam." },
-      { id: "9-S15", type: "sentence", sentence: "SAVE BIODIVERSITY FOR OUR FUTURE", meaning: "Selamatkan keanekaragaman hayati demi masa depan kita", grade: "9", pos: "Sentence", hint: "Slogan kelestarian bumi." }
+      { id: "AN-01", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "CAT", meaning: "Kucing", pos: "Noun", hint: "Hewan peliharaan lucu bersuara meong" },
+      { id: "AN-02", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "DOG", meaning: "Anjing", pos: "Noun", hint: "Hewan setia penjaga rumah" },
+      { id: "AN-03", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "BIRD", meaning: "Burung", pos: "Noun", hint: "Hewan bersayap yang bisa terbang di angkasa" },
+      { id: "AN-04", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "FISH", meaning: "Ikan", pos: "Noun", hint: "Hewan air yang bernapas dengan insang" },
+      { id: "AN-05", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "DUCK", meaning: "Bebek", pos: "Noun", hint: "Unggas air yang suka berenang dan berbunyi kwek-kwek" },
+      { id: "AN-06", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "CHICKEN", meaning: "Ayam", pos: "Noun", hint: "Unggas penghasil telur dan daging lezat" },
+      { id: "AN-07", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "COW", meaning: "Sapi", pos: "Noun", hint: "Hewan ternak pemakan rumput penghasil susu segar" },
+      { id: "AN-08", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "GOAT", meaning: "Kambing", pos: "Noun", hint: "Hewan ternak berkaki empat berjanggut" },
+      { id: "AN-09", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "SHEEP", meaning: "Domba", pos: "Noun", hint: "Hewan berbulu tebal dan keriting" },
+      { id: "AN-10", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "HORSE", meaning: "Kuda", pos: "Noun", hint: "Hewan berkaki empat yang tangguh dan berlari kencang" },
+      { id: "AN-11", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "RABBIT", meaning: "Kelinci", pos: "Noun", hint: "Hewan bertelinga panjang yang gemar makan wortel" },
+      { id: "AN-12", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "ELEPHANT", meaning: "Gajah", pos: "Noun", hint: "Hewan darat raksasa yang memiliki belalai panjang" },
+      { id: "AN-13", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "LION", meaning: "Singa", pos: "Noun", hint: "Raja hutan yang memiliki surai lebat dan auman kuat" },
+      { id: "AN-14", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "TIGER", meaning: "Harimau", pos: "Noun", hint: "Kucing besar bermotif loreng oranye dan hitam" },
+      { id: "AN-15", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "BEAR", meaning: "Beruang", pos: "Noun", hint: "Hewan bertubuh besar berbulu tebal pemakan madu dan ikan" },
+      { id: "AN-16", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "MONKEY", meaning: "Monyet", pos: "Noun", hint: "Primata lincah pemanjat pohon yang suka makan pisang" },
+      { id: "AN-17", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "DEER", meaning: "Rusa", pos: "Noun", hint: "Hewan anggun bertanduk indah bercabang" },
+      { id: "AN-18", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "WOLF", meaning: "Serigala", pos: "Noun", hint: "Hewan pemburu yang suka melolong di malam hari" },
+      { id: "AN-19", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "FOX", meaning: "Rubah", pos: "Noun", hint: "Hewan cerdik berekor lebat berwarna oranye kemerahan" },
+      { id: "AN-20", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "MOUSE", meaning: "Tikus", pos: "Noun", hint: "Hewan pengerat mungil berkumis panjang" },
+      { id: "AN-21", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "ZEBRA", meaning: "Zebra", pos: "Noun", hint: "Kuda liar Afrika bercorak garis-garis hitam putih" },
+      { id: "AN-22", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "GIRAFFE", meaning: "Jerapah", pos: "Noun", hint: "Hewan berleher amat panjang pemakan pucuk daun" },
+      { id: "AN-23", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "PANDA", meaning: "Panda", pos: "Noun", hint: "Mamalia lucu hitam putih asal Tiongkok pemakan bambu" },
+      { id: "AN-24", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "KANGAROO", meaning: "Kanguru", pos: "Noun", hint: "Hewan berkantung khas Australia yang melompat jauh" },
+      { id: "AN-25", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "CAMEL", meaning: "Unta", pos: "Noun", hint: "Hewan berpunuk yang bertahan lama di padang pasir gurun" },
+      { id: "AN-26", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "DONKEY", meaning: "Keledai", pos: "Noun", hint: "Hewan pengangkut beban yang mirip kuda kecil" },
+      { id: "AN-27", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "FROG", meaning: "Katak / Kodok", pos: "Noun", hint: "Hewan amfibi pelompat lincah di sekitar kolam" },
+      { id: "AN-28", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "SNAKE", meaning: "Ular", pos: "Noun", hint: "Reptil tak berkaki yang melata di atas tanah" },
+      { id: "AN-29", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "TURTLE", meaning: "Kura-kura", pos: "Noun", hint: "Reptil bertempurung keras yang berjalan lambat" },
+      { id: "AN-30", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "CROCODILE", meaning: "Buaya", pos: "Noun", hint: "Reptil pemangsa berahang amat kuat di perairan sungai" },
+      { id: "AN-31", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "DOLPHIN", meaning: "Lumba-lumba", pos: "Noun", hint: "Mamalia laut cerdas yang ramah dan suka beratraksi" },
+      { id: "AN-32", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "SHARK", meaning: "Hiu", pos: "Noun", hint: "Ikan predator penguasa samudra bergigi sangat tajam" },
+      { id: "AN-33", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "WHALE", meaning: "Paus", pos: "Noun", hint: "Mamalia laut raksasa terbesar di muka bumi" },
+      { id: "AN-34", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "OCTOPUS", meaning: "Gurita", pos: "Noun", hint: "Hewan laut berlengan delapan penuh tentakel" },
+      { id: "AN-35", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "CRAB", meaning: "Kepiting", pos: "Noun", hint: "Hewan laut bercapit keras yang berjalan miring" },
+      { id: "AN-36", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "EAGLE", meaning: "Elang", pos: "Noun", hint: "Burung pemangsa berparuh kait dan berpemandangan tajam" },
+      { id: "AN-37", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "OWL", meaning: "Burung Hantu", pos: "Noun", hint: "Burung bermata bulat besar yang aktif berburu di malam gelap" },
+      { id: "AN-38", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "PARROT", meaning: "Burung Beo", pos: "Noun", hint: "Burung berbulu warna-warni yang pintar menirukan suara" },
+      { id: "AN-39", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "PENGUIN", meaning: "Penguin", pos: "Noun", hint: "Burung kutub berbulu hitam putih yang mahir berenang" },
+      { id: "AN-40", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "SWAN", meaning: "Angsa Putih", pos: "Noun", hint: "Unggas air berleher panjang yang amat anggun" },
+      { id: "AN-41", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "BEE", meaning: "Lebah", pos: "Noun", hint: "Serangga penghisap nektar penghasil madu manis" },
+      { id: "AN-42", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "ANT", meaning: "Semut", pos: "Noun", hint: "Serangga mungil pekerja keras yang hidup rukun berkoloni" },
+      { id: "AN-43", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "BUTTERFLY", meaning: "Kupu-kupu", pos: "Noun", hint: "Serangga bersayap indah penuh warna dari ulat" },
+      { id: "AN-44", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "SPIDER", meaning: "Laba-laba", pos: "Noun", hint: "Hewan berkaki delapan pemintal jaring perangkap mangsa" },
+      { id: "AN-45", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "BAT", meaning: "Kelelawar", pos: "Noun", hint: "Mamalia malam yang terbang dengan sayap selaput" },
+      { id: "AN-46", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "GOOSE", meaning: "Angsa / Entok", pos: "Noun", hint: "Unggas berleher panjang bersuara nyaring" },
+      { id: "AN-47", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "SQUIRREL", meaning: "Tupai", pos: "Noun", hint: "Hewan pengerat berekor lebat pemakan buah dan kenari" },
+      { id: "AN-48", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "HIPPO", meaning: "Kuda Nil", pos: "Noun", hint: "Mamalia darat berbadan bulat besar penyuka kubangan air" },
+      { id: "AN-49", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "RHINO", meaning: "Badak", pos: "Noun", hint: "Hewan bertubuh tebal kekar dengan cula di hidungnya" },
+      { id: "AN-50", type: "word", category: "animals", categoryName: "Hewan (Animals)", categoryIcon: "🐾", word: "MOSQUITO", meaning: "Nyamuk", pos: "Noun", hint: "Serangga kecil bersayap penghisap darah saat malam" },
+      { id: "FO-01", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "RICE", meaning: "Nasi / Beras", pos: "Noun", hint: "Makanan pokok utama sehari-hari masyarakat Indonesia" },
+      { id: "FO-02", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "BREAD", meaning: "Roti", pos: "Noun", hint: "Olahan tepung terigu panggang yang empuk untuk sarapan" },
+      { id: "FO-03", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "NOODLE", meaning: "Mie", pos: "Noun", hint: "Makanan olahan berbentuk helai panjang kenyal berkuah" },
+      { id: "FO-04", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SOUP", meaning: "Sup", pos: "Noun", hint: "Hidangan berkuah kaldu hangat berisi aneka sayuran" },
+      { id: "FO-05", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "MEAT", meaning: "Daging", pos: "Noun", hint: "Bahan makanan kaya protein hewani untuk lauk lezat" },
+      { id: "FO-06", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "EGG", meaning: "Telur", pos: "Noun", hint: "Makanan bulat bergizi tinggi yang dihasilkan oleh ayam" },
+      { id: "FO-07", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "FISH", meaning: "Ikan Goreng/Bakar", pos: "Noun", hint: "Lauk pauk sehat kaya omega-3 dari perairan" },
+      { id: "FO-08", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CHICKEN", meaning: "Ayam", pos: "Noun", hint: "Daging unggas gurih yang paling sering disukai anak-anak" },
+      { id: "FO-09", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CHEESE", meaning: "Keju", pos: "Noun", hint: "Olahan fermentasi susu sapi bercita rasa gurih asin" },
+      { id: "FO-10", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "BUTTER", meaning: "Mentega", pos: "Noun", hint: "Lemak susu gurih olesan roti atau penumis masakan" },
+      { id: "FO-11", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "PIZZA", meaning: "Pizza", pos: "Noun", hint: "Roti bundar panggang khas Italia bertabur saus dan keju" },
+      { id: "FO-12", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "BURGER", meaning: "Burger", pos: "Noun", hint: "Roti bundar berlapis daging panggang dan selada segar" },
+      { id: "FO-13", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CAKE", meaning: "Kue Tart", pos: "Noun", hint: "Bolu manis berhias krim untuk pesta ulang tahun" },
+      { id: "FO-14", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CANDY", meaning: "Permen", pos: "Noun", hint: "Gula-gula manis beraneka rasa favorit santri" },
+      { id: "FO-15", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CHOCOLATE", meaning: "Cokelat", pos: "Noun", hint: "Kudapan manis legit terbuat dari olahan biji kakao" },
+      { id: "FO-16", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "ICECREAM", meaning: "Es Krim", pos: "Noun", hint: "Kudapan beku manis menyegarkan saat cuaca panas" },
+      { id: "FO-17", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "COOKIE", meaning: "Kue Kering / Biskuit", pos: "Noun", hint: "Kue renyah manis yang cocok dicelup ke dalam teh" },
+      { id: "FO-18", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "DONUT", meaning: "Donat", pos: "Noun", hint: "Kue goreng bundar berlubang di tengah bertabur meses" },
+      { id: "FO-19", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "HONEY", meaning: "Madu", pos: "Noun", hint: "Cairan manis alami penuh khasiat dari sarang lebah" },
+      { id: "FO-20", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SUGAR", meaning: "Gula Pasir", pos: "Noun", hint: "Pemberi rasa manis pada masakan dan seduhan teh" },
+      { id: "FO-21", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SALT", meaning: "Garam Dapur", pos: "Noun", hint: "Pemberi rasa gurih asin yang diolah dari air laut" },
+      { id: "FO-22", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "PEPPER", meaning: "Lada / Merica", pos: "Noun", hint: "Bumbu dapur penambah rasa hangat pedas gurih" },
+      { id: "FO-23", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "APPLE", meaning: "Buah Apel", pos: "Noun", hint: "Buah manis renyah berkulit merah atau hijau segar" },
+      { id: "FO-24", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "BANANA", meaning: "Buah Pisang", pos: "Noun", hint: "Buah berkulit kuning lembut kaya kalium penambah energi" },
+      { id: "FO-25", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "ORANGE", meaning: "Buah Jeruk", pos: "Noun", hint: "Buah bulat segar berwarna oranye kaya vitamin C" },
+      { id: "FO-26", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "MANGO", meaning: "Buah Mangga", pos: "Noun", hint: "Buah manis harum berdaging tebal kuning jingga" },
+      { id: "FO-27", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "GRAPE", meaning: "Buah Anggur", pos: "Noun", hint: "Buah manis berbentuk bulir kecil ungu atau hijau" },
+      { id: "FO-28", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "WATERMELON", meaning: "Semangka", pos: "Noun", hint: "Buah hijau besar berdaging merah segar banyak air" },
+      { id: "FO-29", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "PAPAYA", meaning: "Pepaya", pos: "Noun", hint: "Buah berdaging oranye manis pelancar sistem pencernaan" },
+      { id: "FO-30", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "STRAWBERRY", meaning: "Stroberi", pos: "Noun", hint: "Buah merah berbintik kecil dengan sensasi asam manis" },
+      { id: "FO-31", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "LEMON", meaning: "Buah Lemon", pos: "Noun", hint: "Buah berkulit kuning cerah berair amat asam segar" },
+      { id: "FO-32", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "AVOCADO", meaning: "Alpukat", pos: "Noun", hint: "Buah berdaging lembut mentega kaya lemak baik" },
+      { id: "FO-33", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CARROT", meaning: "Wortel", pos: "Noun", hint: "Sayuran berwarna oranye renyah yang sangat sehat untuk mata" },
+      { id: "FO-34", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "POTATO", meaning: "Kentang", pos: "Noun", hint: "Umbi kaya karbohidrat yang lezat direbus atau digoreng" },
+      { id: "FO-35", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "TOMATO", meaning: "Tomat", pos: "Noun", hint: "Buah merah segar pelengkap bumbu sayur dan jus" },
+      { id: "FO-36", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "ONION", meaning: "Bawang Bombay", pos: "Noun", hint: "Bumbu sayur beraroma sedap berbentuk bulat berlapis" },
+      { id: "FO-37", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "GARLIC", meaning: "Bawang Putih", pos: "Noun", hint: "Bumbu dapur utama beraroma wangi khas penambah selera" },
+      { id: "FO-38", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "CORN", meaning: "Jagung", pos: "Noun", hint: "Biji-bijian kuning manis yang enak dibakar atau direbus" },
+      { id: "FO-39", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SPINACH", meaning: "Bayam", pos: "Noun", hint: "Sayuran hijau kaya zat besi penambah kekuatan tubuh" },
+      { id: "FO-40", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "MUSHROOM", meaning: "Jamur", pos: "Noun", hint: "Tumbuhan berbentuk payung kenyal yang lezat ditumis" },
+      { id: "FO-41", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "MILK", meaning: "Susu Sapi", pos: "Noun", hint: "Minuman putih bernutrisi tinggi penguat tulang dan gigi" },
+      { id: "FO-42", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "WATER", meaning: "Air Putih", pos: "Noun", hint: "Minuman terpenting untuk menjaga tubuh tetap bugar segar" },
+      { id: "FO-43", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "TEA", meaning: "Air Teh", pos: "Noun", hint: "Minuman seduhan pucuk daun alami beraroma harum" },
+      { id: "FO-44", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "COFFEE", meaning: "Kopi", pos: "Noun", hint: "Seduhan biji kopi hitam pekat pembangkit semangat" },
+      { id: "FO-45", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "JUICE", meaning: "Jus Buah", pos: "Noun", hint: "Sari buah segar yang diblender dingin menyehatkan" },
+      { id: "FO-46", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SODA", meaning: "Minuman Bersoda", pos: "Noun", hint: "Minuman manis berkarbonasi dingin yang berbuih" },
+      { id: "FO-47", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SYRUP", meaning: "Sirup Manis", pos: "Noun", hint: "Cairan gula kental beraroma aneka buah" },
+      { id: "FO-48", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "TOFU", meaning: "Tahu", pos: "Noun", hint: "Olahan kedelai putih bertekstur lembut kaya protein nabati" },
+      { id: "FO-49", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "TEMPEH", meaning: "Tempe", pos: "Noun", hint: "Makanan fermentasi kedelai khas Indonesia yang gurih" },
+      { id: "FO-50", type: "word", category: "food", categoryName: "Makanan & Minuman (Food & Drinks)", categoryIcon: "🍎", word: "SAUCE", meaning: "Saus Sambal / Tomat", pos: "Noun", hint: "Cairan kental pelengkap makanan berasa pedas atau gurih" },
+      { id: "OB-01", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BOOK", meaning: "Buku Bacaan", pos: "Noun", hint: "Kumpulan kertas bertuliskan ilmu pengetahuan" },
+      { id: "OB-02", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PENCIL", meaning: "Pensil Tulis", pos: "Noun", hint: "Alat tulis berbahan kayu dan karbon grafit" },
+      { id: "OB-03", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PEN", meaning: "Pulpen / Pena", pos: "Noun", hint: "Alat tulis bertinta cair untuk menulis di atas kertas" },
+      { id: "OB-04", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "ERASER", meaning: "Penghapus Karet", pos: "Noun", hint: "Alat pembersih coretan pensil pada kertas" },
+      { id: "OB-05", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "RULER", meaning: "Penggaris", pos: "Noun", hint: "Alat bantu pembuat garis lurus dan pengukur jarak" },
+      { id: "OB-06", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BAG", meaning: "Tas Sekolah", pos: "Noun", hint: "Ransel pembawa buku dan alat tulis santri" },
+      { id: "OB-07", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "DESK", meaning: "Meja Tulis", pos: "Noun", hint: "Meja tempat santri belajar dan menulis di kelas" },
+      { id: "OB-08", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CHAIR", meaning: "Kursi Duduk", pos: "Noun", hint: "Perabot berkaki empat tempat duduk yang nyaman" },
+      { id: "OB-09", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "TABLE", meaning: "Meja Makan/Ruangan", pos: "Noun", hint: "Perabot bidang datar berkaki empat di ruangan" },
+      { id: "OB-10", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CLOCK", meaning: "Jam Dinding", pos: "Noun", hint: "Penunjuk waktu berdetik di dinding ruangan" },
+      { id: "OB-11", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "DOOR", meaning: "Pintu Masuk", pos: "Noun", hint: "Penyekat yang bisa dibuka tutup sebagai akses ruangan" },
+      { id: "OB-12", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "WINDOW", meaning: "Jendela Ruang", pos: "Noun", hint: "Bukaan dinding berkaca untuk sirkulasi cahaya dan udara" },
+      { id: "OB-13", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "LAMP", meaning: "Lampu Penerang", pos: "Noun", hint: "Sumber cahaya buatan saat ruangan dalam keadaan gelap" },
+      { id: "OB-14", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BED", meaning: "Kasur Tempat Tidur", pos: "Noun", hint: "Tempat merebahkan badan untuk istirahat lelap" },
+      { id: "OB-15", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PILLOW", meaning: "Bantal Kepala", pos: "Noun", hint: "Alas empuk penyangga kepala saat tidur malam" },
+      { id: "OB-16", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BLANKET", meaning: "Selimut Hangat", pos: "Noun", hint: "Kain penghangat badan penahan hawa dingin" },
+      { id: "OB-17", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "SOFA", meaning: "Kursi Sofa Empuk", pos: "Noun", hint: "Kursi tamu berbusa lembut dan nyaman" },
+      { id: "OB-18", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "MIRROR", meaning: "Kaca Cermin", pos: "Noun", hint: "Permukaan kaca pemantul bayangan untuk merapikan diri" },
+      { id: "OB-19", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CUPBOARD", meaning: "Lemari Pakaian", pos: "Noun", hint: "Perabot berpintu tempat menyimpan pakaian rapi" },
+      { id: "OB-20", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BOTTLE", meaning: "Botol Air Minum", pos: "Noun", hint: "Wadah tempat menyimpan air bekal belajar" },
+      { id: "OB-21", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CUP", meaning: "Cangkir Bertangkai", pos: "Noun", hint: "Wadah kecil bertangkai untuk menyeruput teh hangat" },
+      { id: "OB-22", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "GLASS", meaning: "Gelas Kaca", pos: "Noun", hint: "Wadah silinder bening tempat minum air" },
+      { id: "OB-23", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PLATE", meaning: "Piring Makan", pos: "Noun", hint: "Wadah datar bundar tempat meletakkan nasi dan lauk" },
+      { id: "OB-24", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "SPOON", meaning: "Sendok Makan", pos: "Noun", hint: "Alat makan cekung untuk mengambil hidangan" },
+      { id: "OB-25", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "FORK", meaning: "Garpu Makan", pos: "Noun", hint: "Alat makan bergigi runcing pendamping sendok" },
+      { id: "OB-26", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BOWL", meaning: "Mangkuk Makan", pos: "Noun", hint: "Wadah cekung bulat untuk menyajikan sup dan mie" },
+      { id: "OB-27", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "KNIFE", meaning: "Pisau Dapur", pos: "Noun", hint: "Benda logam berbilah tajam pemotong bahan masakan" },
+      { id: "OB-28", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PAN", meaning: "Wajan / Panci", pos: "Noun", hint: "Wadah logam bertangkai untuk menggoreng makanan" },
+      { id: "OB-29", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BROOM", meaning: "Sapu Ijuk/Lantai", pos: "Noun", hint: "Alat pembersih debu dan kotoran pada lantai" },
+      { id: "OB-30", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "MOP", meaning: "Kain Pel Lantai", pos: "Noun", hint: "Alat bertangkai untuk membersihkan lantai basah" },
+      { id: "OB-31", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "BUCKET", meaning: "Ember Penampung", pos: "Noun", hint: "Wadah bulat bertangkai untuk menampung air" },
+      { id: "OB-32", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "SCISSORS", meaning: "Gunting Pemotong", pos: "Noun", hint: "Alat dua bilah tajam berporos untuk memotong kertas" },
+      { id: "OB-33", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PAPER", meaning: "Kertas HVS/Tulis", pos: "Noun", hint: "Lembaran tipis putih untuk menulis dan menggambar" },
+      { id: "OB-34", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "NOTEBOOK", meaning: "Buku Catatan", pos: "Noun", hint: "Buku tulis bergaris tempat mencatat ringkasan materi" },
+      { id: "OB-35", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "WHITEBOARD", meaning: "Papan Tulis Putih", pos: "Noun", hint: "Papan licin di depan kelas yang ditulis dengan spidol" },
+      { id: "OB-36", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CALENDAR", meaning: "Kalender Penanggalan", pos: "Noun", hint: "Daftar susunan tanggal dan bulan penunjuk hari" },
+      { id: "OB-37", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "FAN", meaning: "Kipas Angin", pos: "Noun", hint: "Alat berbaling-baling penyejuk udara ruangan" },
+      { id: "OB-38", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "TELEVISION", meaning: "Televisi Layar", pos: "Noun", hint: "Perangkat penampil gambar bergerak dan berita" },
+      { id: "OB-39", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "COMPUTER", meaning: "Komputer Meja", pos: "Noun", hint: "Perangkat digital pengolah data tugas belajar" },
+      { id: "OB-40", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "KEYBOARD", meaning: "Papan Ketik Tombol", pos: "Noun", hint: "Papan tombol huruf untuk mengetik pada komputer" },
+      { id: "OB-41", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "MOUSE", meaning: "Tetikus Komputer", pos: "Noun", hint: "Alat genggam penggerak kursor panah di layar" },
+      { id: "OB-42", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "PHONE", meaning: "Ponsel Genggam", pos: "Noun", hint: "Perangkat pintar untuk berkomunikasi jarak jauh" },
+      { id: "OB-43", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CHARGER", meaning: "Pengisi Daya Kabel", pos: "Noun", hint: "Alat pengalir arus listrik pengisi baterai gadget" },
+      { id: "OB-44", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "TOWEL", meaning: "Handuk Mandi", pos: "Noun", hint: "Kain tebal penyerap air sehabis mandi bersih" },
+      { id: "OB-45", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "SOAP", meaning: "Sabun Mandi", pos: "Noun", hint: "Pembersih wangi pembunuh kuman saat membasuh badan" },
+      { id: "OB-46", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "TOOTHBRUSH", meaning: "Sikat Gigi", pos: "Noun", hint: "Alat berbulu halus pembersih sela-sela gigi" },
+      { id: "OB-47", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "COMB", meaning: "Sisir Rambut", pos: "Noun", hint: "Alat bergigi rapat perapih helai rambut di kepala" },
+      { id: "OB-48", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "SHOES", meaning: "Sepatu Bertali", pos: "Noun", hint: "Alas kaki pelindung saat beraktivitas di sekolah" },
+      { id: "OB-49", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "SOCKS", meaning: "Kaos Kaki", pos: "Noun", hint: "Kain penutup telapak kaki di dalam sepatu" },
+      { id: "OB-50", type: "word", category: "objects", categoryName: "Benda Sekolah & Rumah (Things)", categoryIcon: "🏫", word: "CURTAIN", meaning: "Kain Gorden", pos: "Noun", hint: "Kain tirai penutup jendela penahan silau cahaya" },
+      { id: "BO-01", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "HEAD", meaning: "Kepala", pos: "Noun", hint: "Bagian puncak tubuh tempat bernaungnya otak dan wajah" },
+      { id: "BO-02", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "HAIR", meaning: "Rambut", pos: "Noun", hint: "Helai mahkota alami yang tumbuh di atas kulit kepala" },
+      { id: "BO-03", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "EYE", meaning: "Mata", pos: "Noun", hint: "Indra penglihatan karunia Allah untuk menatap dunia" },
+      { id: "BO-04", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "EAR", meaning: "Telinga", pos: "Noun", hint: "Indra pendengaran untuk menangkap gelombang suara" },
+      { id: "BO-05", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "NOSE", meaning: "Hidung", pos: "Noun", hint: "Indra pencium aroma dan gerbang saluran bernapas" },
+      { id: "BO-06", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "MOUTH", meaning: "Mulut", pos: "Noun", hint: "Rongga tempat berbicara santun dan mengunyah makanan" },
+      { id: "BO-07", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "TOOTH", meaning: "Gigi", pos: "Noun", hint: "Bagian keras putih di dalam mulut pemotong makanan" },
+      { id: "BO-08", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "TONGUE", meaning: "Lidah", pos: "Noun", hint: "Indra pengecap aneka rasa manis, asin, dan gurih" },
+      { id: "BO-09", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "LIP", meaning: "Bibir", pos: "Noun", hint: "Bagian tepi luar mulut yang lentur saat berucap" },
+      { id: "BO-10", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "CHIN", meaning: "Dagu", pos: "Noun", hint: "Bagian wajah paling bawah di bawah bibir bawah" },
+      { id: "BO-11", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "CHEEK", meaning: "Pipi", pos: "Noun", hint: "Bagian samping wajah yang kenyal di kiri dan kanan" },
+      { id: "BO-12", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "FOREHEAD", meaning: "Dahi / Kening", pos: "Noun", hint: "Bagian wajah yang luas di atas kedua alis mata" },
+      { id: "BO-13", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "NECK", meaning: "Leher", pos: "Noun", hint: "Bagian tubuh penyangga dan pemutar posisi kepala" },
+      { id: "BO-14", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "SHOULDER", meaning: "Pundak / Bahu", pos: "Noun", hint: "Sendi kokoh penopang pangkal lengan dan tas ransel" },
+      { id: "BO-15", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "ARM", meaning: "Lengan Tangan", pos: "Noun", hint: "Anggota gerak bagian atas dari bahu ke pergelangan" },
+      { id: "BO-16", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "ELBOW", meaning: "Siku Lengan", pos: "Noun", hint: "Sendi engsel lipatan di tengah-tengah lengan" },
+      { id: "BO-17", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "HAND", meaning: "Tangan", pos: "Noun", hint: "Anggota tubuh terpenting untuk memegang dan berkarya" },
+      { id: "BO-18", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "FINGER", meaning: "Jari Jemari", pos: "Noun", hint: "Lima ruas jemari lincah di tiap telapak tangan" },
+      { id: "BO-19", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "THUMB", meaning: "Ibu Jari / Jempol", pos: "Noun", hint: "Jari tangan terbesar simbol tanda setuju atau hebat" },
+      { id: "BO-20", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "NAIL", meaning: "Kuku Jari", pos: "Noun", hint: "Lapisan keratin keras pelindung di tiap ujung jari" },
+      { id: "BO-21", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "CHEST", meaning: "Dada", pos: "Noun", hint: "Bagian depan tubuh pelindung rongga jantung" },
+      { id: "BO-22", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "STOMACH", meaning: "Perut", pos: "Noun", hint: "Bagian badan penampung makanan yang dicerna" },
+      { id: "BO-23", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "BACK", meaning: "Punggung", pos: "Noun", hint: "Bagian belakang tubuh di sekeliling tulang belakang" },
+      { id: "BO-24", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "WAIST", meaning: "Pinggang", pos: "Noun", hint: "Bagian lekuk tubuh tempat melingkarkan ikat pinggang" },
+      { id: "BO-25", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "LEG", meaning: "Kaki / Tungkai", pos: "Noun", hint: "Anggota gerak bawah penopang tubuh untuk berjalan" },
+      { id: "BO-26", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "KNEE", meaning: "Lutut Kaki", pos: "Noun", hint: "Sendi lipatan penekuk kaki saat duduk dan sujud" },
+      { id: "BO-27", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "FOOT", meaning: "Telapak Kaki", pos: "Noun", hint: "Bagian terbawah kaki yang menapak kokoh di lantai" },
+      { id: "BO-28", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "TOE", meaning: "Jari Kaki", pos: "Noun", hint: "Jemari kecil di bagian depan telapak kaki" },
+      { id: "BO-29", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "ANKLE", meaning: "Pergelangan Kaki", pos: "Noun", hint: "Sendi mata kaki penghubung tungkai dan telapak kaki" },
+      { id: "BO-30", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "HEEL", meaning: "Tumit Kaki", pos: "Noun", hint: "Bagian belakang bawah pada telapak kaki" },
+      { id: "BO-31", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "SKIN", meaning: "Kulit Tubuh", pos: "Noun", hint: "Lapisan terluar pelindung seluruh bagian badan" },
+      { id: "BO-32", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "BONE", meaning: "Tulang Kerangka", pos: "Noun", hint: "Kerangka keras kokoh penopang bentuk tubuh manusia" },
+      { id: "BO-33", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "BLOOD", meaning: "Darah Merah", pos: "Noun", hint: "Cairan merah pembawa sari makanan dan oksigen" },
+      { id: "BO-34", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "HEART", meaning: "Jantung", pos: "Noun", hint: "Organ pemompa darah yang berdetak teratur di dada" },
+      { id: "BO-35", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "BRAIN", meaning: "Otak", pos: "Noun", hint: "Pusat pengendali pikiran, memori, dan seluruh saraf" },
+      { id: "BO-36", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "MUSCLE", meaning: "Otot Tubuh", pos: "Noun", hint: "Jaringan penggerak tulang pemberi tenaga fisik" },
+      { id: "BO-37", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "THROAT", meaning: "Tenggorokan", pos: "Noun", hint: "Saluran pernapasan dan penelan di bagian leher dalam" },
+      { id: "BO-38", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "EYEBROW", meaning: "Alis Mata", pos: "Noun", hint: "Lengkungan rambut pelindung mata dari tetesan keringat" },
+      { id: "BO-39", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "EYELASH", meaning: "Bulu Mata", pos: "Noun", hint: "Helai rambut halus penyaring debu di kelopak mata" },
+      { id: "BO-40", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "BEARD", meaning: "Jenggot", pos: "Noun", hint: "Helaian rambut di sekitar dagu laki-laki dewasa" },
+      { id: "BO-41", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "PALM", meaning: "Telapak Tangan", pos: "Noun", hint: "Bagian dalam tangan yang hangat saat bersalaman" },
+      { id: "BO-42", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "WRIST", meaning: "Pergelangan Tangan", pos: "Noun", hint: "Sendi tempat melingkarkan jam tangan kesayangan" },
+      { id: "BO-43", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "HIP", meaning: "Pinggul", pos: "Noun", hint: "Bagian tulang gelang panggul penopang berat badan" },
+      { id: "BO-44", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "BELLY", meaning: "Perut Bawah", pos: "Noun", hint: "Bagian tengah perut di sekeliling area pusar" },
+      { id: "BO-45", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "THIGH", meaning: "Paha Kaki", pos: "Noun", hint: "Bagian tungkai kaki atas yang berotot besar dan kuat" },
+      { id: "BO-46", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "CALF", meaning: "Betis Kaki", pos: "Noun", hint: "Bagian belakang tungkai bawah di bawah sendi lutut" },
+      { id: "BO-47", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "SHIN", meaning: "Tulang Kering", pos: "Noun", hint: "Bagian depan tulang tungkai bawah kaki" },
+      { id: "BO-48", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "RIB", meaning: "Tulang Rusuk", pos: "Noun", hint: "Lengkungan tulang pelindung paru-paru dan jantung" },
+      { id: "BO-49", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "LUNG", meaning: "Paru-paru", pos: "Noun", hint: "Organ pernapasan penukar gas oksigen segar" },
+      { id: "BO-50", type: "word", category: "body", categoryName: "Anggota Tubuh (Body Parts)", categoryIcon: "👤", word: "FACE", meaning: "Wajah / Muka", pos: "Noun", hint: "Tampilan depan kepala yang memancarkan ekspresi ceria" },
+      { id: "VE-01", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WAKE", meaning: "Bangun Tidur", pos: "Verb", hint: "Membuka mata dan beranjak dari kasur di waktu fajar" },
+      { id: "VE-02", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SLEEP", meaning: "Tidur Lelap", pos: "Verb", hint: "Merebahkan tubuh untuk beristirahat malam penuh pulas" },
+      { id: "VE-03", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "EAT", meaning: "Makan Makanan", pos: "Verb", hint: "Menyantap hidangan lezat penambah stamina tubuh" },
+      { id: "VE-04", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "DRINK", meaning: "Minum Air", pos: "Verb", hint: "Meneguk air putih segar pelepas rasa dahaga" },
+      { id: "VE-05", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WASH", meaning: "Mencuci Bersih", pos: "Verb", hint: "Membersihkan barang kotor dengan siraman air dan sabun" },
+      { id: "VE-06", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "BATHE", meaning: "Mandi Segar", pos: "Verb", hint: "Membersihkan seluruh badan agar wangi dan bersih" },
+      { id: "VE-07", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "BRUSH", meaning: "Menyikat Gigi", pos: "Verb", hint: "Menggosok gigi dengan pasta gigi secara teratur" },
+      { id: "VE-08", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "COOK", meaning: "Memasak Makanan", pos: "Verb", hint: "Mengolah racikan bumbu bahan di dapur hingga siap santap" },
+      { id: "VE-09", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "READ", meaning: "Membaca Buku", pos: "Verb", hint: "Melihat dan memahami deretan kalimat ilmu pada buku" },
+      { id: "VE-10", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WRITE", meaning: "Menulis Catatan", pos: "Verb", hint: "Menggoreskan pena menorehkan kata di lembaran buku" },
+      { id: "VE-11", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "STUDY", meaning: "Belajar Pelajaran", pos: "Verb", hint: "Menelaah dan mendalami materi pelajaran sekolah" },
+      { id: "VE-12", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "LEARN", meaning: "Mempelajari Hal Baru", pos: "Verb", hint: "Menyerap wawasan dan keterampilan baru yang bermanfaat" },
+      { id: "VE-13", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SPEAK", meaning: "Berbicara Jelas", pos: "Verb", hint: "Mengucapkan kata-kata melalui suara lisan" },
+      { id: "VE-14", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "TALK", meaning: "Mengobrol Santai", pos: "Verb", hint: "Bercakap-cakap akrab bertukar cerita bersama teman" },
+      { id: "VE-15", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "LISTEN", meaning: "Mendengarkan Seksama", pos: "Verb", hint: "Memperhatikan suara nasihat guru dengan penuh perhatian" },
+      { id: "VE-16", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "HEAR", meaning: "Mendengar Suara", pos: "Verb", hint: "Menangkap bunyi suara adzan melalui indra telinga" },
+      { id: "VE-17", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WATCH", meaning: "Menonton Tayangan", pos: "Verb", hint: "Menyaksikan video edukatif di layar monitor" },
+      { id: "VE-18", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SEE", meaning: "Melihat Pemandangan", pos: "Verb", hint: "Memandang keelokan alam ciptaan Allah melalui mata" },
+      { id: "VE-19", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "LOOK", meaning: "Menoleh / Melihat", pos: "Verb", hint: "Mengarahkan pandangan fokus ke suatu benda" },
+      { id: "VE-20", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WALK", meaning: "Berjalan Kaki", pos: "Verb", hint: "Melangkahkan kaki dengan santai dan tertib" },
+      { id: "VE-21", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "RUN", meaning: "Berlari Cepat", pos: "Verb", hint: "Melangkahkan kaki dengan kecepatan tinggi penuh semangat" },
+      { id: "VE-22", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "JUMP", meaning: "Melompat Tinggi", pos: "Verb", hint: "Mendorong kedua kaki melesat ke atas di udara" },
+      { id: "VE-23", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SIT", meaning: "Duduk Rapi", pos: "Verb", hint: "Menempatkan badan di atas kursi dengan tenang" },
+      { id: "VE-24", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "STAND", meaning: "Berdiri Tegak", pos: "Verb", hint: "Menegakkan tubuh berdiri tegap saat baris-berbaris" },
+      { id: "VE-25", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "OPEN", meaning: "Membuka Pintu/Buku", pos: "Verb", hint: "Menyingkap jendela atau lembaran buku belajar" },
+      { id: "VE-26", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "CLOSE", meaning: "Menutup Rapat", pos: "Verb", hint: "Merapatkan kembali daun pintu setelah melewatinya" },
+      { id: "VE-27", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "PUSH", meaning: "Mendorong Kuat", pos: "Verb", hint: "Menekan benda bergerak maju menjauh dari badan" },
+      { id: "VE-28", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "PULL", meaning: "Menarik Mendekat", pos: "Verb", hint: "Menghela gerobak atau pintu ke arah badan" },
+      { id: "VE-29", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "CLEAN", meaning: "Membersihkan Ruang", pos: "Verb", hint: "Menyingkirkan kotoran agar ruangan kembali kinclong" },
+      { id: "VE-30", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SWEEP", meaning: "Menyapu Lantai", pos: "Verb", hint: "Mengayunkan sapu mengumpulkan debu lantai ke serokan" },
+      { id: "VE-31", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "HELP", meaning: "Menolong Teman", pos: "Verb", hint: "Memberikan bantuan tulus kepada sesama yang membutuhkan" },
+      { id: "VE-32", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WORK", meaning: "Bekerja Ikhlas", pos: "Verb", hint: "Menjalankan tugas dan kewajiban dengan penuh dedikasi" },
+      { id: "VE-33", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "PLAY", meaning: "Bermain Ceria", pos: "Verb", hint: "Melakukan permainan yang menggembirakan bersama kawan" },
+      { id: "VE-34", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SING", meaning: "Bernyanyi Bersama", pos: "Verb", hint: "Melantunkan bait-bait lagu nada indah dan ceria" },
+      { id: "VE-35", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "DANCE", meaning: "Menari Berirama", pos: "Verb", hint: "Menggerakkan badan selaras dengan ketukan irama" },
+      { id: "VE-36", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SMILE", meaning: "Tersenyum Manis", pos: "Verb", hint: "Menarik sudut bibir tanda ramah dan sedekah termudah" },
+      { id: "VE-37", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "LAUGH", meaning: "Tertawa Gembira", pos: "Verb", hint: "Mengeluarkan tawa renyah mendengar lelucon lucu" },
+      { id: "VE-38", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "CRY", meaning: "Menangis Haru", pos: "Verb", hint: "Menitikkan air mata karena perasaan haru atau sedih" },
+      { id: "VE-39", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "BUY", meaning: "Membeli Barang", pos: "Verb", hint: "Menukarkan uang dengan barang di toko atau kantin" },
+      { id: "VE-40", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SELL", meaning: "Menjual Dagangan", pos: "Verb", hint: "Menjajakan barang dagangan berkualitas kepada pembeli" },
+      { id: "VE-41", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "PAY", meaning: "Membayar Tunai", pos: "Verb", hint: "Melunasi tagihan harga belanjaan dengan uang pas" },
+      { id: "VE-42", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "BRING", meaning: "Membawa Bekal", pos: "Verb", hint: "Mengangkut tas atau barang bawaan ke sekolah" },
+      { id: "VE-43", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "TAKE", meaning: "Mengambil Sesuatu", pos: "Verb", hint: "Meraih atau memegang benda dari atas meja" },
+      { id: "VE-44", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "GIVE", meaning: "Memberi Sedekah", pos: "Verb", hint: "Menyerahkan pemberian ikhlas untuk membahagiakan sesama" },
+      { id: "VE-45", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SEND", meaning: "Mengirim Pesan", pos: "Verb", hint: "Melayangkan pesan surat atau paket ke penerima" },
+      { id: "VE-46", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "WAIT", meaning: "Menunggu Sabar", pos: "Verb", hint: "Menantikan kehadiran kawan dengan penuh kesabaran" },
+      { id: "VE-47", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "PRAY", meaning: "Berdoa / Sholat", pos: "Verb", hint: "Memohon kebaikan dan bersujud menyembah Allah SWT" },
+      { id: "VE-48", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "THINK", meaning: "Berpikir Cerdas", pos: "Verb", hint: "Menggunakan akal untuk mencari jalan keluar terbaik" },
+      { id: "VE-49", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "TEACH", meaning: "Mengajar Santri", pos: "Verb", hint: "Membimbing dan membagikan ilmu hikmah kepada murid" },
+      { id: "VE-50", type: "word", category: "verbs", categoryName: "Aktivitas Harian (Daily Verbs)", categoryIcon: "🏃", word: "SWIM", meaning: "Berenang di Air", pos: "Verb", hint: "Meluncur mengapungkan badan berolahraga di kolam air" },
+      { id: "AD-01", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "HAPPY", meaning: "Bahagia / Senang", pos: "Adjective", hint: "Perasaan hati yang riang gembira dan bersyukur" },
+      { id: "AD-02", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SAD", meaning: "Sedih / Murung", pos: "Adjective", hint: "Rasa pilu di hati yang membuat ingin dihibur" },
+      { id: "AD-03", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "ANGRY", meaning: "Marah Kesal", pos: "Adjective", hint: "Emosi geram yang harus diredam dengan berwudhu" },
+      { id: "AD-04", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SCARED", meaning: "Takut / Gentar", pos: "Adjective", hint: "Perasaan was-was ketika menghadapi hal yang mencekam" },
+      { id: "AD-05", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "TIRED", meaning: "Lelah Letih", pos: "Adjective", hint: "Kondisi badan penat setelah seharian aktif berkegiatan" },
+      { id: "AD-06", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SLEEPY", meaning: "Mengantuk Berat", pos: "Adjective", hint: "Mata yang terasa berat tanda harus segera tidur malam" },
+      { id: "AD-07", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "HUNGRY", meaning: "Lapar Perut", pos: "Adjective", hint: "Rasa perut keroncongan yang butuh diisi makanan" },
+      { id: "AD-08", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "THIRSTY", meaning: "Haus Dahaga", pos: "Adjective", hint: "Kerongkongan kering yang mendambakan segelas air minum" },
+      { id: "AD-09", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "EXCITED", meaning: "Sangat Antusias", pos: "Adjective", hint: "Perasaan berdebar gembira menyambut acara seru" },
+      { id: "AD-10", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "PROUD", meaning: "Bangga Prestasi", pos: "Adjective", hint: "Rasa puas atas pencapaian prestasi belajar terbaik" },
+      { id: "AD-11", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "BRAVE", meaning: "Pemberani Gagah", pos: "Adjective", hint: "Sikap gagah berani pantang menyerah hadapi rintangan" },
+      { id: "AD-12", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "KIND", meaning: "Baik Hati / Ramah", pos: "Adjective", hint: "Sifat mulia yang tulus mencintai dan menolong sesama" },
+      { id: "AD-13", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "POLITE", meaning: "Sopan Santun", pos: "Adjective", hint: "Tutur kata halus dan berakhlak mulia menghormati orang lain" },
+      { id: "AD-14", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "HONEST", meaning: "Jujur Amanah", pos: "Adjective", hint: "Selalu berucap benar dan memegang teguh amanah" },
+      { id: "AD-15", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "CLEVER", meaning: "Pandai Tanggap", pos: "Adjective", hint: "Mudah memahami konsep pelajaran dengan cepat" },
+      { id: "AD-16", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SMART", meaning: "Cerdas Berakal", pos: "Adjective", hint: "Mampu mencari solusi jitu untuk masalah yang rumit" },
+      { id: "AD-17", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "FUNNY", meaning: "Lucu Jenaka", pos: "Adjective", hint: "Pribadi jenaka yang menghibur dan mengundang tawa ceria" },
+      { id: "AD-18", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "QUIET", meaning: "Tenang Sunyi", pos: "Adjective", hint: "Suasana hening damai tanpa ada kebisingan suara" },
+      { id: "AD-19", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "NOISY", meaning: "Bising Ramai", pos: "Adjective", hint: "Suasana riuh ramai penuh celoteh dan kegaduhan" },
+      { id: "AD-20", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "BIG", meaning: "Besar Luas", pos: "Adjective", hint: "Ukuran fisik yang bervolume luas atau tinggi besar" },
+      { id: "AD-21", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SMALL", meaning: "Kecil Mungil", pos: "Adjective", hint: "Ukuran dimensi yang mungil dan ringkas" },
+      { id: "AD-22", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "TALL", meaning: "Tinggi Menjulang", pos: "Adjective", hint: "Postur badan atau pohon yang menjulang tinggi ke atas" },
+      { id: "AD-23", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SHORT", meaning: "Pendek / Singkat", pos: "Adjective", hint: "Ukuran tinggi atau durasi waktu yang pendek" },
+      { id: "AD-24", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "LONG", meaning: "Panjang Rentang", pos: "Adjective", hint: "Rentang jarak dari ujung ke ujung yang luas" },
+      { id: "AD-25", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "FAT", meaning: "Gemuk Berisi", pos: "Adjective", hint: "Bentuk tubuh yang montok dan berisi gizi cukup" },
+      { id: "AD-26", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "THIN", meaning: "Kurus Langsing", pos: "Adjective", hint: "Bentuk fisik yang ramping dan berlemak sedikit" },
+      { id: "AD-27", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "STRONG", meaning: "Kuat Bertenaga", pos: "Adjective", hint: "Memiliki tenaga fisik kekar dan daya tahan kokoh" },
+      { id: "AD-28", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "WEAK", meaning: "Lemah / Lesu", pos: "Adjective", hint: "Kondisi fisik kurang bertenaga yang butuh asupan gizi" },
+      { id: "AD-29", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "FAST", meaning: "Cepat Kilat", pos: "Adjective", hint: "Bergerak dengan kelincahan dan kecepatan tinggi" },
+      { id: "AD-30", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SLOW", meaning: "Lambat Perlahan", pos: "Adjective", hint: "Melangkah secara santai dan perlahan tanpa terburu-buru" },
+      { id: "AD-31", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "HOT", meaning: "Panas Terik", pos: "Adjective", hint: "Suhu udara tinggi membakar seperti terik matahari" },
+      { id: "AD-32", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "COLD", meaning: "Dingin Beku", pos: "Adjective", hint: "Suhu sangat sejuk menggigil seperti udara kutub" },
+      { id: "AD-33", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "WARM", meaning: "Hangat Nyaman", pos: "Adjective", hint: "Suhu pas yang memberikan rasa nyaman menenangkan" },
+      { id: "AD-34", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "COOL", meaning: "Sejuk Menyegarkan", pos: "Adjective", hint: "Hawa semilir berangin segar di bawah pohon rindang" },
+      { id: "AD-35", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "CLEAN", meaning: "Bersih Suci", pos: "Adjective", hint: "Kondisi kinclong bebas dari noda, kotoran, dan kuman" },
+      { id: "AD-36", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "DIRTY", meaning: "Kotor Bernoda", pos: "Adjective", hint: "Terkena cipratan lumpur atau debu yang perlu dicuci" },
+      { id: "AD-37", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "NEW", meaning: "Baru Gress", pos: "Adjective", hint: "Barang gres yang baru dibeli dan belum pernah dipakai" },
+      { id: "AD-38", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "OLD", meaning: "Tua / Kuno", pos: "Adjective", hint: "Benda antik atau seseorang yang berusia lanjut" },
+      { id: "AD-39", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "YOUNG", meaning: "Muda Belia", pos: "Adjective", hint: "Berada di usia dini penuh semangat jiwa muda" },
+      { id: "AD-40", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "RICH", meaning: "Kaya Harta", pos: "Adjective", hint: "Berlimpah rezeki yang gemar berinfak dan bersedekah" },
+      { id: "AD-41", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "POOR", meaning: "Miskin Kurang", pos: "Adjective", hint: "Kondisi kekurangan harta yang wajib kita santuni" },
+      { id: "AD-42", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "EASY", meaning: "Mudah Gampang", pos: "Adjective", hint: "Soal yang gampang dipecahkan tanpa kesulitan berarti" },
+      { id: "AD-43", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "HARD", meaning: "Sulit Menantang", pos: "Adjective", hint: "Tantangan berbobot yang butuh ketelitian ekstra" },
+      { id: "AD-44", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "HEAVY", meaning: "Berat Beban", pos: "Adjective", hint: "Memiliki timbangan bobot yang besar saat diangkat" },
+      { id: "AD-45", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "LIGHT", meaning: "Ringan Timbangan", pos: "Adjective", hint: "Memiliki bobot enteng yang mudah dibawa ke mana saja" },
+      { id: "AD-46", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "BRIGHT", meaning: "Terang Benderang", pos: "Adjective", hint: "Cahaya berkilau benderang menyinari kegelapan malam" },
+      { id: "AD-47", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "DARK", meaning: "Gelap Gulita", pos: "Adjective", hint: "Kondisi tanpa penerangan cahaya di malam pekat" },
+      { id: "AD-48", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SWEET", meaning: "Manis Legit", pos: "Adjective", hint: "Rasa nikmat seperti madu lebah atau gula tebu" },
+      { id: "AD-49", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "SOUR", meaning: "Asam Kecut", pos: "Adjective", hint: "Rasa kecut segar yang menggelitik lidah seperti buah lemon" },
+      { id: "AD-50", type: "word", category: "adjectives", categoryName: "Sifat & Emosi (Adjectives)", categoryIcon: "✨", word: "BITTER", meaning: "Pahit Alami", pos: "Adjective", hint: "Rasa khas jamu herbal atau kopi tanpa campuran gula" }
     ];
 
     /* ==========================================================================
        GAME STATE MANAGEMENT & TURN-BASED ENGINE
        ========================================================================== */
-    let currentModeFilter = 'word'; // 'word' or 'sentence'
-    let currentGradeFilter = 'all'; // 'all', '7', '8', '9'
+    let currentCategoryFilter = 'all';
     let currentQuestion = null;
     let poolLetters = [];
     let placedLetters = [];
@@ -992,7 +1129,6 @@
           osc.start(now);
           osc.stop(now + 0.15);
         } else if (type === 'success') {
-          // Play Festive 5-Note Victory Fanfare (C5, E5, G5, C6, E6)
           const notes = [523.25, 659.25, 783.99, 1046.50, 1318.51];
           notes.forEach((freq, idx) => {
             const oscN = audioCtx.createOscillator();
@@ -1007,7 +1143,6 @@
             oscN.stop(now + idx * 0.08 + 0.28);
           });
         } else if (type === 'error') {
-          // Brief wrong attempt buzz ("Tet!")
           const oscE = audioCtx.createOscillator();
           const gE = audioCtx.createGain();
           oscE.type = 'sawtooth';
@@ -1020,15 +1155,13 @@
           oscE.start(now);
           oscE.stop(now + 0.12);
         } else if (type === 'gameover') {
-          // Iconic Fun Game-Show "TET-TOT! 💥" Sound Effect (Waktu/Kesempatan Habis)
-          // 1. "TET!" (High sharp dual-tone buzzer)
           const oscTet1 = audioCtx.createOscillator();
           const oscTet2 = audioCtx.createOscillator();
           const gTet = audioCtx.createGain();
           oscTet1.type = 'sawtooth';
           oscTet2.type = 'square';
-          oscTet1.frequency.setValueAtTime(466.16, now); // Bb4
-          oscTet2.frequency.setValueAtTime(349.23, now); // F4 (harmonized buzzer)
+          oscTet1.frequency.setValueAtTime(466.16, now);
+          oscTet2.frequency.setValueAtTime(349.23, now);
           gTet.gain.setValueAtTime(0.45, now);
           gTet.gain.linearRampToValueAtTime(0.01, now + 0.18);
           oscTet1.connect(gTet);
@@ -1039,16 +1172,15 @@
           oscTet1.stop(now + 0.18);
           oscTet2.stop(now + 0.18);
 
-          // 2. "TOT!" (Low heavy game-over buzzer drop)
           const startTot = now + 0.21;
           const oscTot1 = audioCtx.createOscillator();
           const oscTot2 = audioCtx.createOscillator();
           const gTot = audioCtx.createGain();
           oscTot1.type = 'square';
           oscTot2.type = 'sawtooth';
-          oscTot1.frequency.setValueAtTime(233.08, startTot); // Bb3
-          oscTot1.frequency.exponentialRampToValueAtTime(110.00, startTot + 0.45); // Pitch drop to low 110Hz
-          oscTot2.frequency.setValueAtTime(174.61, startTot); // F3
+          oscTot1.frequency.setValueAtTime(233.08, startTot);
+          oscTot1.frequency.exponentialRampToValueAtTime(110.00, startTot + 0.45);
+          oscTot2.frequency.setValueAtTime(174.61, startTot);
           oscTot2.frequency.exponentialRampToValueAtTime(80.00, startTot + 0.45);
           gTot.gain.setValueAtTime(0.50, startTot);
           gTot.gain.linearRampToValueAtTime(0.01, startTot + 0.45);
@@ -1060,7 +1192,6 @@
           oscTot1.stop(startTot + 0.45);
           oscTot2.stop(startTot + 0.45);
         } else if (type === 'tick') {
-          // Warning countdown beep for last 10 seconds
           osc.type = 'sine';
           osc.frequency.setValueAtTime(880, now);
           gain.gain.setValueAtTime(0.15, now);
@@ -1105,11 +1236,27 @@
       });
     });
 
-    function switchGameMode(mode) {
-      currentModeFilter = mode;
-      document.getElementById('tabWordMode').classList.toggle('active', mode === 'word');
-      document.getElementById('tabSentenceMode').classList.toggle('active', mode === 'sentence');
+    function selectCategory(cat) {
+      currentCategoryFilter = cat;
+      const select = document.getElementById('categorySelect');
+      if (select) select.value = cat;
+      updatePillStyles();
       initGameSession();
+    }
+
+    function onCategorySelectChange() {
+      const select = document.getElementById('categorySelect');
+      if (select) currentCategoryFilter = select.value;
+      updatePillStyles();
+      initGameSession();
+    }
+
+    function updatePillStyles() {
+      const cats = ['all', 'animals', 'food', 'objects', 'body', 'verbs', 'adjectives'];
+      cats.forEach(c => {
+        const el = document.getElementById(`pill-${c}`);
+        if (el) el.classList.toggle('active', c === currentCategoryFilter);
+      });
     }
 
     let usedQuestionIds = [];
@@ -1139,42 +1286,35 @@
     function initGameSession() {
       stopTimer();
       isQuestionActive = false;
-      lives = 3; // Selalu reset nyawa penuh (3) untuk setiap giliran / ronde baru
-      currentGradeFilter = document.getElementById('gradeSelect').value;
+      lives = 3;
       wrongAttemptsInRound = 0;
 
-      // Filter dataset based on Grade and Type
+      // Filter dataset berdasarkan Kategori
       let dataset = MASTER_DATASET;
-
-      if (currentGradeFilter !== 'all') {
-        dataset = dataset.filter(item => item.grade === currentGradeFilter);
-      }
-
-      if (currentModeFilter !== 'all') {
-        dataset = dataset.filter(item => item.type === currentModeFilter);
+      if (currentCategoryFilter !== 'all') {
+        dataset = dataset.filter(item => item.category === currentCategoryFilter);
       }
 
       if (dataset.length === 0) {
         dataset = MASTER_DATASET;
       }
 
-      // Filter out questions played in current session so they don't repeat
+      // Filter soal yang sudah dimainkan di sesi ini agar tidak mengulang
       let availableDataset = dataset.filter(item => !usedQuestionIds.includes(item.id));
       if (availableDataset.length === 0) {
-        // Reset pool history if all questions in this category have been played
         usedQuestionIds = usedQuestionIds.filter(id => !dataset.some(item => item.id === id));
         availableDataset = dataset;
       }
 
-      // Pick Truly Random Question
+      // Ambil soal secara acak murni
       const randomIndex = Math.floor(Math.random() * availableDataset.length);
       currentQuestion = availableDataset[randomIndex];
       usedQuestionIds.push(currentQuestion.id);
 
-      // Setup Round Elements
+      // Setup Elemen Ronde
       setupRoundUI();
 
-      // Show Turn Cover Overlay (Hides question & timer until Start is clicked)
+      // Tampilkan Turn Cover Overlay (Sembunyikan soal & timer sampai tombol Start ditekan)
       document.getElementById('coverPlayerBadge').innerText = `🎲 SIAP-SIAP PEMAIN #${turnCount}!`;
       document.getElementById('startCoverOverlay').classList.add('active');
 
@@ -1186,7 +1326,6 @@
       document.getElementById('startCoverOverlay').classList.remove('active');
       isQuestionActive = true;
       startTimer();
-      // Jaga layar gameplay tetap fokus dan tidak lompat/scroll ke atas
       const board = document.getElementById('gameBoard');
       if (board) {
         board.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -1199,23 +1338,24 @@
       document.getElementById('btnHint').disabled = false;
 
       // Setup Badges
-      const isWord = currentQuestion.type === 'word';
-      const targetText = isWord ? currentQuestion.word : currentQuestion.sentence;
+      const targetText = currentQuestion.word;
 
       const badgeType = document.getElementById('badgeType');
-      badgeType.innerText = isWord ? '🔤 SUSUN KATA' : '📝 SUSUN KALIMAT';
-      badgeType.className = 'badge-tag ' + (isWord ? 'badge-type' : 'badge-easy');
+      badgeType.innerText = '🔤 SUSUN KATA';
+      badgeType.className = 'badge-tag badge-type';
 
-      document.getElementById('badgeCategory').innerText = 'Kelas ' + currentQuestion.grade;
+      const badgeCategory = document.getElementById('badgeCategory');
+      badgeCategory.innerText = `${currentQuestion.categoryIcon} ${currentQuestion.categoryName}`;
+      badgeCategory.className = 'badge-tag badge-grade';
+
       document.getElementById('badgePos').innerText = `(${currentQuestion.pos.toUpperCase()})`;
-
       document.getElementById('clueText').innerHTML = `🔒 <strong>Clue:</strong> <i>(Tersembunyi - Klik tombol "Petunjuk" di bawah untuk melihat clue)</i>`;
 
       // Split target items
-      let items = isWord ? targetText.split('') : targetText.split(' ');
+      let items = targetText.split('');
       placedLetters = new Array(items.length).fill(null);
 
-      // Scramble letters or words
+      // Scramble letters
       poolLetters = shuffleArray([...items]);
       if (poolLetters.join('') === items.join('') && items.length > 1) {
         poolLetters.reverse();
