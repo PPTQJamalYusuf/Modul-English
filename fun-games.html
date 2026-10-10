@@ -84,36 +84,93 @@
       box-shadow: 0 5px 12px rgba(0,0,0,0.15);
     }
 
-    /* Playful Mode Switch Tabs */
-    .mode-tab-container {
-      display: flex;
-      gap: 10px;
-      margin-bottom: 20px;
+    /* Integrated Category Menu Grid in Header */
+    .category-menu-section {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      padding: 14px 16px;
+      border-radius: 16px;
+      backdrop-filter: blur(10px);
     }
 
-    .tab-btn {
-      flex: 1;
-      padding: 12px 16px;
-      background: white;
-      border: 2px solid var(--border-color);
-      border-radius: 14px;
+    .category-menu-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 8px;
+    }
+
+    @media (max-width: 992px) {
+      .category-menu-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .category-menu-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .cat-menu-btn {
+      background: rgba(255, 255, 255, 0.95);
+      color: #0b4f57;
+      border: 2px solid transparent;
+      padding: 10px 6px;
+      border-radius: 12px;
       font-weight: 800;
-      color: var(--text-muted);
       cursor: pointer;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      gap: 8px;
-      transition: all 0.22s ease;
-      font-size: 0.92rem;
+      gap: 3px;
+      transition: all 0.22s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      box-shadow: 0 3px 8px rgba(0, 0, 0, 0.08);
+      user-select: none;
+      width: 100%;
     }
 
-    .tab-btn.active {
-      border-color: var(--primary-color);
+    .cat-menu-btn .cat-icon {
+      font-size: 1.35rem;
+      line-height: 1.1;
+    }
+
+    .cat-menu-btn .cat-name {
+      font-size: 0.82rem;
+      font-weight: 800;
+      letter-spacing: 0.2px;
+      white-space: nowrap;
+    }
+
+    .cat-menu-btn .cat-count {
+      font-size: 0.7rem;
       background: #e0f2f3;
-      color: var(--primary-color);
-      box-shadow: 0 4px 12px rgba(11,79,87,0.12);
+      color: #0b4f57;
+      padding: 1px 8px;
+      border-radius: 10px;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .cat-menu-btn:hover {
       transform: translateY(-2px);
+      background: #ffffff;
+      border-color: #f59e0b;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15);
+    }
+
+    .cat-menu-btn.active {
+      background: #f59e0b;
+      color: #0f172a;
+      border-color: #ffffff;
+      box-shadow: 0 5px 16px rgba(245, 158, 11, 0.45);
+      transform: translateY(-2px);
+    }
+
+    .cat-menu-btn.active .cat-count {
+      background: rgba(15, 23, 42, 0.18);
+      color: #0f172a;
+      font-weight: 800;
     }
 
     /* Scoreboard & Status Bar */
@@ -622,48 +679,84 @@
       </div>
     </nav>
 
-    <!-- Game Header Card & Settings -->
+    <!-- Game Menu & Category Settings Card -->
     <div class="game-header-card">
-      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
-        <h2 style="font-size: 1.35rem; font-weight: 900;">🎯 Pengaturan Kategori</h2>
-        <span style="font-size: 0.85rem; background: rgba(255,255,255,0.22); padding: 5px 14px; border-radius: 20px; font-weight: 700;">Mode Gantian (3x Salah = Game Over)</span>
-      </div>
-
-      <div class="game-controls">
-        <!-- Category Filter -->
-        <div class="control-group">
-          <label for="categorySelect">📂 Kategori Kosakata:</label>
-          <select id="categorySelect" class="game-select" onchange="onCategorySelectChange()">
-            <option value="all">🌟 Semua Kategori (300 Kata)</option>
-            <option value="animals">🐾 Hewan (Animals - 50 Kata)</option>
-            <option value="food">🍎 Makanan & Minuman (Food & Drinks - 50 Kata)</option>
-            <option value="objects">🏫 Benda Sekolah & Rumah (Things - 50 Kata)</option>
-            <option value="body">👤 Anggota Tubuh (Body Parts - 50 Kata)</option>
-            <option value="verbs">🏃 Aktivitas Harian (Daily Verbs - 50 Kata)</option>
-            <option value="adjectives">✨ Sifat & Emosi (Adjectives - 50 Kata)</option>
-          </select>
-        </div>
-
-        <!-- Player Turn Status -->
-        <div class="control-group">
-          <span id="turnCounterBadge" style="background: white; color: var(--primary-color); font-weight: 800; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; box-shadow: 0 2px 5px rgba(0,0,0,0.1);">
-            👤 Giliran Pemain: <span id="turnNumberText">#1</span>
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <h2 style="font-size: 1.3rem; font-weight: 900; margin: 0; display: flex; align-items: center; gap: 8px;">
+            🎮 Menu Kategori Permainan
+          </h2>
+          <span style="font-size: 0.8rem; background: rgba(255,255,255,0.22); padding: 4px 12px; border-radius: 20px; font-weight: 700;">
+            Mode Gantian (3x Salah = Game Over)
           </span>
         </div>
 
-        <button class="game-btn-toggle" onclick="resetGameStats()">🔄 Reset Sesi Game</button>
+        <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+          <span id="turnCounterBadge" style="background: white; color: var(--primary-color); font-weight: 800; padding: 6px 14px; border-radius: 20px; font-size: 0.85rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1);">
+            👤 Giliran: <span id="turnNumberText">#1</span>
+          </span>
+          <button class="game-btn-toggle" onclick="resetGameStats()">🔄 Reset Sesi</button>
+        </div>
       </div>
-    </div>
 
-    <!-- Category Filter Pills (Quick Switch) -->
-    <div class="mode-tab-container" style="overflow-x: auto; padding-bottom: 6px; gap: 8px;">
-      <button id="pill-all" class="tab-btn active" onclick="selectCategory('all')">🌟 Semua (300)</button>
-      <button id="pill-animals" class="tab-btn" onclick="selectCategory('animals')">🐾 Hewan (50)</button>
-      <button id="pill-food" class="tab-btn" onclick="selectCategory('food')">🍎 Makanan (50)</button>
-      <button id="pill-objects" class="tab-btn" onclick="selectCategory('objects')">🏫 Benda (50)</button>
-      <button id="pill-body" class="tab-btn" onclick="selectCategory('body')">👤 Tubuh (50)</button>
-      <button id="pill-verbs" class="tab-btn" onclick="selectCategory('verbs')">🏃 Aktivitas (50)</button>
-      <button id="pill-adjectives" class="tab-btn" onclick="selectCategory('adjectives')">✨ Sifat (50)</button>
+      <!-- Integrated & Proportional Category Grid Inside Menu -->
+      <div class="category-menu-section">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; flex-wrap: wrap; gap: 6px;">
+          <label style="font-size: 0.88rem; font-weight: 800; color: rgba(255,255,255,0.95); display: flex; align-items: center; gap: 6px;">
+            📂 Pilih Kategori Kosakata (300 Kata Pilihan):
+          </label>
+          <span style="font-size: 0.8rem; color: rgba(255,255,255,0.85); font-weight: 600;">Klik kartu kategori untuk mulai:</span>
+        </div>
+
+        <!-- Hidden select for backward compatibility -->
+        <select id="categorySelect" style="display: none;" onchange="onCategorySelectChange()">
+          <option value="all">Semua Kategori</option>
+          <option value="animals">Hewan</option>
+          <option value="food">Makanan</option>
+          <option value="objects">Benda</option>
+          <option value="body">Tubuh</option>
+          <option value="verbs">Aktivitas</option>
+          <option value="adjectives">Sifat</option>
+        </select>
+
+        <div class="category-menu-grid">
+          <button id="pill-all" class="cat-menu-btn active" onclick="selectCategory('all')" title="Semua Kategori (300 Kosakata)">
+            <span class="cat-icon">🌟</span>
+            <span class="cat-name">Semua</span>
+            <span class="cat-count">300 Kata</span>
+          </button>
+          <button id="pill-animals" class="cat-menu-btn" onclick="selectCategory('animals')" title="Hewan (50 Kata)">
+            <span class="cat-icon">🐾</span>
+            <span class="cat-name">Hewan</span>
+            <span class="cat-count">50 Kata</span>
+          </button>
+          <button id="pill-food" class="cat-menu-btn" onclick="selectCategory('food')" title="Makanan & Minuman (50 Kata)">
+            <span class="cat-icon">🍎</span>
+            <span class="cat-name">Makanan</span>
+            <span class="cat-count">50 Kata</span>
+          </button>
+          <button id="pill-objects" class="cat-menu-btn" onclick="selectCategory('objects')" title="Benda Sekolah & Rumah (50 Kata)">
+            <span class="cat-icon">🏫</span>
+            <span class="cat-name">Benda</span>
+            <span class="cat-count">50 Kata</span>
+          </button>
+          <button id="pill-body" class="cat-menu-btn" onclick="selectCategory('body')" title="Anggota Tubuh (50 Kata)">
+            <span class="cat-icon">👤</span>
+            <span class="cat-name">Tubuh</span>
+            <span class="cat-count">50 Kata</span>
+          </button>
+          <button id="pill-verbs" class="cat-menu-btn" onclick="selectCategory('verbs')" title="Aktivitas Harian (50 Kata)">
+            <span class="cat-icon">🏃</span>
+            <span class="cat-name">Aktivitas</span>
+            <span class="cat-count">50 Kata</span>
+          </button>
+          <button id="pill-adjectives" class="cat-menu-btn" onclick="selectCategory('adjectives')" title="Sifat & Emosi (50 Kata)">
+            <span class="cat-icon">✨</span>
+            <span class="cat-name">Sifat</span>
+            <span class="cat-count">50 Kata</span>
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Status Bar / Scoreboard -->
